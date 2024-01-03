@@ -8,124 +8,133 @@
 
     <ImageView
         android:id="@+id/login_logo"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:src="@drawable/login_back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:scaleType="fitXY"
+        android:src="@drawable/login_img"
+        app:layout_constraintBottom_toTopOf="@id/login"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/login"
         android:background="@drawable/login_bg"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintVertical_bias="1"
-        >
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/login_logo">
 
         <TextView
             android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/welcome_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="5dp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/poppins_extra_bold"
-            android:textSize="32sp"
             android:alpha="0.7"
-            />
+            android:fontFamily="@font/poppins_extra_bold"
+            android:text="@string/welcome_back"
+            android:textColor="@color/black"
+            android:textSize="32sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/see_you_again"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/welcome_text"
-            android:textColor="@color/black"
-            android:fontFamily="@font/poppins_bold"
-            android:textSize="16sp"
             android:alpha="0.65"
-            />
+            android:fontFamily="@font/poppins_bold"
+            android:text="@string/see_you_again"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/welcome_text" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/email_back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/text"
             android:layout_margin="15dp"
-            app:boxStrokeWidth="3dp"
-            app:boxStrokeColor="@color/black"
-            app:startIconDrawable="@drawable/email"
-            app:startIconTint="@color/black"
-            app:hintTextColor="@color/black"
             android:hint="@string/email"
             android:textColorHint="@color/black"
-            >
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidth="3dp"
+            app:hintTextColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/text"
+            app:startIconDrawable="@drawable/email"
+            app:startIconTint="@color/black">
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/email_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/email_text"
+                android:fontFamily="@font/poppins_bold"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/pass_back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/pass_back"
-            app:layout_constraintTop_toBottomOf="@id/email_back"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_margin="15dp"
-            app:boxStrokeWidth="3dp"
-            app:boxStrokeColor="@color/black"
-            app:endIconMode="password_toggle"
-            app:endIconTint="@color/black"
-            app:startIconDrawable="@drawable/password"
-            app:startIconTint="@color/black"
-            app:counterTextColor="@color/black"
-            app:hintTextColor="@color/black"
             android:hint="@string/password"
             android:textColorHint="@color/black"
-            >
+            app:boxStrokeColor="@color/black"
+            app:boxStrokeWidth="3dp"
+            app:counterTextColor="@color/black"
+            app:endIconMode="password_toggle"
+            app:endIconTint="@color/black"
+            app:hintTextColor="@color/black"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/email_back"
+            app:startIconDrawable="@drawable/login_lock_password"
+            app:startIconTint="@color/black">
+
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/pass_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/pass_text"
+                android:fontFamily="@font/poppins_bold"
                 android:inputType="textPassword"
                 android:textColor="@color/black"
-                android:fontFamily="@font/poppins_bold"
-                android:textSize="16sp"/>
+                android:textSize="16sp" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/forgot_pass"
+            style="@style/Theme.SHD.Login.TextButton"
+            android:text="@string/forgot_password"
+            app:layout_constraintTop_toBottomOf="@id/pass_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/login_button"
+            />
 
         <Button
+            android:id="@+id/login_button"
+            style="@style/Theme.SHD.Login.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="15dp"
             android:text="@string/log_in"
-            android:textSize="20sp"
-            android:fontFamily="@font/poppins_bold"
-            android:layout_margin="17dp"
-            app:layout_constraintTop_toBottomOf="@id/pass_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/Theme.SHD.Button"
-            />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/forgot_pass"
+            android:elevation="16dp"
+            android:stateListAnimator="@null"
+           />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
