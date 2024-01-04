@@ -11,17 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SHD"
-        tools:targetApi="31"
-        >
+        tools:targetApi="31">
+        <activity
+            android:name=".login.ResetPassword"
+            android:exported="false"
+            android:theme="@style/Theme.SHD.Login.ResetPassword"/>
         <activity
             android:name=".login.LogIn"
-            android:theme="@style/Theme.SHD.Login"
             android:exported="false"
-            />
+            android:theme="@style/Theme.SHD.Login" />
         <activity
             android:name=".login.SplashScreen"
-            android:theme="@style/Theme.SHD.Login"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/Theme.SHD.Login">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

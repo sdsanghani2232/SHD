@@ -2,19 +2,21 @@ package com.shd.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.shd.R;
-import com.shd.db_firebase.LoginValidation;
+import com.shd.validation.LoginValidation;
 
 import java.util.Objects;
 
 public class LogIn extends AppCompatActivity {
-    Button login;
+    Button login,forgotPassword;
     TextInputEditText email,password;
     TextInputLayout emailLayout, passwordLayout;
     @SuppressLint("ClickableViewAccessibility")
@@ -39,6 +41,10 @@ public class LogIn extends AppCompatActivity {
             return true;
         });
 
+        forgotPassword.setOnClickListener(v -> {
+            startActivity(new Intent(getApplicationContext(),ResetPassword.class));
+        });
+
     }
 
     private void findId() {
@@ -49,6 +55,7 @@ public class LogIn extends AppCompatActivity {
         passwordLayout = findViewById(R.id.pass_layout);
         emailLayout.setErrorEnabled(false);
         passwordLayout.setErrorEnabled(false);
+        forgotPassword = findViewById(R.id.forgot_pass);
     }
     private void checkData() {
 

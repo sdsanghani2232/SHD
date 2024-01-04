@@ -7,4 +7,6 @@
     <string name="log_in">Log In</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="login_page_img">Login page img</string>
+    <string name="request_pass_string">Request to reset your password. Please provide a valid email to initiate the reset process via email confirmation.</string>
+    <string name="send">Send</string>
 </resources>

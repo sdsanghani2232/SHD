@@ -6,4 +6,5 @@
     <color name="login_button_click">#3363DE</color>
     <color name="login_button_bg">#0048FF</color>
     <color name="error">#FF0000</color>
+    <color name="not_click_button">#302C2C</color>
 </resources>
