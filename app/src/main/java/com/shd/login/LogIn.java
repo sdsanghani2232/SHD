@@ -26,18 +26,18 @@ public class LogIn extends AppCompatActivity {
         findId();
 
         login.setOnTouchListener((v, event) -> {
-             switch (event.getAction()) {
-                 case MotionEvent.ACTION_DOWN:
-                     emailLayout.setErrorEnabled(false);
-                     passwordLayout.setErrorEnabled(false);
-                     checkData();
-                     break;
-                 case MotionEvent.ACTION_UP:
-                     login.setBackgroundColor(getColor(R.color.login_button_bg));
-                     break;
-             }
-             return true;
-         });
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    emailLayout.setErrorEnabled(false);
+                    passwordLayout.setErrorEnabled(false);
+                    checkData();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    login.setBackgroundColor(getColor(R.color.login_button_bg));
+                    break;
+            }
+            return true;
+        });
 
     }
 

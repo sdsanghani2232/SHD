@@ -16,7 +16,8 @@
         <activity
             android:name=".login.LogIn"
             android:theme="@style/Theme.SHD.Login"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".login.SplashScreen"
             android:theme="@style/Theme.SHD.Login"
