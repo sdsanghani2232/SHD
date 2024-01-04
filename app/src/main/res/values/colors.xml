@@ -5,5 +5,5 @@
     <color name="app_color">#CA9F85</color>
     <color name="login_button_click">#3363DE</color>
     <color name="login_button_bg">#0048FF</color>
-    <color name="red">#FF0000</color>
+    <color name="error">#FF0000</color>
 </resources>

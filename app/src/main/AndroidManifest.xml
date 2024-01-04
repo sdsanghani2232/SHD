@@ -18,7 +18,7 @@
             android:theme="@style/Theme.SHD.Login"
             android:exported="false" />
         <activity
-            android:name=".SplashScreen"
+            android:name=".login.SplashScreen"
             android:theme="@style/Theme.SHD.Login"
             android:exported="true">
             <intent-filter>

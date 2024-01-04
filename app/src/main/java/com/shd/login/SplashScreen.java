@@ -1,4 +1,4 @@
-package com.shd;
+package com.shd.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
+import com.shd.R;
 import com.shd.login.LogIn;
 
 public class SplashScreen extends AppCompatActivity {

@@ -16,6 +16,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/login_page_img"
         />
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -56,18 +57,23 @@
             app:layout_constraintTop_toBottomOf="@id/welcome_text" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_back"
+            android:id="@+id/email_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="@string/email"
             android:textColorHint="@color/black"
             app:boxStrokeColor="@color/black"
+            app:boxStrokeErrorColor="@color/error"
             app:boxStrokeWidth="3dp"
             app:hintTextColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/text"
             app:startIconDrawable="@drawable/email"
-            app:startIconTint="@color/black">
+            app:startIconTint="@color/black"
+            app:errorTextColor="@color/error"
+            app:errorIconTint="@color/error"
+            app:cursorColor="@color/black"
+            app:cursorErrorColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_text"
@@ -76,27 +82,31 @@
                 android:fontFamily="@font/poppins_bold"
                 android:inputType="textEmailAddress"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="VisualLintTextFieldSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pass_back"
+            android:id="@+id/pass_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="@string/password"
             android:textColorHint="@color/black"
             app:boxStrokeColor="@color/black"
+            app:boxStrokeErrorColor="@color/error"
             app:boxStrokeWidth="3dp"
-            app:counterTextColor="@color/black"
             app:endIconMode="password_toggle"
             app:endIconTint="@color/black"
+            app:errorIconTint="@color/error"
             app:hintTextColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email_back"
+            app:layout_constraintTop_toBottomOf="@id/email_layout"
             app:startIconDrawable="@drawable/login_lock_password"
-            app:startIconTint="@color/black">
+            app:startIconTint="@color/black"
+            app:errorTextColor="@color/error"
+            app:cursorErrorColor="@color/black">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/pass_text"
@@ -105,7 +115,8 @@
                 android:fontFamily="@font/poppins_bold"
                 android:inputType="textPassword"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="VisualLintTextFieldSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,7 +126,7 @@
             android:id="@+id/forgot_pass"
             style="@style/Theme.SHD.Login.TextButton"
             android:text="@string/forgot_password"
-            app:layout_constraintTop_toBottomOf="@id/pass_back"
+            app:layout_constraintTop_toBottomOf="@id/pass_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/login_button"
             />
@@ -134,7 +145,7 @@
             app:layout_constraintTop_toBottomOf="@id/forgot_pass"
             android:elevation="16dp"
             android:stateListAnimator="@null"
-           />
+            tools:ignore="VisualLintButtonSize" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
