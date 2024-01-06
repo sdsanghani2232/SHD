@@ -1,4 +1,4 @@
-package com.shd.login;
+package com.shd.ui.activity.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;

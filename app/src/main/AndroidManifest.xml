@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools" >
 
     <application
         android:allowBackup="true"
@@ -11,19 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SHD"
-        tools:targetApi="31">
+        tools:targetApi="31" >
         <activity
-            android:name=".login.ResetPassword"
+            android:name=".ui.activity.home.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.login.ResetPassword"
             android:exported="false"
-            android:theme="@style/Theme.SHD.Login.ResetPassword"/>
+            android:theme="@style/Theme.SHD.Login.ResetPassword" />
         <activity
-            android:name=".login.LogIn"
+            android:name=".ui.activity.login.LogIn"
             android:exported="false"
             android:theme="@style/Theme.SHD.Login" />
         <activity
-            android:name=".login.SplashScreen"
+            android:name=".ui.activity.login.SplashScreen"
             android:exported="true"
-            android:theme="@style/Theme.SHD.Login">
+            android:theme="@style/Theme.SHD.Login" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,16 +1,16 @@
-package com.shd.login;
+package com.shd.ui.activity.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.shd.R;
+import com.shd.ui.activity.home.HomeActivity;
 import com.shd.validation.LoginValidation;
 
 import java.util.Objects;
@@ -70,7 +70,8 @@ public class LogIn extends AppCompatActivity {
             {
                 case "Login Successfully" :
                 {
-                    Toast.makeText(getApplicationContext(), "login", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                    finish();
                     break;
                 }
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.shd.dataclass.Admin;
+import com.shd.model.Admin;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -3,7 +3,7 @@ package com.shd.validation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
-import com.shd.dataclass.Admin;
+import com.shd.model.Admin;
 import com.shd.db_firebase.AdminInfo;
 
 import java.util.Objects;

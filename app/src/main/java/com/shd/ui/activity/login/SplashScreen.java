@@ -1,4 +1,4 @@
-package com.shd.login;
+package com.shd.ui.activity.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,20 +8,23 @@ import android.os.Handler;
 
 import com.shd.R;
 import com.shd.db_firebase.AdminInfo;
-import com.shd.login.LogIn;
+import com.shd.ui.activity.home.HomeActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
-    AdminInfo adminInfo = AdminInfo.getInstance();
+    // TODO : that code is working. after complete Entire app remove comment
+//    AdminInfo adminInfo = AdminInfo.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        adminInfo.setContext(this);
-        adminInfo.getAdmin();
+//        adminInfo.setContext(this);
+//        adminInfo.getAdmin();
         new Handler().postDelayed(() -> {
-            startActivity(new Intent(getApplicationContext(), LogIn.class));
+//            startActivity(new Intent(getApplicationContext(), LogIn.class));
+//            finish();
+            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
             finish();
         },300);
     }

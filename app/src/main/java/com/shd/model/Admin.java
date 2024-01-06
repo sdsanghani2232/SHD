@@ -1,6 +1,4 @@
-package com.shd.dataclass;
-
-import org.checkerframework.checker.units.qual.A;
+package com.shd.model;
 
 public class Admin {
     private String email;
