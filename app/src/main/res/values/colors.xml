@@ -7,4 +7,6 @@
     <color name="login_button_bg">#0048FF</color>
     <color name="error">#FF0000</color>
     <color name="not_click_button">#302C2C</color>
+    <color name="tab_indicator_color">#EB7A7A</color>
+    <color name="tab_background_color">#A865C9</color>
 </resources>

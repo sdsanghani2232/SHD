@@ -1,4 +1,4 @@
-package com.shd.validation;
+package com.shd.halperclass.validationclass;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;

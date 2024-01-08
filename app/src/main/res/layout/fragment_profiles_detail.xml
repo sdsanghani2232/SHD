@@ -1,13 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.fragments.ProfilesDetailFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.fragments.mainfragments.ProfilesDetailFragment"
+    android:background="@color/app_color">
 
-    <TextView
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/profile_details_tab_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/tab_background"
+        app:tabIndicator="@drawable/tab_indicator"
+        app:tabIndicatorColor="@color/tab_indicator_color"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorGravity="stretch"
+        app:tabTextColor="@color/black"
+        app:tabSelectedTextColor="@color/white"
+        />
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/profile_details_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Profiles Detail Fragment" />
-
-</FrameLayout>
+        android:layout_below="@id/profile_details_tab_view"
+        />
+</RelativeLayout>

@@ -13,20 +13,21 @@
         android:theme="@style/Theme.SHD"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.activity.home.HomeActivity"
-            android:exported="false" />
+            android:name=".ui.activitys.mainactivitys.home.HomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SHD.Main"/>
         <activity
-            android:name=".ui.activity.login.ResetPassword"
+            android:name=".ui.activitys.mainactivitys.login.ResetPassword"
             android:exported="false"
             android:theme="@style/Theme.SHD.Login.ResetPassword" />
         <activity
-            android:name=".ui.activity.login.LogIn"
+            android:name=".ui.activitys.mainactivitys.login.LogIn"
             android:exported="false"
-            android:theme="@style/Theme.SHD.Login" />
+            android:theme="@style/Theme.SHD.Main" />
         <activity
-            android:name=".ui.activity.login.SplashScreen"
+            android:name=".ui.activitys.mainactivitys.login.SplashScreen"
             android:exported="true"
-            android:theme="@style/Theme.SHD.Login" >
+            android:theme="@style/Theme.SHD.Main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -4,7 +4,7 @@
 
     <style name="Theme.SHD" parent="Base.Theme.SHD" />
 
-    <style name="Theme.SHD.Login" parent="Theme.Material3.Dark.NoActionBar">
+    <style name="Theme.SHD.Main" parent="Theme.Material3.Dark.NoActionBar">
         <item name="colorPrimaryDark">@color/black</item>
         <item name="colorPrimary">@color/black</item>
     </style>

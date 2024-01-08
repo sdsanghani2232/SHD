@@ -1,4 +1,4 @@
-package com.shd.ui.fragments;
+package com.shd.ui.fragments.subfragments.profiledetail;
 
 import android.os.Bundle;
 
@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 
 import com.shd.R;
 
-public class HomeFragment extends Fragment {
+public class CustomerFragment extends Fragment {
 
-    public HomeFragment() {
+    public CustomerFragment() {
         // Required empty public constructor
     }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +26,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        return inflater.inflate(R.layout.fragment_customer, container, false);
     }
 }

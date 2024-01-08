@@ -1,17 +1,16 @@
-package com.shd.ui.activity.home;
+package com.shd.ui.activitys.mainactivitys.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.google.firebase.auth.FirebaseAuth;
 import com.shd.R;
-import com.shd.ui.fragments.AddJewelleryFragment;
-import com.shd.ui.fragments.HomeFragment;
-import com.shd.ui.fragments.ProfilesDetailFragment;
-import com.shd.ui.fragments.SearchFragment;
-import com.shd.ui.fragments.UserProfileFragment;
+import com.shd.ui.fragments.mainfragments.AddJewelleryFragment;
+import com.shd.ui.fragments.mainfragments.HomeFragment;
+import com.shd.ui.fragments.mainfragments.ProfilesDetailFragment;
+import com.shd.ui.fragments.mainfragments.SearchFragment;
+import com.shd.ui.fragments.mainfragments.UserProfileFragment;
 
 public class HomeActivity extends AppCompatActivity {
     MeowBottomNavigation navigation;

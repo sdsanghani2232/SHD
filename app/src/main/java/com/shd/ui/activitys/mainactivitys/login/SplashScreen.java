@@ -1,4 +1,4 @@
-package com.shd.ui.activity.login;
+package com.shd.ui.activitys.mainactivitys.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.shd.R;
-import com.shd.db_firebase.AdminInfo;
-import com.shd.ui.activity.home.HomeActivity;
+import com.shd.ui.activitys.mainactivitys.home.HomeActivity;
 
 public class SplashScreen extends AppCompatActivity {
 

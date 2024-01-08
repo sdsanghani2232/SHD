@@ -1,4 +1,4 @@
-package com.shd.ui.fragments;
+package com.shd.ui.fragments.subfragments.addjewellery;
 
 import android.os.Bundle;
 
@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.shd.R;
 
-public class UserProfileFragment extends Fragment {
+public class FormFragment extends Fragment {
 
-    public UserProfileFragment() {
+    public FormFragment() {
         // Required empty public constructor
     }
 
@@ -26,6 +26,6 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_profile, container, false);
+        return inflater.inflate(R.layout.fragment_form, container, false);
     }
 }
