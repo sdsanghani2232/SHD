@@ -1,4 +1,4 @@
-package com.shd.ui.activitys.mainactivitys.home;
+package com.shd.ui.activitys.mainActivitys.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -6,11 +6,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.shd.R;
-import com.shd.ui.fragments.mainfragments.AddJewelleryFragment;
-import com.shd.ui.fragments.mainfragments.HomeFragment;
-import com.shd.ui.fragments.mainfragments.ProfilesDetailFragment;
-import com.shd.ui.fragments.mainfragments.SearchFragment;
-import com.shd.ui.fragments.mainfragments.UserProfileFragment;
+import com.shd.ui.fragments.mainFragments.AddJewelleryFragment;
+import com.shd.ui.fragments.mainFragments.HomeFragment;
+import com.shd.ui.fragments.mainFragments.ProfilesDetailFragment;
+import com.shd.ui.fragments.mainFragments.SearchFragment;
+import com.shd.ui.fragments.mainFragments.UserProfileFragment;
 
 public class HomeActivity extends AppCompatActivity {
     MeowBottomNavigation navigation;

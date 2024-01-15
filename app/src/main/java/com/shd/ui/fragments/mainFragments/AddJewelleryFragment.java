@@ -1,4 +1,4 @@
-package com.shd.ui.fragments.mainfragments;
+package com.shd.ui.fragments.mainFragments;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
@@ -9,13 +9,15 @@ import android.view.ViewGroup;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.shd.R;
-import com.shd.halperclass.tabsadapaters.ProfilesDetailsAdapter;
+import com.shd.halperclass.tabsadapaters.AddJewelleryTabAdapter;
 
-public class ProfilesDetailFragment extends Fragment {
+public class AddJewelleryFragment extends Fragment {
+
     TabLayout addJewellerytablayout;
     ViewPager2 addJewelleryViewPager;
 
-    public ProfilesDetailFragment() {
+    public AddJewelleryFragment() {
+        // Required empty public constructor
     }
 
     @Override
@@ -26,25 +28,27 @@ public class ProfilesDetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_profiles_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_add_jewellery, container, false);
 
-        addJewellerytablayout = view.findViewById(R.id.profile_details_tab_view);
-        addJewelleryViewPager = view.findViewById(R.id.profile_details_viewpager);
+        addJewellerytablayout = view.findViewById(R.id.add_jewellery_tab_view);
+        addJewelleryViewPager = view.findViewById(R.id.add_jewellery_viewpager);
+        AddJewelleryTabAdapter addJewelleryTabAdapter = new AddJewelleryTabAdapter(requireActivity());
+        addJewelleryViewPager.setAdapter(addJewelleryTabAdapter);
 
-        ProfilesDetailsAdapter profilesDetailsAdapter = new ProfilesDetailsAdapter(requireActivity());
-        addJewelleryViewPager.setAdapter(profilesDetailsAdapter);
+        addJewelleryViewPager.setUserInputEnabled(false);
 
         new TabLayoutMediator(addJewellerytablayout, addJewelleryViewPager, (tab, position) -> {
             switch (position)
             {
                 case 0 :
-                    tab.setText("EMPLOYEES");
+                    tab.setText("FORM");
                     break;
                 case 1 :
-                    tab.setText("CUSTOMER");
+                    tab.setText("EXCEL");
                     break;
             }
         }).attach();
+
         return view;
     }
 }

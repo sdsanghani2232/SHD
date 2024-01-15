@@ -1,4 +1,4 @@
-package com.shd.ui.fragments.mainfragments;
+package com.shd.ui.fragments.mainFragments;
 
 import android.os.Bundle;
 
@@ -9,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shd.R;
-
-public class UserProfileFragment extends Fragment {
-
-    public UserProfileFragment() {
+public class SearchFragment extends Fragment {
+    public SearchFragment() {
         // Required empty public constructor
     }
 
@@ -26,6 +24,6 @@ public class UserProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_user_profile, container, false);
+        return inflater.inflate(R.layout.fragment_search, container, false);
     }
 }

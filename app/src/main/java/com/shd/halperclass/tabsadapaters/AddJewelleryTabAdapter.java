@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.shd.ui.fragments.subfragments.addjewellery.ExcelFragment;
-import com.shd.ui.fragments.subfragments.addjewellery.FormFragment;
+import com.shd.ui.fragments.subFragments.addJewellery.ExcelFragment;
+import com.shd.ui.fragments.subFragments.addJewellery.FormFragment;
 
 public class AddJewelleryTabAdapter extends FragmentStateAdapter {
     public AddJewelleryTabAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -23,7 +23,7 @@ public class AddJewelleryTabAdapter extends FragmentStateAdapter {
             case 1:
                 return new ExcelFragment();
         }
-        return null;
+        return new FormFragment();
     }
 
     @Override

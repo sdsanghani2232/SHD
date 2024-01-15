@@ -1,4 +1,4 @@
-package com.shd.ui.fragments.subfragments.addjewellery;
+package com.shd.ui.fragments.mainFragments;
 
 import android.os.Bundle;
 
@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 
 import com.shd.R;
 
-public class FormFragment extends Fragment {
+public class HomeFragment extends Fragment {
 
-    public FormFragment() {
+    public HomeFragment() {
         // Required empty public constructor
     }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +24,6 @@ public class FormFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_form, container, false);
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 }

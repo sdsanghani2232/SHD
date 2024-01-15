@@ -1,4 +1,4 @@
-package com.shd.ui.activitys.mainactivitys.login;
+package com.shd.ui.activitys.mainActivitys.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
@@ -36,6 +36,7 @@ public class ResetPassword extends AppCompatActivity {
         checkConnection();
 
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
+
         send.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
@@ -43,15 +44,16 @@ public class ResetPassword extends AppCompatActivity {
                     checkConnection();
                     if(isConnection)
                     {
+                        send.setBackgroundColor(getColor(R.color.login_button_background_onClick_color));
                         checkData();
                     }
                     break;
                 case MotionEvent.ACTION_UP:
                     if(isConnection)
                     {
-                        send.setBackgroundColor(getColor(R.color.login_button_bg));
+                        send.setBackgroundColor(getColor(R.color.login_button_background_color));
                     }else {
-                        send.setBackgroundColor(getColor(R.color.not_click_button));
+                        send.setBackgroundColor(getColor(R.color.RP_not_enable_button_color));
                     }
 
                     break;
@@ -67,13 +69,13 @@ public class ResetPassword extends AppCompatActivity {
         {
             isConnection = false;
             error.setVisibility(View.VISIBLE);
-            send.setBackgroundColor(getColor(R.color.not_click_button));
+            send.setBackgroundColor(getColor(R.color.RP_not_enable_button_color));
             send.setClickable(false);
             error.setText("Check Internet Connectivity");
         }else {
             isConnection = true;
             error.setVisibility(View.GONE);
-            send.setBackgroundColor(getColor(R.color.login_button_bg));
+            send.setBackgroundColor(getColor(R.color.login_button_background_color));
             send.setClickable(true);
         }
     }
@@ -86,7 +88,7 @@ public class ResetPassword extends AppCompatActivity {
         toolbar = findViewById(R.id.appbar_material);
     }
     private void checkData() {
-        send.setBackgroundColor(getColor(R.color.login_button_click));
+        send.setBackgroundColor(getColor(R.color.login_button_background_color));
         String emailId = Objects.requireNonNull(email.getText()).toString().trim();
 
         if(emailId.isEmpty() || emailId.trim().length() == 0 )

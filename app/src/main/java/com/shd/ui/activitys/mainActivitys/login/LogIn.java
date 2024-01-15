@@ -1,4 +1,4 @@
-package com.shd.ui.activitys.mainactivitys.login;
+package com.shd.ui.activitys.mainActivitys.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
@@ -10,9 +10,8 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.shd.R;
-import com.shd.ui.activitys.mainactivitys.home.HomeActivity;
+import com.shd.ui.activitys.mainActivitys.home.HomeActivity;
 import com.shd.halperclass.validationclass.LoginValidation;
-
 import java.util.Objects;
 
 public class LogIn extends AppCompatActivity {
@@ -35,7 +34,7 @@ public class LogIn extends AppCompatActivity {
                     checkData();
                     break;
                 case MotionEvent.ACTION_UP:
-                    login.setBackgroundColor(getColor(R.color.login_button_bg));
+                    login.setBackgroundColor(getColor(R.color.login_button_background_color));
                     break;
             }
             return true;
@@ -59,7 +58,7 @@ public class LogIn extends AppCompatActivity {
     }
     private void checkData() {
 
-        login.setBackgroundColor(getColor(R.color.login_button_click));
+        login.setBackgroundColor(getColor(R.color.login_button_background_onClick_color));
         String emailId = Objects.requireNonNull(email.getText()).toString().trim();
         String pass = Objects.requireNonNull(password.getText()).toString().trim();
 

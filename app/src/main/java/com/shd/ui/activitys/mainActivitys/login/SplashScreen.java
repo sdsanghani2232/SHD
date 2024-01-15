@@ -1,4 +1,4 @@
-package com.shd.ui.activitys.mainactivitys.login;
+package com.shd.ui.activitys.mainActivitys.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.shd.R;
-import com.shd.ui.activitys.mainactivitys.home.HomeActivity;
+import com.shd.ui.activitys.mainActivitys.home.HomeActivity;
 
 public class SplashScreen extends AppCompatActivity {
 

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.SHD.from.calender.header.layout" parent="Widget.MaterialComponents.MaterialCalendar.HeaderLayout">
+        <item name="android:backgroundTint">@color/calender_header_background</item>
+    </style>
+    <style name="Theme.SHD.from.calender.header.title" parent="@style/Widget.MaterialComponents.MaterialCalendar.HeaderTitle">
+        <item name="android:textColor">@color/calender_text_color</item>
+    </style>
+    
+    <style name="Theme.SHD.from.calender.header.selection" parent="@style/Widget.Material3.MaterialCalendar.HeaderSelection">
+        <item name="android:textColor">@color/calender_text_color</item>
+    </style>
+    
+    <style name="Theme.SHD.from.calender.switch.keyboard" parent="@style/Widget.Material3.MaterialCalendar.HeaderToggleButton">
+        <item name="android:backgroundTint">@color/calender_header_background</item>
+        <item name="android:tint">@color/calender_key_bored_change_icon_color</item>
+    </style>
+
+    <style name="Theme.SHD.from.calender.year.selection" parent="@style/Widget.Material3.MaterialCalendar.YearNavigationButton">
+        <item name="android:textColor">@color/calender_text_color</item>
+        <item name="iconTint">@color/calender_text_color</item>
+    </style>
+
+    <style name="Theme.SHD.from.calender.month.selection" parent="@style/Widget.Material3.MaterialCalendar.MonthNavigationButton">
+        <item name="android:textColor">@color/calender_text_color</item>
+        <item name="iconTint">@color/calender_text_color</item>
+    </style>
+
+
+</resources>

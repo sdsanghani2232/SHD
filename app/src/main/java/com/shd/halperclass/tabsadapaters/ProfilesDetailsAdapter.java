@@ -5,10 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.shd.ui.fragments.subfragments.addjewellery.ExcelFragment;
-import com.shd.ui.fragments.subfragments.addjewellery.FormFragment;
-import com.shd.ui.fragments.subfragments.profiledetail.CustomerFragment;
-import com.shd.ui.fragments.subfragments.profiledetail.EmployesFragment;
+import com.shd.ui.fragments.subFragments.profileDetail.CustomerFragment;
+import com.shd.ui.fragments.subFragments.profileDetail.EmployesFragment;
 
 public class ProfilesDetailsAdapter extends FragmentStateAdapter {
     public ProfilesDetailsAdapter(@NonNull FragmentActivity fragmentActivity) {

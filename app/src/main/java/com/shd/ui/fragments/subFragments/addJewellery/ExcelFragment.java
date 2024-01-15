@@ -1,4 +1,4 @@
-package com.shd.ui.fragments.subfragments.profiledetail;
+package com.shd.ui.fragments.subFragments.addJewellery;
 
 import android.os.Bundle;
 
@@ -10,12 +10,11 @@ import android.view.ViewGroup;
 
 import com.shd.R;
 
-public class CustomerFragment extends Fragment {
+public class ExcelFragment extends Fragment {
 
-    public CustomerFragment() {
+    public ExcelFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -26,6 +25,6 @@ public class CustomerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_customer, container, false);
+        return inflater.inflate(R.layout.fragment_excel, container, false);
     }
 }

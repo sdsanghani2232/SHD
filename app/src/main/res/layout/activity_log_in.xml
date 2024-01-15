@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activitys.mainactivitys.login.LogIn">
+    tools:context=".ui.activitys.mainActivitys.login.LogIn">
 
     <ImageView
         android:id="@+id/login_logo"
@@ -34,10 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            android:alpha="0.7"
             android:fontFamily="@font/poppins_extra_bold"
             android:text="@string/welcome_back"
-            android:textColor="@color/black"
+            android:textColor="@color/login_welcome_text"
             android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -47,10 +46,9 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:alpha="0.65"
             android:fontFamily="@font/poppins_bold"
             android:text="@string/see_you_again"
-            android:textColor="@color/black"
+            android:textColor="@color/login_welcome_text2"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -62,18 +60,18 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="@string/email"
-            android:textColorHint="@color/black"
-            app:boxStrokeColor="@color/black"
-            app:boxStrokeErrorColor="@color/error"
             app:boxStrokeWidth="3dp"
-            app:hintTextColor="@color/black"
             app:layout_constraintTop_toBottomOf="@id/text"
             app:startIconDrawable="@drawable/email"
-            app:startIconTint="@color/black"
-            app:errorTextColor="@color/error"
-            app:errorIconTint="@color/error"
-            app:cursorColor="@color/black"
-            app:cursorErrorColor="@color/black">
+            android:textColorHint="@color/Edit_Text_hint_text_color"
+            app:boxStrokeColor="@color/Edit_Text_box_stroke_color"
+            app:boxStrokeErrorColor="@color/Edit_Text_box_stroke_error_color"
+            app:hintTextColor="@color/Edit_Text_hint_text_color"
+            app:startIconTint="@color/login_start_icon_color"
+            app:errorTextColor="@color/Edit_Text_error_text_color"
+            app:errorIconTint="@color/Edit_Text_end_error_icon_color"
+            app:cursorColor="@color/Edit_Text_cursor_color"
+            app:cursorErrorColor="@color/Edit_Text_cursor_error_color">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_text"
@@ -81,7 +79,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/black"
+                android:textColor="@color/Edit_Text_input_text_color"
                 android:textSize="16sp"
                 tools:ignore="VisualLintTextFieldSize" />
 
@@ -93,20 +91,22 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="@string/password"
-            android:textColorHint="@color/black"
-            app:boxStrokeColor="@color/black"
-            app:boxStrokeErrorColor="@color/error"
+            android:textColorHint="@color/Edit_Text_hint_text_color"
+            app:boxStrokeColor="@color/Edit_Text_box_stroke_color"
+            app:boxStrokeErrorColor="@color/Edit_Text_box_stroke_error_color"
+            app:hintTextColor="@color/Edit_Text_hint_text_color"
+            app:startIconTint="@color/login_start_icon_color"
+            app:errorTextColor="@color/Edit_Text_error_text_color"
+            app:errorIconTint="@color/Edit_Text_end_error_icon_color"
+            app:cursorColor="@color/Edit_Text_cursor_color"
+            app:cursorErrorColor="@color/Edit_Text_cursor_error_color"
             app:boxStrokeWidth="3dp"
+            app:endIconTint="@color/Edit_Text_end_icon_color"
             app:endIconMode="password_toggle"
-            app:endIconTint="@color/black"
-            app:errorIconTint="@color/error"
-            app:hintTextColor="@color/black"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email_layout"
             app:startIconDrawable="@drawable/login_lock_password"
-            app:startIconTint="@color/black"
-            app:errorTextColor="@color/error"
-            app:cursorErrorColor="@color/black">
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/pass_text"
@@ -114,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_bold"
                 android:inputType="textPassword"
-                android:textColor="@color/black"
+                android:textColor="@color/Edit_Text_input_text_color"
                 android:textSize="16sp"
                 tools:ignore="VisualLintTextFieldSize" />
 

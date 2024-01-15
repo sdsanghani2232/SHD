@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.mainfragments.ProfilesDetailFragment"
-    android:background="@color/app_color">
+    tools:context=".ui.fragments.mainFragments.ProfilesDetailFragment"
+    android:background="@color/profiles_details_background">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/profile_details_tab_view"
@@ -20,8 +20,8 @@
         app:tabIndicatorColor="@color/tab_indicator_color"
         app:tabIndicatorFullWidth="true"
         app:tabIndicatorGravity="stretch"
-        app:tabTextColor="@color/black"
-        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/tab_text_color"
+        app:tabSelectedTextColor="@color/tab_selected_text_color"
         />
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/profile_details_viewpager"

@@ -4,8 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.mainfragments.AddJewelleryFragment"
-    android:background="@color/app_color">
+    tools:context=".ui.fragments.mainFragments.AddJewelleryFragment"
+    android:background="@color/add_jewellery_fragment_background">
 
 
     <com.google.android.material.tabs.TabLayout
@@ -21,13 +21,14 @@
         app:tabIndicatorColor="@color/tab_indicator_color"
         app:tabIndicatorFullWidth="true"
         app:tabIndicatorGravity="stretch"
-        app:tabTextColor="@color/black"
-        app:tabSelectedTextColor="@color/white"
+        app:tabTextColor="@color/tab_text_color"
+        app:tabSelectedTextColor="@color/tab_selected_text_color"
          />
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/add_jewellery_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/add_jewellery_tab_view"
+
         />
 </RelativeLayout>

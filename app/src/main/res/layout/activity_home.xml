@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activitys.mainactivitys.home.HomeActivity">
+    tools:context=".ui.activitys.mainActivitys.home.HomeActivity"
+    android:background="@color/home_background">
 
     <FrameLayout
         android:id="@+id/frame_layout"
-        android:layout_width="fill_parent"
-        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,12 +20,12 @@
     <com.etebarian.meowbottomnavigation.MeowBottomNavigation
         android:id="@+id/bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:mbn_circleColor="#A865C9"
-        app:mbn_backgroundBottomColor="#A865C9"
-        app:mbn_defaultIconColor="#ffffff"
-        app:mbn_selectedIconColor="#ffffff"
-        app:mbn_shadowColor="#1f212121"
+        android:layout_height="0dp"
+        app:mbn_circleColor="@color/bottom_navigation_background"
+        app:mbn_backgroundBottomColor="@color/bottom_navigation_background"
+        app:mbn_defaultIconColor="@color/bottom_navigation_not_selected_icon"
+        app:mbn_selectedIconColor="@color/bottom_navigation_selected_icon"
+        app:mbn_shadowColor="@color/bottom_navigation_shadow"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
