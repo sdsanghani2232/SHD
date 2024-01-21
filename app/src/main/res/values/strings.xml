@@ -34,27 +34,50 @@
     <string name="width">Width (mm) :</string>
     <string name="height">Height (mm) :</string>
     <string name="save">SAVE</string>
+    <string name="customer_code">Customer Code :</string>
+    <string name="enter_customer_code">Enter Customer Code</string>
+    <string name="temp_code">Temp Code :</string>
+    <string name="enter_temp_code">Enter temp code</string>
 
 
     <string-array name="jewellery_main_type">
       <item>Ring</item>
-      <item>Necklace</item>
+      <item>NKC</item>
       <item>ER</item>
+      <item>BR</item>
       <item>PND</item>
+      <item>BA</item>
+      <item>MS</item>
+      <item>NP</item>
+      <item>PDSet</item>
+
   </string-array>
 
     <string-array name="jewellery_ring_sub_type">
         <item>GR</item>
         <item>LR</item>
         <item>Bend</item>
+        <item>Couple Ring</item>
+        <item>Cocktail Ring</item>
     </string-array>
 
-    <string-array name="jewellery_necklace_sub_type">
-        <item>TM</item>
+    <string-array name="jewellery_nkc_sub_type">
+        <item>Tenis</item>
+        <item>Regular</item>
     </string-array>
 
     <string-array name="jewellery_er_sub_type">
-        <item>Jumaki</item>
+        <item>Bail</item>
         <item>Tops</item>
+        <item>Stud</item>
+        <item>Long ER</item>
+        <item>Jumkhi</item>
     </string-array>
+
+    <string-array name="jewellery_br_sub_type">
+        <item>Lose</item>
+        <item>Tenies</item>
+        <item>Kada</item>
+    </string-array>
+
 </resources>

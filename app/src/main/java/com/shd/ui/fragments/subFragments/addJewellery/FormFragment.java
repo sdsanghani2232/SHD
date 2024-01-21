@@ -1,10 +1,19 @@
 package com.shd.ui.fragments.subFragments.addJewellery;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,15 +21,26 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.HorizontalScrollView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.imageview.ShapeableImageView;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.shd.R;
+import com.shd.db_firebase.JewelleryDetailsStore;
+import com.shd.halperclass.otherClass.CheckInternet;
+import com.shd.halperclass.validationclass.FormValidation;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -29,11 +49,18 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class FormFragment extends Fragment {
-    private boolean isChanging = false;
+    private boolean isChanging = false,isInternet = true,isError = false;
+    private float gold_weight = 0.00f,diamond_weight= 0.00f,length= 0.00f,width=0.00f,height= 0.00f;
+    ScrollView mainScrollView;
+    TextView errorText;
     View indicator1,indicator2;
+    private Uri img1Url = Uri.parse(""),img2Url= Uri.parse("");
+    ShapeableImageView jewelleryImg1,jewelleryImg2;
+    MaterialSwitch designStatus;
+    FloatingActionButton jewelleryImg1Button,jewelleryImg2Button;
     HorizontalScrollView imgScrollView;
-    TextInputLayout date_layout,jewelleryMainTypeLayout,jewellerySubTypeLayout,gold_layout,diamond_layout,length_layout,width_layout,height_layout;
-    TextInputEditText date_text,gold_text,diamond_text,length_text,width_text,height_text;
+    TextInputLayout date_layout,jewelleryMainTypeLayout,jewellerySubTypeLayout,gold_layout,diamond_layout,length_layout,width_layout,height_layout,design_code_layout,customer_code_layout,temp_code_layout,errorLayout;
+    TextInputEditText date_text,gold_text,diamond_text,length_text,width_text,height_text,design_code_text,customer_text,work_by_text,work_place_text,customer_code_text,temp_code_text;
     MaterialAutoCompleteTextView jewelleryMainTypeText,jewellerySubTypeText;
     Slider gold_slider,diamond_slider,length_slider,width_slider,height_slider;
     Button save;
@@ -53,34 +80,40 @@ public class FormFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_form, container, false);
 
         findIds(view);
-
+        checkInternet();
         currentDate();
         setMainDropDownList();
+        jewelleryImg1Button.setOnClickListener(v -> img1.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
+        jewelleryImg2Button.setOnClickListener(v -> img2.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
         date_layout.setStartIconOnClickListener(v ->setDate());
-
         date_text.setOnClickListener(v -> setDate());
-
         imgScrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> setIndicator(scrollX));
-        jewelleryMainTypeText.setOnItemClickListener((parent, view1, position, id) -> setSubDropDown(parent.getItemAtPosition(position).toString()));
-        gold_slider.addOnChangeListener((slider, value, fromUser) -> setGoldInputText(value));
-        diamond_slider.addOnChangeListener((slider, value, fromUser) -> setDiamondInputText(value));
-        length_slider.addOnChangeListener((slider, value, fromUser) -> setLengthInputText(value));
-        width_slider.addOnChangeListener((slider, value, fromUser) -> setWidthInputText(value));
-        height_slider.addOnChangeListener((slider, value, fromUser) -> setHeightInputText(value));
+        jewelleryMainTypeText.setOnItemClickListener((parent, view1, position, id) -> {
+            jewelleryMainTypeLayout.setErrorEnabled(false);
+            setSubDropDown(parent.getItemAtPosition(position).toString());
+        });
+        gold_slider.addOnChangeListener((slider, value, fromUser) -> gold_weight = setInputText(value,gold_text,gold_layout));
+        diamond_slider.addOnChangeListener((slider, value, fromUser) -> diamond_weight = setInputText(value,diamond_text,diamond_layout));
+        length_slider.addOnChangeListener((slider, value, fromUser) -> length = setInputText(value,length_text,length_layout));
+        width_slider.addOnChangeListener((slider, value, fromUser) -> width = setInputText(value,width_text,width_layout));
+        height_slider.addOnChangeListener((slider, value, fromUser) -> height = setInputText(value,height_text,height_layout));
+
         gold_text.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {gold_text.setSelection(Objects.requireNonNull(gold_text.getText()).length());}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { setGoldSlider(); }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                gold_weight = setSlider(gold_text,gold_layout,gold_slider);
+            }
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
         diamond_text.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {diamond_text.setSelection(Objects.requireNonNull(diamond_text.getText()).length());}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { setDiamondSlider(); }
+            public void onTextChanged(CharSequence s, int start, int before, int count) { diamond_weight = setSlider(diamond_text,diamond_layout,diamond_slider); }
 
             @Override
             public void afterTextChanged(Editable s) {}
@@ -88,9 +121,9 @@ public class FormFragment extends Fragment {
 
         length_text.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {length_text.setSelection(Objects.requireNonNull(length_text.getText()).length());}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { setLengthSlider();}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { length = setSlider(length_text,length_layout,length_slider);}
 
             @Override
             public void afterTextChanged(Editable s) {}
@@ -98,18 +131,18 @@ public class FormFragment extends Fragment {
 
         width_text.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {width_text.setSelection(Objects.requireNonNull(width_text.getText()).length());}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { setWidthSlider();}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { width = setSlider(width_text,width_layout,width_slider);}
             @Override
             public void afterTextChanged(Editable s) {}
         });
 
         height_text.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {height_text.setSelection(Objects.requireNonNull(height_text.getText()).length());}
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { setHeightSlider();}
+            public void onTextChanged(CharSequence s, int start, int before, int count) { height = setSlider(height_text,height_layout,height_slider);}
             @Override
             public void afterTextChanged(Editable s) {}
         });
@@ -117,10 +150,20 @@ public class FormFragment extends Fragment {
         save.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
-                    checkData();
+                    checkInternet();
+                    if(isInternet)
+                    {
+                        checkData();
+                        save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_onClick_color));
+                    }
                     break;
                 case MotionEvent.ACTION_UP:
-                    save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_color));
+                    if(isInternet)
+                    {
+                        save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_color));
+                    }else {
+                        save.setBackgroundColor(requireContext().getColor(R.color.form_not_enable_button_color));
+                    }
                     break;
             }
             return true;
@@ -129,7 +172,27 @@ public class FormFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
+    private void checkInternet() {
+        if(new CheckInternet(requireContext()).Check())
+        {
+            isInternet = true;
+            save.setClickable(true);
+            save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_color));
+            errorText.setVisibility(View.GONE);
+        }else {
+            isInternet = false;
+            save.setClickable(false);
+            save.setBackgroundColor(requireContext().getColor(R.color.form_not_enable_button_color));
+            errorText.setText("Check Internet Connectivity");
+            errorText.setVisibility(View.VISIBLE);
+            mainScrollView.scrollTo(0,0);
+        }
+    }
+
     private void findIds(View view) {
+        mainScrollView = view.findViewById(R.id.main_scroll_view);
+        errorText = view.findViewById(R.id.error_text);
         indicator1 = view.findViewById(R.id.form_img_indicator_1);
         indicator2 = view.findViewById(R.id.form_img_indicator_2);
         imgScrollView = view.findViewById(R.id.form_design_horizontal_scroll_bar);
@@ -155,8 +218,44 @@ public class FormFragment extends Fragment {
         height_text = view.findViewById(R.id.form_height_input_text);
         height_slider = view.findViewById(R.id.form_height_slider);
         save = view.findViewById(R.id.form_save_button);
+        design_code_layout = view.findViewById(R.id.design_code_layout);
+        design_code_text = view.findViewById(R.id.design_code_text);
+        jewelleryImg1Button = view.findViewById(R.id.form_design_img_pencil_1);
+        jewelleryImg2Button = view.findViewById(R.id.form_design_img_pencil_2);
+        jewelleryImg1 = view.findViewById(R.id.form_design_img_1);
+        jewelleryImg2 = view.findViewById(R.id.form_design_img_2);
+        customer_text = view.findViewById(R.id.form_customer_input_text);
+        work_by_text = view.findViewById(R.id.form_work_by_input_text);
+        work_place_text = view.findViewById(R.id.form_work_place_input_text);
+        designStatus = view.findViewById(R.id.form_status_switch);
+        customer_code_layout = view.findViewById(R.id.form_customer_code_layout);
+        customer_code_text = view.findViewById(R.id.form_customer_code_input_text);
+        temp_code_layout = view.findViewById(R.id.form_temp_code_layout);
+        temp_code_text = view.findViewById(R.id.form_temp_code_input_text);
     }
 
+    public ActivityResultLauncher<Intent> img1 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == Activity.RESULT_OK || result.getData() != null)
+            {
+                assert result.getData() != null;
+                img1Url = result.getData().getData();
+                jewelleryImg1.setImageURI(img1Url);
+            }
+        }
+    });
+    public ActivityResultLauncher<Intent> img2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        @Override
+        public void onActivityResult(ActivityResult result) {
+            if(result.getResultCode() == Activity.RESULT_OK || result.getData() != null)
+            {
+                assert result.getData() != null;
+                img2Url = result.getData().getData();
+                jewelleryImg2.setImageURI(img2Url);
+            }
+        }
+    });
 
     private void setIndicator(int scrollX)
     {
@@ -185,7 +284,7 @@ public class FormFragment extends Fragment {
         builder.setValidator(DateValidatorPointBackward.now());
 
         MaterialDatePicker.Builder<Long> dateBuilder = MaterialDatePicker.Builder.datePicker();
-        dateBuilder.setTheme(R.style.Theme_SHD_from_calender);
+        dateBuilder.setTheme(R.style.Theme_SHD_form_calender);
         dateBuilder.setCalendarConstraints(builder.build());
 
         long today = MaterialDatePicker.todayInUtcMilliseconds();
@@ -228,7 +327,7 @@ public class FormFragment extends Fragment {
             jewellerySubTypeLayout.setEnabled(true);
             jewellerySubTypeText.setEnabled(true);
             jewellerySubTypeText.setText("Sub Type");
-            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(),R.array.jewellery_necklace_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
+            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(),R.array.jewellery_nkc_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
             jewellerySubTypeText.setAdapter(subList);
         } else if (subType.equals(mainList.get(2))) {
             jewellerySubTypeLayout.setEnabled(true);
@@ -236,279 +335,234 @@ public class FormFragment extends Fragment {
             jewellerySubTypeText.setText("Sub Type");
             ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(),R.array.jewellery_er_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
             jewellerySubTypeText.setAdapter(subList);
-        }else {
+        } else if (subType.equals(mainList.get(3))) {
+            jewellerySubTypeLayout.setEnabled(true);
+            jewellerySubTypeText.setEnabled(true);
+            jewellerySubTypeText.setText("Sub Type");
+            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(),R.array.jewellery_br_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
+            jewellerySubTypeText.setAdapter(subList);
+        } else {
             jewellerySubTypeText.setText("No Sub Type");
             jewellerySubTypeLayout.setEnabled(false);
             jewellerySubTypeText.setEnabled(false);
         }
     }
 
-    @SuppressLint("DefaultLocale")
-    private void setGoldInputText(float value) {
-        if(!isChanging) {
-            isChanging = true;
-            gold_text.setText(String.format("%.2f", value));
-            gold_text.setSelection(Objects.requireNonNull(gold_text.getText()).length());
-            isChanging = false;
-        }
-    }
-
-    private void setGoldSlider() {
+    private float setInputText(float sliderValue , TextInputEditText editText ,TextInputLayout layout)
+    {
+        float formComponent;
         if(!isChanging)
         {
             isChanging = true;
-            String number = Objects.requireNonNull(gold_text.getText()).toString();
-            if(number.isEmpty())
-            {
-                gold_slider.setValue(0.00f);
+//            DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
+//            decimalFormat.setRoundingMode(java.math.RoundingMode.HALF_UP);
+            layout.setErrorEnabled(false);
+//            formComponent = Float.parseFloat(decimalFormat.format(sliderValue));
+            Log.d("values",""+sliderValue);
+            formComponent = (float) (Math.ceil(sliderValue * 100) / 100);
+            editText.setText(String.valueOf(formComponent));
+            Log.d("values",""+formComponent);
+//            Log.d("values",""+formComponent);
+            editText.setSelection(Objects.requireNonNull(editText.getText()).length());
+            isChanging = false;
+            return formComponent;
+//            return formComponent;
+        }
+        return 0.00f;
+    }
+
+    private float setSlider(TextInputEditText editText ,TextInputLayout layout,Slider slider)
+    {
+        if(!isChanging)
+        {
+            isChanging = true;
+            isError = false;
+            String number = Objects.requireNonNull(editText.getText()).toString();
+            if(number.isEmpty()) {
+                slider.setValue(0.00f);
+                isChanging = false;
+                return 0.00f;
             }
-            if(number.equals("."))
-            {
-                number="0.0";
-                gold_text.setText("0.");
-                gold_text.setSelection(gold_text.getText().length());
-            }
-            if(!number.isEmpty())
-            {
-                if (number.matches("^(\\d+\\.\\d{1,2}|\\d+|\\d+\\.)$"))
+            else if (number.equals(".")) {
+                number = "0.";
+                editText.setText(number);
+                editText.setSelection(editText.getText().length());
+                isChanging = false;
+                return 0.00f;
+            } else if (number.equals("0")) {
+                number = "";
+                editText.setText(number);
+                editText.setSelection(editText.getText().length());
+                isChanging = false;
+                return 0.00f;
+            } else {
+                if(number.matches("^(\\d+\\.\\d{1,2}|\\d+|\\d+\\.)$"))
                 {
                     float sliderValue = Float.parseFloat(number);
                     if(sliderValue >= 0.00 && sliderValue <= 100.00)
                     {
-                        gold_layout.setErrorEnabled(false);
-                        gold_slider.setValue(sliderValue);
-                        gold_text.setSelection(gold_text.getText().length());
+                        layout.setErrorEnabled(false);
+                        slider.setValue(sliderValue);
+                        editText.setSelection(editText.getText().length());
+                        isChanging = false;
+
+                        return (float) (Math.ceil(sliderValue * 100) / 100);
+//                        return sliderValue;
                     }
-                   else {
-                        gold_layout.setErrorEnabled(true);
-                        gold_layout.setError(" ");
+                    else {
+                        layout.setErrorEnabled(true);
+                        layout.setError(" ");
 //                            TODO : make custom Toast
+                        isError = true;
+                        errorLayout = layout;
                         Toast.makeText(requireContext(), "Only 0.00 to 100.00 number Allow", Toast.LENGTH_SHORT).show();
-                        gold_slider.setValue(0.00f);
+                        slider.setValue(0.00f);
+                        isChanging = false;
+                        return 0.00f;
                     }
                 }else {
-                    gold_layout.setErrorEnabled(true);
-                    gold_layout.setError(" ");
+                    layout.setErrorEnabled(true);
+                    layout.setError(" ");
+                    isError = true;
+                    errorLayout = layout;
                     Toast.makeText(requireContext(), "Only 2 Decimal Allow", Toast.LENGTH_SHORT).show();
-                    gold_slider.setValue(0.00f);
+                    slider.setValue(0.00f);
+                    isChanging = false;
+                    return 0.00f;
                 }
             }
-            isChanging = false;
         }
+        isChanging = false;
+        return 0.00f;
     }
 
-    @SuppressLint("DefaultLocale")
-    private void setDiamondInputText(float value) {
-        if(!isChanging) {
-            isChanging = true;
-            diamond_text.setText(String.format("%.2f", value));
-            diamond_text.setSelection(Objects.requireNonNull(diamond_text.getText()).length());
-            isChanging = false;
-        }
-    }
-
-    private void setDiamondSlider() {
-        if(!isChanging)
-        {
-            isChanging = true;
-            String number = Objects.requireNonNull(diamond_text.getText()).toString();
-            if(number.isEmpty())
-            {
-                diamond_slider.setValue(0.00f);
-            }
-            if(number.equals("."))
-            {
-                number="0.0";
-                diamond_text.setText("0.");
-                diamond_text.setSelection(diamond_text.getText().length());
-            }
-            if(!number.isEmpty())
-            {
-                if (number.matches("^(\\d+\\.\\d{1,2}|\\d+|\\d+\\.)$"))
-                {
-                    float sliderValue = Float.parseFloat(number);
-                    if(sliderValue >= 0.00 && sliderValue <= 100.00)
-                    {
-                        diamond_layout.setErrorEnabled(false);
-                        diamond_slider.setValue(sliderValue);
-                        diamond_text.setSelection(diamond_text.getText().length());
-                    }
-                    else {
-                        diamond_layout.setErrorEnabled(true);
-                        diamond_layout.setError(" ");
-                        Toast.makeText(requireContext(), "Only 0.00 to 100.00 number Allow", Toast.LENGTH_SHORT).show();
-                        diamond_slider.setValue(0.00f);
-                    }
-                }else {
-                    diamond_layout.setErrorEnabled(true);
-                    diamond_layout.setError(" ");
-                    Toast.makeText(requireContext(), "Only 2 Decimal Allow", Toast.LENGTH_SHORT).show();
-                    diamond_slider.setValue(0.00f);
-                }
-            }
-            isChanging = false;
-        }
-    }
-
-    @SuppressLint("DefaultLocale")
-    private void setLengthInputText(float value) {
-        if(!isChanging) {
-            isChanging = true;
-            length_text.setText(String.format("%.2f", value));
-            length_text.setSelection(Objects.requireNonNull(length_text.getText()).length());
-            isChanging = false;
-        }
-    }
-    private void setLengthSlider() {
-        if(!isChanging)
-        {
-            isChanging = true;
-            String number = Objects.requireNonNull(length_text.getText()).toString();
-            if(number.isEmpty())
-            {
-                length_slider.setValue(0.00f);
-            }
-            if(number.equals("."))
-            {
-                number="0.0";
-                length_text.setText("0.");
-                length_text.setSelection(length_text.getText().length());
-            }
-            if(!number.isEmpty())
-            {
-                if (number.matches("^(\\d+\\.\\d{1,2}|\\d+|\\d+\\.)$"))
-                {
-                    float sliderValue = Float.parseFloat(number);
-                    if(sliderValue >= 0.00 && sliderValue <= 100.00)
-                    {
-                        length_layout.setErrorEnabled(false);
-                        length_slider.setValue(sliderValue);
-                        length_text.setSelection(length_text.getText().length());
-                    }
-                    else {
-                        length_layout.setErrorEnabled(true);
-                        length_layout.setError(" ");
-                        Toast.makeText(requireContext(), "Only 0.00 to 100.00 number Allow", Toast.LENGTH_SHORT).show();
-                        length_slider.setValue(0.00f);
-                    }
-                }else {
-                    length_layout.setErrorEnabled(true);
-                    length_layout.setError(" ");
-                    Toast.makeText(requireContext(), "Only 2 Decimal Allow", Toast.LENGTH_SHORT).show();
-                    length_slider.setValue(0.00f);
-                }
-            }
-            isChanging = false;
-        }
-    }
-
-    @SuppressLint("DefaultLocale")
-    private void setWidthInputText(float value) {
-        if(!isChanging) {
-            isChanging = true;
-            width_text.setText(String.format("%.2f", value));
-            width_text.setSelection(Objects.requireNonNull(width_text.getText()).length());
-            isChanging = false;
-        }
-    }
-
-    private void setWidthSlider() {
-        if(!isChanging)
-        {
-            isChanging = true;
-            String number = Objects.requireNonNull(width_text.getText()).toString();
-            if(number.isEmpty())
-            {
-                width_slider.setValue(0.00f);
-            }
-            if(number.equals("."))
-            {
-                number="0.0";
-                width_text.setText("0.");
-                width_text.setSelection(width_text.getText().length());
-            }
-            if(!number.isEmpty())
-            {
-                if (number.matches("^(\\d+\\.\\d{1,2}|\\d+|\\d+\\.)$"))
-                {
-                    float sliderValue = Float.parseFloat(number);
-                    if(sliderValue >= 0.00 && sliderValue <= 100.00)
-                    {
-                        width_layout.setErrorEnabled(false);
-                        width_slider.setValue(sliderValue);
-                        width_text.setSelection(width_text.getText().length());
-                    }
-                    else {
-                        width_layout.setErrorEnabled(true);
-                        width_layout.setError(" ");
-                        Toast.makeText(requireContext(), "Only 0.00 to 100.00 number Allow", Toast.LENGTH_SHORT).show();
-                        width_slider.setValue(0.00f);
-                    }
-                }else {
-                    width_layout.setErrorEnabled(true);
-                    width_layout.setError(" ");
-                    Toast.makeText(requireContext(), "Only 2 Decimal Allow", Toast.LENGTH_SHORT).show();
-                    width_slider.setValue(0.00f);
-                }
-            }
-            isChanging = false;
-        }
-    }
-    @SuppressLint("DefaultLocale")
-    private void setHeightInputText(float value) {
-        if(!isChanging) {
-            isChanging = true;
-            height_text.setText(String.format("%.2f", value));
-            height_text.setSelection(Objects.requireNonNull(height_text.getText()).length());
-            isChanging = false;
-        }
-    }
-    private void setHeightSlider() {
-        if(!isChanging)
-        {
-            isChanging = true;
-            String number = Objects.requireNonNull(height_text.getText()).toString();
-            if(number.isEmpty())
-            {
-                height_slider.setValue(0.00f);
-            }
-            if(number.equals("."))
-            {
-                number="0.0";
-                height_text.setText("0.");
-                height_text.setSelection(height_text.getText().length());
-            }
-            if(!number.isEmpty())
-            {
-                if (number.matches("^(\\d+\\.\\d{1,2}|\\d+|\\d+\\.)$"))
-                {
-                    float sliderValue = Float.parseFloat(number);
-                    if(sliderValue >= 0.00 && sliderValue <= 100.00)
-                    {
-                        height_layout.setErrorEnabled(false);
-                        height_slider.setValue(sliderValue);
-                        height_text.setSelection(height_text.getText().length());
-                    }
-                    else {
-                        height_layout.setErrorEnabled(true);
-                        height_layout.setError(" ");
-                        Toast.makeText(requireContext(), "Only 0.00 to 100.00 number Allow", Toast.LENGTH_SHORT).show();
-                        height_slider.setValue(0.00f);
-                    }
-                }else {
-                    height_layout.setErrorEnabled(true);
-                    height_layout.setError(" ");
-                    Toast.makeText(requireContext(), "Only 2 Decimal Allow", Toast.LENGTH_SHORT).show();
-                    height_slider.setValue(0.00f);
-                }
-            }
-            isChanging = false;
-        }
-    }
 
 
     private void checkData() {
-        save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_onClick_color));
+        String designCode,mainType,subType,customer_code,temp_code;
+
+        designCode = Objects.requireNonNull(design_code_text.getText()).toString();
+        mainType = jewelleryMainTypeText.getText().toString();
+        subType = jewellerySubTypeText.getText().toString();
+        customer_code = Objects.requireNonNull(customer_code_text.getText()).toString();
+        temp_code = Objects.requireNonNull(temp_code_text.getText()).toString();
+        design_code_layout.setErrorEnabled(false);
+        customer_code_layout.setErrorEnabled(false);
+        temp_code_layout.setErrorEnabled(false);
+        jewelleryMainTypeLayout.setErrorEnabled(false);
+        jewellerySubTypeLayout.setErrorEnabled(false);
+
+        FormValidation fv = new FormValidation(designCode,customer_code,temp_code,mainType,subType);
+//        TODO : check design code Is exist or not
+        fv.validate(result -> {
+            switch (result){
+                case "Small Design Code" :
+                {
+                    design_code_layout.setErrorEnabled(true);
+                    design_code_layout.setError(" ");
+                    design_code_text.setError("Enter minimum 5 charter Design Code ");
+                    mainScrollView.scrollTo(0,design_code_layout.getTop());
+                    break;
+                }
+                case "Small Customer Code" :
+                {
+                    customer_code_layout.setErrorEnabled(true);
+                    customer_code_layout.setError(" ");
+                    customer_code_text.setError("Enter minimum 5 charter Customer Code");
+                    mainScrollView.scrollTo(0,customer_code_layout.getTop());
+                    break;
+                }
+                case "Empty Temp Code" :
+                {
+                    temp_code_layout.setErrorEnabled(true);
+                    temp_code_layout.setError(" ");
+                    temp_code_text.setError("Enter Temp Code Required");
+                    mainScrollView.scrollTo(0,temp_code_layout.getTop());
+                    break;
+                }
+                case "Small Temp Code" :
+                {
+                    temp_code_layout.setErrorEnabled(true);
+                    temp_code_layout.setError(" ");
+                    temp_code_text.setError("Enter minimum 5 charter Temp Code");
+                    mainScrollView.scrollTo(0,temp_code_layout.getTop());
+                    break;
+                }
+                case "Empty Main Type" :
+                {
+                    jewelleryMainTypeLayout.setErrorEnabled(true);
+                    jewelleryMainTypeLayout.setError(" ");
+                    mainScrollView.scrollTo(0,jewelleryMainTypeLayout.getTop());
+                    break;
+                }
+                case "Empty sub Type" :
+                {
+                    jewellerySubTypeLayout.setErrorEnabled(true);
+                    jewellerySubTypeLayout.setError(" ");
+                    mainScrollView.scrollTo(0,jewellerySubTypeLayout.getTop());
+                    break;
+                }
+                case "NO Error" :
+                {
+                    if(isError) mainScrollView.scrollTo(0,errorLayout.getTop());
+                    else storeData();
+                }
+            }
+        });
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    private void storeData() {
+        String customerName,designCode,customerCode,tempCode,workBy,workPlace,selectedDate,mainType,subType;
+        boolean status;
+
+        errorText.setVisibility(View.GONE);
+        designCode = Objects.requireNonNull(design_code_text.getText()).toString();
+        customerName = Objects.requireNonNull(customer_text.getText()).toString();
+        customerCode = Objects.requireNonNull(customer_code_text.getText()).toString();
+        tempCode = Objects.requireNonNull(temp_code_text.getText()).toString();
+        status = designStatus.isChecked();
+        workBy = Objects.requireNonNull(work_by_text.getText()).toString();
+        workPlace = Objects.requireNonNull(work_place_text.getText()).toString();
+        selectedDate = Objects.requireNonNull(date_text.getText()).toString();
+        mainType = jewelleryMainTypeText.getText().toString();
+        subType = jewellerySubTypeText.getText().toString();
+
+        if(workBy.isEmpty())
+        {
+            workBy = "SHD";
+        }
+        if(workPlace.isEmpty())
+        {
+            workPlace = "SHD office";
+        }
+
+        Log.d("values","img 1 :"+img1Url+"\nimg 2 :"+img2Url+"\nCustomer Name :"+customerName+"\ncustomer code :"+customerCode+
+                "\ndesign code :"+designCode+"\ntemp code :"+tempCode+"\nstatus :"+status+"\nwork by :"+workBy+"\nwork place :"+workPlace+
+                "\ndate :"+selectedDate+"\nmain type :"+mainType+"\nsub type :"+subType+"\ngold :"+gold_weight+"\ndiamond :"+diamond_weight+
+                "\nlength :"+length+"\nwidth :"+width+"\nheight :"+height);
+
+        JewelleryDetailsStore jds = new JewelleryDetailsStore(img1Url,img2Url,customerName,designCode,customerCode,tempCode,workBy,workPlace,selectedDate,mainType,subType,status,length,width,height,gold_weight,diamond_weight);
+        jds.StoreJewelleryImg(result -> {
+            switch (result)
+            {
+                case "Img Not Store" :
+                {
+                    errorText.setVisibility(View.VISIBLE);
+                    errorText.setText("Img Not Stored");
+                    mainScrollView.scrollTo(0,0);
+                    break;
+                }
+                case "Design Not Store" :
+                {
+                    errorText.setVisibility(View.VISIBLE);
+                    errorText.setText("Design Not Stored");
+                    mainScrollView.scrollTo(0,0);
+                    break;
+                }
+            }
+        });
     }
 
 }

@@ -46,7 +46,7 @@
         <item name="cornerSize">50%</item>
     </style>
     
-    <style name="Theme.SHD.from.AllText.view" parent="Widget.AppCompat.TextView">
+    <style name="Theme.SHD.form.AllText.view" parent="Widget.AppCompat.TextView">
         <item name="android:textSize">20sp</item>
         <item name="fontFamily">@font/poppins_regular</item>
         <item name="android:textColor">@color/add_jewellery_form_text_color</item>
@@ -57,18 +57,18 @@
         <item name="dropDownListViewStyle">@color/Edit_Text_drop_down_list_style_color</item>
     </style>
 
-    <style name="Theme.SHD.from.calender" parent="ThemeOverlay.Material3.MaterialCalendar">
+    <style name="Theme.SHD.form.calender" parent="ThemeOverlay.Material3.MaterialCalendar">
         <item name="colorPrimary">@color/calender_text_color</item>
         <item name="colorOnPrimary">@color/calender_selected_date</item>
-        <item name="materialCalendarHeaderTitle">@style/Theme.SHD.from.calender.header.title</item>
-        <item name="materialCalendarHeaderSelection" >@style/Theme.SHD.from.calender.header.selection</item>
-        <item name="materialCalendarHeaderToggleButton">@style/Theme.SHD.from.calender.switch.keyboard</item>
-        <item name="materialCalendarYearNavigationButton">@style/Theme.SHD.from.calender.year.selection</item>
-        <item name="materialCalendarMonthNavigationButton">@style/Theme.SHD.from.calender.month.selection</item>
-        <item name="materialCalendarHeaderLayout">@style/Theme.SHD.from.calender.header.layout</item>
+        <item name="materialCalendarHeaderTitle">@style/Theme.SHD.form.calender.header.title</item>
+        <item name="materialCalendarHeaderSelection" >@style/Theme.SHD.form.calender.header.selection</item>
+        <item name="materialCalendarHeaderToggleButton">@style/Theme.SHD.form.calender.switch.keyboard</item>
+        <item name="materialCalendarYearNavigationButton">@style/Theme.SHD.form.calender.year.selection</item>
+        <item name="materialCalendarMonthNavigationButton">@style/Theme.SHD.form.calender.month.selection</item>
+        <item name="materialCalendarHeaderLayout">@style/Theme.SHD.form.calender.header.layout</item>
     </style>
     
-    <style name="Theme.SHD.from.slider" parent="@style/Widget.Material3.Slider.Label">
+    <style name="Theme.SHD.form.slider" parent="@style/Widget.Material3.Slider.Label">
         <item name="backgroundTint">@color/slider_label_background_color</item>
         <item name="android:textColor">@color/slider_label_text_color</item>
     </style>

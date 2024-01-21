@@ -4,24 +4,44 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ui.fragments.subFragments.addJewellery.FormFragment"
-    >
+    tools:context=".ui.fragments.subFragments.addJewellery.FormFragment">
 
     <ScrollView
+        android:id="@+id/main_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="@dimen/img_scroll_margin_Horizontal"
         android:scrollbars="none">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <TextView
+                android:id="@+id/error_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:textColor="@color/Edit_Text_error_text_color"
+                app:layout_constraintTop_toTopOf="@id/main_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/form_design_horizontal_scroll_bar"
+                android:fontFamily="@font/poppins_medium"
+                android:textSize="20sp"
+                android:visibility="gone"
+                />
 
             <HorizontalScrollView
                 android:id="@+id/form_design_horizontal_scroll_bar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/error_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="10dp"
@@ -34,14 +54,15 @@
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/form_design_img_1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="300dp"
+                        android:layout_height="200dp"
                         android:layout_marginEnd="20dp"
                         android:src="@drawable/default_img"
                         app:layout_constraintEnd_toStartOf="@id/form_design_img_2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="ImageContrastCheck" />
+                        tools:ignore="ImageContrastCheck"
+                        android:scaleType="fitXY"/>
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/form_design_img_pencil_1"
@@ -61,14 +82,15 @@
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/form_design_img_2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="300dp"
+                        android:layout_height="200dp"
                         android:layout_marginEnd="20dp"
                         android:src="@drawable/default_img"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/form_design_img_1"
                         app:layout_constraintTop_toTopOf="parent"
-                        tools:ignore="ImageContrastCheck" />
+                        tools:ignore="ImageContrastCheck"
+                        android:scaleType="fitXY"/>
 
                     <com.google.android.material.floatingactionbutton.FloatingActionButton
                         android:id="@+id/form_design_img_pencil_2"
@@ -120,7 +142,7 @@
                 android:id="@+id/design_code"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/design_code"
                 app:layout_constraintTop_toBottomOf="@id/form_img_indicator_layout"
                 app:layout_constraintStart_toStartOf="parent"
@@ -140,13 +162,14 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 app:boxStrokeWidth="3dp"
-                app:layout_constraintTop_toBottomOf="@id/design_code"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:errorIconTint="@color/Edit_Text_end_error_icon_color"
                 app:errorTextColor="@color/Edit_Text_error_text_color"
                 app:cursorColor="@color/Edit_Text_cursor_color"
                 app:hintEnabled="false"
-                app:cursorErrorColor="@color/Edit_Text_cursor_error_color">
+                app:cursorErrorColor="@color/Edit_Text_cursor_error_color"
+                app:layout_constraintTop_toBottomOf="@id/design_code"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/design_code_text"
@@ -166,7 +189,7 @@
                 android:id="@+id/form_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/status"
                 app:layout_constraintTop_toBottomOf="@id/design_code_layout"
                 app:layout_constraintStart_toStartOf="parent"
@@ -188,13 +211,13 @@
                 android:id="@+id/form_customer_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/customer_name"
                 app:layout_constraintTop_toBottomOf="@id/form_status"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="5dp"
                 />
-
+<!--TODO : add drop Down on list of over customer-->
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/form_customer_text_layout"
                 android:layout_width="match_parent"
@@ -208,6 +231,7 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 app:boxStrokeWidth="3dp"
+                app:errorIconTint="@color/Edit_Text_end_error_icon_color"
                 app:layout_constraintTop_toBottomOf="@id/form_customer_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -228,15 +252,110 @@
                     android:textSize="16sp"
                     tools:ignore="VisualLintTextFieldSize" />
 
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/form_customer_code_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Theme.SHD.form.AllText.view"
+                android:text="@string/customer_code"
+                app:layout_constraintTop_toBottomOf="@id/form_customer_text_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="5dp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/form_customer_code_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColorHint="@color/Edit_Text_hint_text_color"
+                app:boxStrokeColor="@color/Edit_Text_box_stroke_color"
+                app:boxStrokeErrorColor="@color/Edit_Text_box_stroke_error_color"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeWidth="3dp"
+                app:errorIconTint="@color/Edit_Text_end_error_icon_color"
+                app:errorTextColor="@color/Edit_Text_error_text_color"
+                app:cursorColor="@color/Edit_Text_cursor_color"
+                app:hintEnabled="false"
+                app:cursorErrorColor="@color/Edit_Text_cursor_error_color"
+                app:layout_constraintTop_toBottomOf="@id/form_customer_code_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/form_customer_code_input_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:hint="@string/enter_customer_code"
+                    android:textColorHint="@color/Edit_Text_hint_text_color"
+                    android:inputType="text"
+                    android:textColor="@color/Edit_Text_input_text_color"
+                    android:textSize="16sp"
+                    tools:ignore="VisualLintTextFieldSize" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/form_temp_code_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/Theme.SHD.form.AllText.view"
+                android:text="@string/temp_code"
+                app:layout_constraintTop_toBottomOf="@id/form_customer_code_layout"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginTop="5dp"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/form_temp_code_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:textColorHint="@color/Edit_Text_hint_text_color"
+                app:boxStrokeColor="@color/Edit_Text_box_stroke_color"
+                app:boxStrokeErrorColor="@color/Edit_Text_box_stroke_error_color"
+                app:boxCornerRadiusBottomEnd="10dp"
+                app:boxCornerRadiusBottomStart="10dp"
+                app:boxCornerRadiusTopEnd="10dp"
+                app:boxCornerRadiusTopStart="10dp"
+                app:boxStrokeWidth="3dp"
+                app:errorIconTint="@color/Edit_Text_end_error_icon_color"
+                app:errorTextColor="@color/Edit_Text_error_text_color"
+                app:cursorColor="@color/Edit_Text_cursor_color"
+                app:hintEnabled="false"
+                app:cursorErrorColor="@color/Edit_Text_cursor_error_color"
+                app:layout_constraintTop_toBottomOf="@id/form_temp_code_text"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/form_temp_code_input_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_medium"
+                    android:hint="@string/enter_temp_code"
+                    android:textColorHint="@color/Edit_Text_hint_text_color"
+                    android:inputType="text"
+                    android:textColor="@color/Edit_Text_input_text_color"
+                    android:textSize="16sp"
+                    tools:ignore="VisualLintTextFieldSize" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
                 android:id="@+id/form_work_by_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/work_by"
-                app:layout_constraintTop_toBottomOf="@id/form_customer_text_layout"
+                app:layout_constraintTop_toBottomOf="@id/form_temp_code_layout"
                 app:layout_constraintStart_toStartOf="parent"
                 android:layout_marginTop="5dp"
                 />
@@ -254,6 +373,7 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 app:boxStrokeWidth="3dp"
+                app:errorIconTint="@color/Edit_Text_end_error_icon_color"
                 app:layout_constraintTop_toBottomOf="@id/form_work_by_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -280,7 +400,7 @@
                 android:id="@+id/form_work_place_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/work_by"
                 app:layout_constraintTop_toBottomOf="@id/form_work_by_layout"
                 app:layout_constraintStart_toStartOf="parent"
@@ -300,6 +420,7 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 app:boxStrokeWidth="3dp"
+                app:errorIconTint="@color/Edit_Text_end_error_icon_color"
                 app:layout_constraintTop_toBottomOf="@id/form_work_place_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -326,7 +447,7 @@
                 android:id="@+id/form_date_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/date"
                 app:layout_constraintTop_toBottomOf="@id/form_work_place_layout"
                 app:layout_constraintStart_toStartOf="parent"
@@ -343,6 +464,7 @@
                 app:boxCornerRadiusTopEnd="10dp"
                 app:boxCornerRadiusTopStart="10dp"
                 app:boxStrokeWidth="3dp"
+                app:errorIconTint="@color/Edit_Text_end_error_icon_color"
                 app:layout_constraintTop_toBottomOf="@id/form_date_text"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -368,7 +490,7 @@
                 android:id="@+id/form_jewellery_types_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/jewellery_types"
                 app:layout_constraintTop_toBottomOf="@id/form_date_layout"
                 app:layout_constraintStart_toStartOf="parent"
@@ -448,7 +570,7 @@
                 android:id="@+id/form_Weight_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/weight"
                 android:textSize="30sp"
                 app:layout_constraintTop_toBottomOf="@id/form_jewellery_main_type_layout"
@@ -460,7 +582,7 @@
                 android:id="@+id/form_gold_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/gold_gm"
                 app:layout_constraintTop_toBottomOf="@id/form_Weight_text"
                 app:layout_constraintStart_toStartOf="parent"
@@ -482,6 +604,7 @@
                 app:layout_constraintTop_toBottomOf="@id/form_Weight_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:errorIconTint="@color/Edit_Text_end_error_icon_color"
+                app:endIconTint="@color/Edit_Text_end_icon_color"
                 app:errorTextColor="@color/Edit_Text_error_text_color"
                 app:cursorColor="@color/Edit_Text_cursor_color"
                 app:hintEnabled="false"
@@ -489,7 +612,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/form_gold_input_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="@string/form_starting_number"
@@ -514,7 +637,7 @@
                 app:trackHeight="25dp"
                 android:contentDescription="@string/slide"
                 app:haloColor="@color/slider_holo_color"
-                app:labelStyle="@style/Theme.SHD.from.slider"
+                app:labelStyle="@style/Theme.SHD.form.slider"
                 app:thumbColor="@color/slider_thumb_color"
                 />
 
@@ -522,7 +645,7 @@
                 android:id="@+id/form_diamond_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/diamond_text"
                 app:layout_constraintTop_toBottomOf="@id/form_gold_slider"
                 app:layout_constraintStart_toStartOf="parent"
@@ -551,7 +674,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/form_diamond_input_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="@string/form_starting_number"
@@ -576,7 +699,7 @@
                 app:trackHeight="25dp"
                 android:contentDescription="@string/slide"
                 app:haloColor="@color/slider_holo_color"
-                app:labelStyle="@style/Theme.SHD.from.slider"
+                app:labelStyle="@style/Theme.SHD.form.slider"
                 app:thumbColor="@color/slider_thumb_color"
                 />
 
@@ -584,7 +707,7 @@
                 android:id="@+id/form_size_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/size"
                 android:textSize="30sp"
                 app:layout_constraintTop_toBottomOf="@id/form_diamond_slider"
@@ -596,7 +719,7 @@
                 android:id="@+id/form_length_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/length"
                 app:layout_constraintTop_toBottomOf="@id/form_size_text"
                 app:layout_constraintStart_toStartOf="parent"
@@ -625,7 +748,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/form_length_input_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="@string/form_starting_number"
@@ -651,7 +774,7 @@
                 app:trackHeight="25dp"
                 android:contentDescription="@string/slide"
                 app:haloColor="@color/slider_holo_color"
-                app:labelStyle="@style/Theme.SHD.from.slider"
+                app:labelStyle="@style/Theme.SHD.form.slider"
                 app:thumbColor="@color/slider_thumb_color"
                 />
 
@@ -659,7 +782,7 @@
                 android:id="@+id/form_width_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/width"
                 app:layout_constraintTop_toBottomOf="@id/form_length_slider"
                 app:layout_constraintStart_toStartOf="parent"
@@ -688,7 +811,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/form_width_input_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="@string/form_starting_number"
@@ -713,7 +836,7 @@
                 app:trackHeight="25dp"
                 android:contentDescription="@string/slide"
                 app:haloColor="@color/slider_holo_color"
-                app:labelStyle="@style/Theme.SHD.from.slider"
+                app:labelStyle="@style/Theme.SHD.form.slider"
                 app:thumbColor="@color/slider_thumb_color"
                 />
 
@@ -721,7 +844,7 @@
                 android:id="@+id/form_height_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/Theme.SHD.from.AllText.view"
+                style="@style/Theme.SHD.form.AllText.view"
                 android:text="@string/height"
                 app:layout_constraintTop_toBottomOf="@id/form_width_slider"
                 app:layout_constraintStart_toStartOf="parent"
@@ -750,7 +873,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/form_height_input_text"
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_medium"
                     android:text="@string/form_starting_number"
@@ -775,7 +898,7 @@
                 app:trackHeight="25dp"
                 android:contentDescription="@string/slide"
                 app:haloColor="@color/slider_holo_color"
-                app:labelStyle="@style/Theme.SHD.from.slider"
+                app:labelStyle="@style/Theme.SHD.form.slider"
                 app:thumbColor="@color/slider_thumb_color"
                 />
 

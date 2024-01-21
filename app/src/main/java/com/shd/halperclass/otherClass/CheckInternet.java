@@ -1,4 +1,4 @@
-package com.shd.halperclass.validationclass;
+package com.shd.halperclass.otherClass;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

@@ -14,7 +14,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.shd.R;
 import com.shd.db_firebase.AdminInfo;
-import com.shd.halperclass.validationclass.CheckInternet;
+import com.shd.halperclass.otherClass.CheckInternet;
 
 import java.util.Objects;
 

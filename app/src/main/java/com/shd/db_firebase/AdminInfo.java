@@ -1,5 +1,6 @@
 package com.shd.db_firebase;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.Toast;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -11,6 +12,7 @@ import java.util.Map;
 public class AdminInfo {
 
     Context context;
+    @SuppressLint("StaticFieldLeak")
     private static AdminInfo instance;
 
     public void setContext(Context context)
