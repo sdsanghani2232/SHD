@@ -1,17 +1,9 @@
 package com.shd.repository.readdata;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.shd.model.TempCode;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +17,7 @@ public class TempCodeList {
         }
         return instance;
     }
+    private boolean documentExits = false;
     MutableLiveData<List<TempCode>> codeList = new MutableLiveData<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -33,12 +26,17 @@ public class TempCodeList {
     public LiveData<List<TempCode>> getTempCode()
     {
         db.collection("jewelleryCodes").document("tempCodes").addSnapshotListener((value, error) -> {
-            if(error == null && value != null)
+            if(error == null && value != null && value.exists())
             {
+                documentExits = true;
                 tempCodeList = new ArrayList<>();
                 TempCode tc = value.toObject(TempCode.class);
                 tempCodeList.add(tc);
                 codeList.postValue(tempCodeList);
+            }
+            else
+            {
+                documentExits = false;
             }
         });
         return codeList;
@@ -46,15 +44,6 @@ public class TempCodeList {
 
     public boolean documentExits()
     {
-        final boolean[] doxExits = {false};
-        db.collection("jewelleryCodes").document("tempCodes").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.getResult().exists()) {
-                    doxExits[0] = true;
-                }
-            }
-        });
-        return doxExits[0];
+        return documentExits;
     }
 }

@@ -2,17 +2,19 @@ package com.shd.halperclass.validationclass;
 
 public class FormValidation {
 
-    String designCode,mainType,subtype,customerCode,tempCode;
+    String designCode,mainType,subtype,customerCode,tempCode,workBy,workPlace;
     public interface Result{
         void onResult(String result);
     }
 
-    public FormValidation(String designCode, String customerCode, String tempCode, String mainType, String subtype) {
+    public FormValidation(String designCode, String customerCode, String tempCode, String mainType, String subtype,String workBy,String workPlace) {
         this.designCode = designCode;
         this.mainType = mainType;
         this.subtype = subtype;
         this.customerCode = customerCode;
         this.tempCode = tempCode;
+        this.workBy = workBy;
+        this.workPlace =workPlace;
     }
 
     public void validate(Result result)
@@ -43,6 +45,9 @@ public class FormValidation {
             result.onResult("Empty sub Type");
             isError = true;
         }
+
+        if (workBy.isEmpty()) result.onResult("work by empty");
+        if (workPlace.isEmpty()) result.onResult("work place empty");
 
         if(!isError)
         {

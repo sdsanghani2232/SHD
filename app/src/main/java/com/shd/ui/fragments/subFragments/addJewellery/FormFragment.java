@@ -50,8 +50,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class FormFragment extends Fragment {
-    private boolean isChanging = false,isInternet = true,isError = false;
-    private String gold_weight,diamond_weight,length,width,height;
+    private boolean isChanging = false,isInternet = true,isError = false,status = false;
+    private String gold_weight = "0.0",diamond_weight="0.0",length="0.0",width="0.0",height="0.0",designCode,mainType,subType,customerCode,tempCode,customerName,workBy,workPlace,selectedDate;
     private final Codes codes = Codes.getInstance();
     private final TempCodeList tempCodeList = TempCodeList.getInstance();
     private final DesignCodeList designCodeList = DesignCodeList.getInstance();
@@ -359,10 +359,8 @@ public class FormFragment extends Fragment {
         {
             isChanging = true;
             layout.setErrorEnabled(false);
-            Log.d("values",""+sliderValue);
             formComponent = (float) (Math.ceil(sliderValue * 100) / 100);
             editText.setText(String.valueOf(formComponent));
-            Log.d("values",""+formComponent);
             editText.setSelection(Objects.requireNonNull(editText.getText()).length());
             isChanging = false;
             return String.valueOf(formComponent);
@@ -406,7 +404,6 @@ public class FormFragment extends Fragment {
                         isChanging = false;
 
                         return String.valueOf(Math.ceil(sliderValue * 100) / 100);
-//                        return sliderValue;
                     }
                     else {
                         layout.setErrorEnabled(true);
@@ -438,20 +435,25 @@ public class FormFragment extends Fragment {
 
 
     private void checkData() {
-        String designCode,mainType,subType,customer_code,temp_code;
 
         designCode = Objects.requireNonNull(design_code_text.getText()).toString();
         mainType = jewelleryMainTypeText.getText().toString();
         subType = jewellerySubTypeText.getText().toString();
-        customer_code = Objects.requireNonNull(customer_code_text.getText()).toString();
-        temp_code = Objects.requireNonNull(temp_code_text.getText()).toString();
+        customerCode = Objects.requireNonNull(customer_code_text.getText()).toString();
+        tempCode = Objects.requireNonNull(temp_code_text.getText()).toString();
+        workBy = Objects.requireNonNull(work_by_text.getText()).toString();
+        workPlace = Objects.requireNonNull(work_place_text.getText()).toString();
+        customerName = Objects.requireNonNull(customer_text.getText()).toString();
+        selectedDate = Objects.requireNonNull(date_text.getText()).toString();
+        status = designStatus.isChecked();
+
         design_code_layout.setErrorEnabled(false);
         customer_code_layout.setErrorEnabled(false);
         temp_code_layout.setErrorEnabled(false);
         jewelleryMainTypeLayout.setErrorEnabled(false);
         jewellerySubTypeLayout.setErrorEnabled(false);
 
-        FormValidation fv = new FormValidation(designCode,customer_code,temp_code,mainType,subType);
+        FormValidation fv = new FormValidation(designCode,customerCode,tempCode,mainType,subType,workBy,workPlace);
         fv.validate(result -> {
             switch (result){
                 case "Small Design Code" :
@@ -500,27 +502,41 @@ public class FormFragment extends Fragment {
                     mainScrollView.scrollTo(0,jewellerySubTypeLayout.getTop());
                     break;
                 }
+                case "work by empty" :
+                {
+                    workBy = "SHD";
+                    break;
+                }
+                case "work place empty" :
+                {
+                    workPlace = "SHD office";
+                    break;
+                }
                 case "NO Error" :
                 {
-//                    if (!designCode.isEmpty() && designCodeList.documentExits()) {
-//                        if(codes.isDesignCodeExists(designCode))
-//                        {
-//                            design_code_layout.setErrorEnabled(true);
-//                            design_code_layout.setError(" ");
-//                            design_code_text.setError("Design Code already exits");
-//                            mainScrollView.scrollTo(0, design_code_layout.getTop());
-//                        }
-//                    } else if (!temp_code.isEmpty() && tempCodeList.documentExits()) {
-//                        if(codes.isTempCodeExits(temp_code))
-//                        {
-//                            temp_code_layout.setErrorEnabled(true);
-//                            temp_code_layout.setError(" ");
-//                            temp_code_text.setError("Temp Code already exits");
-//                            mainScrollView.scrollTo(0,temp_code_layout.getTop());
-//                        }
-//                    } else
-                        if(isError) mainScrollView.scrollTo(0,errorLayout.getTop());
-                    else storeData();
+                    if (!designCode.isEmpty() && designCodeList.documentExits()) {
+                        if(codes.isDesignCodeExists(designCode))
+                        {
+                            design_code_layout.setErrorEnabled(true);
+                            design_code_layout.setError(" ");
+                            design_code_text.setError("Design Code already exits");
+                            mainScrollView.scrollTo(0, design_code_layout.getTop());
+                        }
+                    }
+                    if (!tempCode.isEmpty() && tempCodeList.documentExits()) {
+                        if(codes.isTempCodeExits(tempCode))
+                        {
+                            temp_code_layout.setErrorEnabled(true);
+                            temp_code_layout.setError(" ");
+                            temp_code_text.setError("Temp Code already exits");
+                            mainScrollView.scrollTo(0,temp_code_layout.getTop());
+                        }
+                    }
+                    if(isError) mainScrollView.scrollTo(0,errorLayout.getTop());
+                    else {
+                        errorText.setVisibility(View.GONE);
+                        storeData();
+                    }
                 }
             }
         });
@@ -529,30 +545,6 @@ public class FormFragment extends Fragment {
 
     @SuppressLint("SetTextI18n")
     private void storeData() {
-        String customerName,designCode,customerCode,tempCode,workBy,workPlace,selectedDate,mainType,subType;
-        boolean status;
-
-        errorText.setVisibility(View.GONE);
-        designCode = Objects.requireNonNull(design_code_text.getText()).toString();
-        customerName = Objects.requireNonNull(customer_text.getText()).toString();
-        customerCode = Objects.requireNonNull(customer_code_text.getText()).toString();
-        tempCode = Objects.requireNonNull(temp_code_text.getText()).toString();
-        status = designStatus.isChecked();
-        workBy = Objects.requireNonNull(work_by_text.getText()).toString();
-        workPlace = Objects.requireNonNull(work_place_text.getText()).toString();
-        selectedDate = Objects.requireNonNull(date_text.getText()).toString();
-        mainType = jewelleryMainTypeText.getText().toString();
-        subType = jewellerySubTypeText.getText().toString();
-
-        if(workBy.isEmpty())
-        {
-            workBy = "SHD";
-        }
-        if(workPlace.isEmpty())
-        {
-            workPlace = "SHD office";
-        }
-
         Log.d("values","img 1 :"+img1Url+"\nimg 2 :"+img2Url+"\nCustomer Name :"+customerName+"\ncustomer code :"+customerCode+
                 "\ndesign code :"+designCode+"\ntemp code :"+tempCode+"\nstatus :"+status+"\nwork by :"+workBy+"\nwork place :"+workPlace+
                 "\ndate :"+selectedDate+"\nmain type :"+mainType+"\nsub type :"+subType+"\ngold :"+gold_weight+"\ndiamond :"+diamond_weight+

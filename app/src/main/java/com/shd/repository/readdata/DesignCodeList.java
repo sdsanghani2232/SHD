@@ -1,14 +1,8 @@
 package com.shd.repository.readdata;
 
 import android.util.Log;
-
-import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.shd.model.DesignCode;
 import java.util.ArrayList;
@@ -24,6 +18,7 @@ public class DesignCodeList {
         }
         return instance;
     }
+    private boolean documentExits = false;
     MutableLiveData<List<DesignCode>> codeList = new MutableLiveData<>();
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -32,12 +27,17 @@ public class DesignCodeList {
     public LiveData<List<DesignCode>> getDesignCode()
     {
         db.collection("jewelleryCodes").document("designCodes").addSnapshotListener((value, error) -> {
-            if(error == null && value != null)
+            if(error == null && value != null && value.exists())
             {
+                documentExits = true;
                 designCodeList = new ArrayList<>();
                 DesignCode dc = value.toObject(DesignCode.class);
                 designCodeList.add(dc);
                 codeList.postValue(designCodeList);
+            }
+            else
+            {
+                documentExits = false;
             }
         });
         return codeList;
@@ -45,15 +45,7 @@ public class DesignCodeList {
 
     public boolean documentExits()
     {
-        final boolean[] doxExits = {false};
-        db.collection("jewelleryCodes").document("designCodes").get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                if (task.getResult().exists()) {
-                    doxExits[0] = true;
-                }
-            }
-        });
-        return doxExits[0];
+        Log.d("value of document ","in method"+documentExits);
+        return documentExits;
     }
 }
