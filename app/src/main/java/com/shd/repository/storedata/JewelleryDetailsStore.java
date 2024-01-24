@@ -1,8 +1,13 @@
-package com.shd.db_firebase;
+package com.shd.repository.storedata;
 
 import android.net.Uri;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
@@ -18,9 +23,8 @@ public class JewelleryDetailsStore {
 
     Uri img1,img2;
     String customerName,designCode,customerCode,tempCode,work_by,work_place,selectedDate,mainType,subType;
-    String img1DownloadUrl,img2DownloadUrl;
+    String img1DownloadUrl,img2DownloadUrl,length,width,height,gold,diamond;
     boolean status;
-    float length,width,height,gold,diamond;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -32,7 +36,8 @@ public class JewelleryDetailsStore {
     public interface Result{
         void onResult(String result);
     }
-    public JewelleryDetailsStore(Uri img1, Uri img2, String customerName, String designCode, String customerCode, String tempCode, String work_by, String work_place, String selectedDate, String mainType, String subType,boolean status, float length, float width, float height, float gold, float diamond) {
+
+    public JewelleryDetailsStore(Uri img1, Uri img2, String customerName, String designCode, boolean status, String customerCode, String tempCode, String work_by, String work_place, String selectedDate, String mainType, String subType, String length, String width, String height, String gold, String diamond) {
         this.img1 = img1;
         this.img2 = img2;
         this.customerName = customerName;
@@ -44,12 +49,12 @@ public class JewelleryDetailsStore {
         this.selectedDate = selectedDate;
         this.mainType = mainType;
         this.subType = subType;
-        this.status = status;
         this.length = length;
         this.width = width;
         this.height = height;
         this.gold = gold;
         this.diamond = diamond;
+        this.status = status;
     }
 
     public void StoreJewelleryImg(Result result)
@@ -94,27 +99,44 @@ public class JewelleryDetailsStore {
                 if(task.isSuccessful())
                 {
                     if(!designCode.isEmpty()) storeDesignCode();
+                    if(!tempCode.isEmpty()) storeTempCode();
                 }
             }).addOnFailureListener(e -> result.onResult("Design Not Store"));
     }
 
     private void storeDesignCode() {
-        Log.d("values","design store");
-
-        db.collection("jewelleryDesignCode").get().addOnCompleteListener(task -> {
-            if(task.getResult().isEmpty()) // create collection and list
+        db.collection("jewelleryCodes").document("designCodes").get().addOnCompleteListener(task -> {
+            if(!task.getResult().exists()) // create document and list
             {
                 List<String> design = new ArrayList<>();
                 design.add(designCode);
                 Map<String,Object> map = new HashMap<>();
-                map.put("Codes",designCode);
-                db.collection("jewelleryDesignCode").document("DesignCodes").set(map);
-            }else // update collection and update collection
+                map.put("codes",design);
+                db.collection("jewelleryCodes").document("designCodes").set(map);
+            }else // update list
             {
-                db.collection("jewelleryDesignCode").document("DesignCodes")
-                        .update("Codes", FieldValue.arrayUnion(designCode));
+                db.collection("jewelleryCodes").document("designCodes")
+                        .update("codes", FieldValue.arrayUnion(designCode));
             }
         });
-        Log.d("values","design code store");
     }
+    private void storeTempCode() {
+        db.collection("jewelleryCodes").document("tempCodes").get().addOnCompleteListener(task -> {
+            if(!task.getResult().exists()) // create document and list
+            {
+                List<String> design = new ArrayList<>();
+                design.add(tempCode);
+                Map<String,Object> map = new HashMap<>();
+                map.put("codes",design);
+                db.collection("jewelleryCodes").document("tempCodes").set(map);
+            }else // update list
+            {
+                db.collection("jewelleryCodes").document("tempCodes")
+                        .update("codes", FieldValue.arrayUnion(tempCode));
+            }
+        });
+    }
+
+
+
 }

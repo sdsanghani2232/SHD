@@ -7,11 +7,10 @@ import java.util.Map;
 import java.util.Objects;
 
 public class JewelleryDesign {
-    String img1,img2,customerName,designCode,customerCode,tempCode,work_by,work_place,selectedDate,mainType,subType;
+    String img1,img2,customerName,designCode,customerCode,tempCode,work_by,work_place,selectedDate,mainType,subType,length,width,height,gold,diamond;
     boolean status;
-    float length,width,height,gold,diamond;
 
-    public JewelleryDesign(String img1, String img2, String customerName, String designCode, String customerCode, String tempCode, String work_by, String work_place, String selectedDate, String mainType, String subType, boolean status, float length, float width, float height, float gold, float diamond) {
+    public JewelleryDesign(String img1, String img2, String customerName, String designCode, String customerCode, String tempCode, String work_by, String work_place, String selectedDate, String mainType, String subType, boolean status, String length, String width,String height, String gold, String diamond) {
         this.img1 = img1;
         this.img2 = img2;
         this.customerName = customerName;
@@ -127,43 +126,43 @@ public class JewelleryDesign {
         this.status = status;
     }
 
-    public float getLength() {
+    public String getLength() {
         return length;
     }
 
-    public void setLength(float length) {
+    public void setLength(String length) {
         this.length = length;
     }
 
-    public float getWidth() {
+    public String getWidth() {
         return width;
     }
 
-    public void setWidth(float width) {
+    public void setWidth(String width) {
         this.width = width;
     }
 
-    public float getHeight() {
+    public String getHeight() {
         return height;
     }
 
-    public void setHeight(float height) {
+    public void setHeight(String height) {
         this.height = height;
     }
 
-    public float getGold() {
+    public String getGold() {
         return gold;
     }
 
-    public void setGold(float gold) {
+    public void setGold(String gold) {
         this.gold = gold;
     }
 
-    public float getDiamond() {
+    public String getDiamond() {
         return diamond;
     }
 
-    public void setDiamond(float diamond) {
+    public void setDiamond(String diamond) {
         this.diamond = diamond;
     }
 
@@ -174,6 +173,7 @@ public class JewelleryDesign {
         jewellery.put("img2",img2);
         jewellery.put("designCode",designCode);
         jewellery.put("status",status);
+        jewellery.put("tempCode",tempCode);
         jewellery.put("customerName",customerName);
         jewellery.put("workBy",work_by);
         jewellery.put("workPlace",work_place);

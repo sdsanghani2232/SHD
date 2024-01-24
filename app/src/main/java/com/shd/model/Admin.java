@@ -6,7 +6,6 @@ public class Admin {
     public Admin() {
     }
 
-
     public Admin(String email) {
         this.email = email;
     }

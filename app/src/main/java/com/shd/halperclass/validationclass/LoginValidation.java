@@ -4,7 +4,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthInvalidUserException;
 import com.shd.model.Admin;
-import com.shd.db_firebase.AdminInfo;
+import com.shd.halperclass.informationclass.AdminInfo;
 
 import java.util.Objects;
 

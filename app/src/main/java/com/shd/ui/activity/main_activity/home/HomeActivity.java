@@ -1,23 +1,53 @@
-package com.shd.ui.activitys.mainActivitys.home;
+package com.shd.ui.activity.main_activity.home;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.shd.R;
+import com.shd.halperclass.informationclass.AdminInfo;
+import com.shd.halperclass.informationclass.Codes;
+import com.shd.model.TempCode;
+import com.shd.viewmodes.AdminModel;
 import com.shd.ui.fragments.mainFragments.AddJewelleryFragment;
 import com.shd.ui.fragments.mainFragments.HomeFragment;
 import com.shd.ui.fragments.mainFragments.ProfilesDetailFragment;
 import com.shd.ui.fragments.mainFragments.SearchFragment;
 import com.shd.ui.fragments.mainFragments.UserProfileFragment;
+import com.shd.viewmodes.DesignCodeModel;
+import com.shd.viewmodes.TempCodeModel;
+
+import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     MeowBottomNavigation navigation;
+    AdminModel adminModel;
+    DesignCodeModel designCodeModel;
+    TempCodeModel tempCodeModel;
+    AdminInfo adminInfo = AdminInfo.getInstance();
+    Codes codes = Codes.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        adminModel = new ViewModelProvider(this).get(AdminModel.class);
+        adminModel.getAdminMap().observe(this, adminMap -> adminInfo.updateAdminList(adminMap));
+
+        designCodeModel = new ViewModelProvider(this).get(DesignCodeModel.class);
+        designCodeModel.getDesignCodeList().observe(this, designCodes -> {
+            codes.updateDesignCodes(designCodes);
+        });
+
+        tempCodeModel = new ViewModelProvider(this).get(TempCodeModel.class);
+        tempCodeModel.getTempCodeList().observe(this, tempCodes -> {
+            codes.updateTempCodes(tempCodes);
+        });
 
         navigation = findViewById(R.id.bottom_navigation);
 

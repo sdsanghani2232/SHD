@@ -35,12 +35,13 @@ import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.shd.R;
-import com.shd.db_firebase.JewelleryDetailsStore;
+import com.shd.halperclass.informationclass.Codes;
+import com.shd.repository.readdata.DesignCodeList;
+import com.shd.repository.readdata.TempCodeList;
+import com.shd.repository.storedata.JewelleryDetailsStore;
 import com.shd.halperclass.otherClass.CheckInternet;
 import com.shd.halperclass.validationclass.FormValidation;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -50,7 +51,10 @@ import java.util.Objects;
 
 public class FormFragment extends Fragment {
     private boolean isChanging = false,isInternet = true,isError = false;
-    private float gold_weight = 0.00f,diamond_weight= 0.00f,length= 0.00f,width=0.00f,height= 0.00f;
+    private String gold_weight,diamond_weight,length,width,height;
+    private final Codes codes = Codes.getInstance();
+    private final TempCodeList tempCodeList = TempCodeList.getInstance();
+    private final DesignCodeList designCodeList = DesignCodeList.getInstance();
     ScrollView mainScrollView;
     TextView errorText;
     View indicator1,indicator2;
@@ -348,30 +352,25 @@ public class FormFragment extends Fragment {
         }
     }
 
-    private float setInputText(float sliderValue , TextInputEditText editText ,TextInputLayout layout)
+    private String setInputText(float sliderValue , TextInputEditText editText ,TextInputLayout layout)
     {
         float formComponent;
         if(!isChanging)
         {
             isChanging = true;
-//            DecimalFormat decimalFormat = new DecimalFormat("#.##", new DecimalFormatSymbols(Locale.US));
-//            decimalFormat.setRoundingMode(java.math.RoundingMode.HALF_UP);
             layout.setErrorEnabled(false);
-//            formComponent = Float.parseFloat(decimalFormat.format(sliderValue));
             Log.d("values",""+sliderValue);
             formComponent = (float) (Math.ceil(sliderValue * 100) / 100);
             editText.setText(String.valueOf(formComponent));
             Log.d("values",""+formComponent);
-//            Log.d("values",""+formComponent);
             editText.setSelection(Objects.requireNonNull(editText.getText()).length());
             isChanging = false;
-            return formComponent;
-//            return formComponent;
+            return String.valueOf(formComponent);
         }
-        return 0.00f;
+        return "0.00";
     }
 
-    private float setSlider(TextInputEditText editText ,TextInputLayout layout,Slider slider)
+    private String setSlider(TextInputEditText editText ,TextInputLayout layout,Slider slider)
     {
         if(!isChanging)
         {
@@ -381,20 +380,20 @@ public class FormFragment extends Fragment {
             if(number.isEmpty()) {
                 slider.setValue(0.00f);
                 isChanging = false;
-                return 0.00f;
+                return "0.00";
             }
             else if (number.equals(".")) {
                 number = "0.";
                 editText.setText(number);
                 editText.setSelection(editText.getText().length());
                 isChanging = false;
-                return 0.00f;
+                return "0.00";
             } else if (number.equals("0")) {
                 number = "";
                 editText.setText(number);
                 editText.setSelection(editText.getText().length());
                 isChanging = false;
-                return 0.00f;
+                return "0.00";
             } else {
                 if(number.matches("^(\\d+\\.\\d{1,2}|\\d+|\\d+\\.)$"))
                 {
@@ -406,7 +405,7 @@ public class FormFragment extends Fragment {
                         editText.setSelection(editText.getText().length());
                         isChanging = false;
 
-                        return (float) (Math.ceil(sliderValue * 100) / 100);
+                        return String.valueOf(Math.ceil(sliderValue * 100) / 100);
 //                        return sliderValue;
                     }
                     else {
@@ -418,7 +417,7 @@ public class FormFragment extends Fragment {
                         Toast.makeText(requireContext(), "Only 0.00 to 100.00 number Allow", Toast.LENGTH_SHORT).show();
                         slider.setValue(0.00f);
                         isChanging = false;
-                        return 0.00f;
+                        return "0.00";
                     }
                 }else {
                     layout.setErrorEnabled(true);
@@ -428,12 +427,12 @@ public class FormFragment extends Fragment {
                     Toast.makeText(requireContext(), "Only 2 Decimal Allow", Toast.LENGTH_SHORT).show();
                     slider.setValue(0.00f);
                     isChanging = false;
-                    return 0.00f;
+                    return "0.00";
                 }
             }
         }
         isChanging = false;
-        return 0.00f;
+        return "0.00";
     }
 
 
@@ -453,7 +452,6 @@ public class FormFragment extends Fragment {
         jewellerySubTypeLayout.setErrorEnabled(false);
 
         FormValidation fv = new FormValidation(designCode,customer_code,temp_code,mainType,subType);
-//        TODO : check design code Is exist or not
         fv.validate(result -> {
             switch (result){
                 case "Small Design Code" :
@@ -504,7 +502,24 @@ public class FormFragment extends Fragment {
                 }
                 case "NO Error" :
                 {
-                    if(isError) mainScrollView.scrollTo(0,errorLayout.getTop());
+//                    if (!designCode.isEmpty() && designCodeList.documentExits()) {
+//                        if(codes.isDesignCodeExists(designCode))
+//                        {
+//                            design_code_layout.setErrorEnabled(true);
+//                            design_code_layout.setError(" ");
+//                            design_code_text.setError("Design Code already exits");
+//                            mainScrollView.scrollTo(0, design_code_layout.getTop());
+//                        }
+//                    } else if (!temp_code.isEmpty() && tempCodeList.documentExits()) {
+//                        if(codes.isTempCodeExits(temp_code))
+//                        {
+//                            temp_code_layout.setErrorEnabled(true);
+//                            temp_code_layout.setError(" ");
+//                            temp_code_text.setError("Temp Code already exits");
+//                            mainScrollView.scrollTo(0,temp_code_layout.getTop());
+//                        }
+//                    } else
+                        if(isError) mainScrollView.scrollTo(0,errorLayout.getTop());
                     else storeData();
                 }
             }
@@ -543,7 +558,7 @@ public class FormFragment extends Fragment {
                 "\ndate :"+selectedDate+"\nmain type :"+mainType+"\nsub type :"+subType+"\ngold :"+gold_weight+"\ndiamond :"+diamond_weight+
                 "\nlength :"+length+"\nwidth :"+width+"\nheight :"+height);
 
-        JewelleryDetailsStore jds = new JewelleryDetailsStore(img1Url,img2Url,customerName,designCode,customerCode,tempCode,workBy,workPlace,selectedDate,mainType,subType,status,length,width,height,gold_weight,diamond_weight);
+        JewelleryDetailsStore jds = new JewelleryDetailsStore(img1Url,img2Url,customerName,designCode,status,customerCode,tempCode,workBy,workPlace,selectedDate,mainType,subType,length,width,height,gold_weight,diamond_weight);
         jds.StoreJewelleryImg(result -> {
             switch (result)
             {

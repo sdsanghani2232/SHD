@@ -1,4 +1,4 @@
-package com.shd.ui.activitys.mainActivitys.login;
+package com.shd.ui.activity.main_activity.login;
 
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
@@ -13,7 +13,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.shd.R;
-import com.shd.db_firebase.AdminInfo;
+import com.shd.halperclass.informationclass.AdminInfo;
 import com.shd.halperclass.otherClass.CheckInternet;
 
 import java.util.Objects;

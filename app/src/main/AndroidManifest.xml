@@ -13,20 +13,20 @@
         android:theme="@style/Theme.SHD"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.activitys.mainActivitys.home.HomeActivity"
+            android:name=".ui.activity.main_activity.home.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.SHD.Main"
             android:windowSoftInputMode="adjustPan"/>
         <activity
-            android:name=".ui.activitys.mainActivitys.login.ResetPassword"
+            android:name=".ui.activity.main_activity.login.ResetPassword"
             android:exported="false"
             android:theme="@style/Theme.SHD.Login.ResetPassword" />
         <activity
-            android:name=".ui.activitys.mainActivitys.login.LogIn"
+            android:name=".ui.activity.main_activity.login.LogIn"
             android:exported="false"
             android:theme="@style/Theme.SHD.Main" />
         <activity
-            android:name=".ui.activitys.mainActivitys.login.SplashScreen"
+            android:name=".ui.activity.main_activity.login.SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.SHD.Main" >
             <intent-filter>

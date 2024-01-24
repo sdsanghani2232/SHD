@@ -1,18 +1,15 @@
 package com.shd.model;
 
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class DesignCode {
+public class TempCode {
     List<String> codes = new ArrayList<>();
 
-    public DesignCode() {
+    public TempCode() {
     }
 
-    public DesignCode(List<String> codes) {
+    public TempCode(List<String> codes) {
         this.codes = codes;
     }
 

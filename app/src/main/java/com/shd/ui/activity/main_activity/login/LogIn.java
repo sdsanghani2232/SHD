@@ -1,6 +1,8 @@
-package com.shd.ui.activitys.mainActivitys.login;
+package com.shd.ui.activity.main_activity.login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +12,9 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.shd.R;
-import com.shd.ui.activitys.mainActivitys.home.HomeActivity;
+import com.shd.halperclass.informationclass.AdminInfo;
+import com.shd.viewmodes.AdminModel;
+import com.shd.ui.activity.main_activity.home.HomeActivity;
 import com.shd.halperclass.validationclass.LoginValidation;
 import java.util.Objects;
 
@@ -18,12 +22,16 @@ public class LogIn extends AppCompatActivity {
     Button login,forgotPassword;
     TextInputEditText email,password;
     TextInputLayout emailLayout, passwordLayout;
+    AdminModel model;
+    AdminInfo adminInfo = AdminInfo.getInstance();
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
+        model = new ViewModelProvider(this).get(AdminModel.class);
+        model.getAdminMap().observe(this, adminMap -> adminInfo.updateAdminList(adminMap));
         findId();
 
         login.setOnTouchListener((v, event) -> {
