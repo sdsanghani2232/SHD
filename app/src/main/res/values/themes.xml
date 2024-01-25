@@ -1,5 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<resources>
     <style name="Base.Theme.SHD" parent="Theme.Material3.Dark.NoActionBar"> </style>
 
     <style name="Theme.SHD" parent="Base.Theme.SHD" />

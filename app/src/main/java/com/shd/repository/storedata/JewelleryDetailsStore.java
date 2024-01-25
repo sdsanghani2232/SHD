@@ -14,15 +14,15 @@ import java.util.Map;
 
 public class JewelleryDetailsStore {
 
-    Uri img1,img2;
-    String customerName,designCode,customerCode,tempCode,work_by,work_place,selectedDate,mainType,subType;
-    String img1DownloadUrl,img2DownloadUrl,length,width,height,gold,diamond;
-    boolean status;
+    private final Uri img1,img2;
+    private final String customerName,designCode,customerCode,tempCode,work_by,work_place,selectedDate,mainType,subType,length,width,height,gold,diamond;
+    String img1DownloadUrl,img2DownloadUrl;
+    final boolean status;
 
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    FirebaseStorage storage = FirebaseStorage.getInstance();
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference reference;
-    StorageMetadata metadata = new StorageMetadata.Builder()
+    final StorageMetadata metadata = new StorageMetadata.Builder()
             .setContentType("image/jpg")
             .build();
 

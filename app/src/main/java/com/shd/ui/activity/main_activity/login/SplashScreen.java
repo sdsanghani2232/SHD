@@ -16,14 +16,14 @@ public class SplashScreen extends AppCompatActivity {
 
     // TODO : that code is working. after complete Entire app remove comment
     AdminModel model;
-    AdminInfo adminInfo = AdminInfo.getInstance();
+    final AdminInfo adminInfo = AdminInfo.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
         model = new ViewModelProvider(this).get(AdminModel.class);
-        model.getAdminMap().observe(this, adminMap -> adminInfo.updateAdminList(adminMap));
+        model.getAdminMap().observe(this, adminInfo::updateAdminList);
 
         new Handler().postDelayed(() -> {
 //            startActivity(new Intent(getApplicationContext(), LogIn.class));

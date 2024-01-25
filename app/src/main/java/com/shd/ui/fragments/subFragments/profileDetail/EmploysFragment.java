@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 import com.shd.R;
 
-public class EmployesFragment extends Fragment {
+public class EmploysFragment extends Fragment {
 
 
-    public EmployesFragment() {
+    public EmploysFragment() {
         // Required empty public constructor
     }
 

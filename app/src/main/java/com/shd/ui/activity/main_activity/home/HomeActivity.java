@@ -1,18 +1,16 @@
 package com.shd.ui.activity.main_activity.home;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
-import android.util.Log;
-
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.shd.R;
 import com.shd.halperclass.informationclass.AdminInfo;
 import com.shd.halperclass.informationclass.Codes;
-import com.shd.model.TempCode;
 import com.shd.viewmodes.AdminModel;
 import com.shd.ui.fragments.mainFragments.AddJewelleryFragment;
 import com.shd.ui.fragments.mainFragments.HomeFragment;
@@ -22,32 +20,26 @@ import com.shd.ui.fragments.mainFragments.UserProfileFragment;
 import com.shd.viewmodes.DesignCodeModel;
 import com.shd.viewmodes.TempCodeModel;
 
-import java.util.List;
-
 public class HomeActivity extends AppCompatActivity {
     MeowBottomNavigation navigation;
     AdminModel adminModel;
     DesignCodeModel designCodeModel;
     TempCodeModel tempCodeModel;
-    AdminInfo adminInfo = AdminInfo.getInstance();
-    Codes codes = Codes.getInstance();
+    final AdminInfo adminInfo = AdminInfo.getInstance();
+    final Codes codes = Codes.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         adminModel = new ViewModelProvider(this).get(AdminModel.class);
-        adminModel.getAdminMap().observe(this, adminMap -> adminInfo.updateAdminList(adminMap));
+        adminModel.getAdminMap().observe(this, adminInfo::updateAdminList);
 
         designCodeModel = new ViewModelProvider(this).get(DesignCodeModel.class);
-        designCodeModel.getDesignCodeList().observe(this, designCodes -> {
-            codes.updateDesignCodes(designCodes);
-        });
+        designCodeModel.getDesignCodeList().observe(this, codes::updateDesignCodes);
 
         tempCodeModel = new ViewModelProvider(this).get(TempCodeModel.class);
-        tempCodeModel.getTempCodeList().observe(this, tempCodes -> {
-            codes.updateTempCodes(tempCodes);
-        });
+        tempCodeModel.getTempCodeList().observe(this, codes::updateTempCodes);
 
         navigation = findViewById(R.id.bottom_navigation);
 
@@ -82,6 +74,22 @@ public class HomeActivity extends AppCompatActivity {
             }
             return null;
         });
+
+        OnBackPressedDispatcher dispatcher = getOnBackPressedDispatcher();
+        dispatcher.addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if(isHomeFragment())
+                {
+                    // TODO : that code is working. after complete Entire app remove comment
+//                       onDestroy();
+                    finish();
+                }else {
+                    navigation.show(1,true);
+                    replace(new HomeFragment());
+                }
+            }
+        });
     }
 
     private void replace(Fragment fragment)
@@ -97,21 +105,6 @@ public class HomeActivity extends AppCompatActivity {
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
         return fragment instanceof HomeFragment;
     }
-
-    @Override
-    public void onBackPressed() {
-       if(isHomeFragment())
-       {
-           super.onBackPressed();
-           // TODO : that code is working. after complete Entire app remove comment
-//           onDestroy();
-       }else {
-           navigation.show(1,true);
-           replace(new HomeFragment());
-       }
-    }
-
-// TODO : that code is working. after complete Entire app remove comment
 
 //    @Override
 //    protected void onDestroy() {

@@ -18,8 +18,8 @@ public class AdminList {
         }
         return instance;
     }
-    MutableLiveData<Map<String, Admin>> adminDetails = new MutableLiveData<>();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final MutableLiveData<Map<String, Admin>> adminDetails = new MutableLiveData<>();
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
     Map<String,Admin> map;
     public LiveData<Map<String,Admin>> getAdmin()
     {

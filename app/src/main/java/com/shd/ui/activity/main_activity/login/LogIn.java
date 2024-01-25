@@ -23,7 +23,7 @@ public class LogIn extends AppCompatActivity {
     TextInputEditText email,password;
     TextInputLayout emailLayout, passwordLayout;
     AdminModel model;
-    AdminInfo adminInfo = AdminInfo.getInstance();
+    final AdminInfo adminInfo = AdminInfo.getInstance();
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
 
         model = new ViewModelProvider(this).get(AdminModel.class);
-        model.getAdminMap().observe(this, adminMap -> adminInfo.updateAdminList(adminMap));
+        model.getAdminMap().observe(this, adminInfo::updateAdminList);
         findId();
 
         login.setOnTouchListener((v, event) -> {
@@ -48,9 +48,7 @@ public class LogIn extends AppCompatActivity {
             return true;
         });
 
-        forgotPassword.setOnClickListener(v -> {
-            startActivity(new Intent(getApplicationContext(),ResetPassword.class));
-        });
+        forgotPassword.setOnClickListener(v -> startActivity(new Intent(getApplicationContext(),ResetPassword.class)));
 
     }
 

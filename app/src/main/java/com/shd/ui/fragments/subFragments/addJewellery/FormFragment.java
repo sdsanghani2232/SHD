@@ -238,7 +238,7 @@ public class FormFragment extends Fragment {
         temp_code_text = view.findViewById(R.id.form_temp_code_input_text);
     }
 
-    public ActivityResultLauncher<Intent> img1 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+    public final ActivityResultLauncher<Intent> img1 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
             if(result.getResultCode() == Activity.RESULT_OK || result.getData() != null)
@@ -249,7 +249,7 @@ public class FormFragment extends Fragment {
             }
         }
     });
-    public ActivityResultLauncher<Intent> img2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+    public final ActivityResultLauncher<Intent> img2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
             if(result.getResultCode() == Activity.RESULT_OK || result.getData() != null)

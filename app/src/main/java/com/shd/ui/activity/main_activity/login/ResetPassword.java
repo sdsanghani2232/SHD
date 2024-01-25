@@ -1,5 +1,7 @@
 package com.shd.ui.activity.main_activity.login;
 
+import androidx.activity.OnBackPressedCallback;
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -26,7 +28,7 @@ public class ResetPassword extends AppCompatActivity {
     TextView error;
     private boolean isConnection = true;
     MaterialToolbar toolbar;
-    FirebaseAuth auth = FirebaseAuth.getInstance();
+    final FirebaseAuth auth = FirebaseAuth.getInstance();
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,15 @@ public class ResetPassword extends AppCompatActivity {
         findId();
         checkConnection();
 
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        toolbar.setNavigationOnClickListener(v -> {
+            OnBackPressedDispatcher dispatcher = getOnBackPressedDispatcher();
+            dispatcher.addCallback(this, new OnBackPressedCallback(true) {
+                @Override
+                public void handleOnBackPressed() {
+                    finish();
+                }
+            });
+        });
 
         send.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {

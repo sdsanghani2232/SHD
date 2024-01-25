@@ -19,8 +19,8 @@ public class DesignCodeList {
         return instance;
     }
     private boolean documentExits = false;
-    MutableLiveData<List<DesignCode>> codeList = new MutableLiveData<>();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final MutableLiveData<List<DesignCode>> codeList = new MutableLiveData<>();
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     List<DesignCode> designCodeList;
 

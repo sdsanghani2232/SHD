@@ -2,7 +2,7 @@ package com.shd.halperclass.validationclass;
 
 public class FormValidation {
 
-    String designCode,mainType,subtype,customerCode,tempCode,workBy,workPlace;
+    private final String designCode,mainType,subtype,customerCode,tempCode,workBy,workPlace;
     public interface Result{
         void onResult(String result);
     }

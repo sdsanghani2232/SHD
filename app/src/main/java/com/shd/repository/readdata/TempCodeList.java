@@ -18,8 +18,8 @@ public class TempCodeList {
         return instance;
     }
     private boolean documentExits = false;
-    MutableLiveData<List<TempCode>> codeList = new MutableLiveData<>();
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final MutableLiveData<List<TempCode>> codeList = new MutableLiveData<>();
+    final FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     List<TempCode> tempCodeList;
 

@@ -1,10 +1,7 @@
 package com.shd.model;
 
-import android.net.Uri;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class JewelleryDesign {
     String img1,img2,customerName,designCode,customerCode,tempCode,work_by,work_place,selectedDate,mainType,subType,length,width,height,gold,diamond;

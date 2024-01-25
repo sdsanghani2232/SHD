@@ -10,8 +10,8 @@ import java.util.Objects;
 
 public class LoginValidation {
     private final String email,password ;
-    FirebaseAuth auth = FirebaseAuth.getInstance();
-    AdminInfo adminInfo = AdminInfo.getInstance();
+    final FirebaseAuth auth = FirebaseAuth.getInstance();
+    final AdminInfo adminInfo = AdminInfo.getInstance();
 
     public interface LoginResult{
         void onResult(String msg);

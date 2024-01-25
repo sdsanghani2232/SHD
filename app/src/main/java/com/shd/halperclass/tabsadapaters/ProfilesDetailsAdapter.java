@@ -6,7 +6,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
 import com.shd.ui.fragments.subFragments.profileDetail.CustomerFragment;
-import com.shd.ui.fragments.subFragments.profileDetail.EmployesFragment;
+import com.shd.ui.fragments.subFragments.profileDetail.EmploysFragment;
 
 public class ProfilesDetailsAdapter extends FragmentStateAdapter {
     public ProfilesDetailsAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -19,11 +19,11 @@ public class ProfilesDetailsAdapter extends FragmentStateAdapter {
         switch (position)
         {
             case 0 :
-                return new EmployesFragment();
+                return new EmploysFragment();
             case 1:
                 return new CustomerFragment();
         }
-        return null;
+        return new EmploysFragment();
     }
 
     @Override
