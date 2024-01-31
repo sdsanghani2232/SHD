@@ -4,19 +4,16 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.shd.R;
 import com.shd.halperclass.informationclass.AdminInfo;
 import com.shd.halperclass.informationclass.Codes;
+import com.shd.halperclass.tabsadapaters.HomeActivityAdapter;
 import com.shd.viewmodes.AdminModel;
-import com.shd.ui.fragments.mainFragments.AddJewelleryFragment;
 import com.shd.ui.fragments.mainFragments.HomeFragment;
-import com.shd.ui.fragments.mainFragments.ProfilesDetailFragment;
-import com.shd.ui.fragments.mainFragments.SearchFragment;
-import com.shd.ui.fragments.mainFragments.UserProfileFragment;
 import com.shd.viewmodes.DesignCodeModel;
 import com.shd.viewmodes.TempCodeModel;
 
@@ -27,11 +24,13 @@ public class HomeActivity extends AppCompatActivity {
     TempCodeModel tempCodeModel;
     final AdminInfo adminInfo = AdminInfo.getInstance();
     final Codes codes = Codes.getInstance();
+    ViewPager2 viewPager2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        viewPager2 = findViewById(R.id.view_pager2);
         adminModel = new ViewModelProvider(this).get(AdminModel.class);
         adminModel.getAdminMap().observe(this, adminInfo::updateAdminList);
 
@@ -50,25 +49,31 @@ public class HomeActivity extends AppCompatActivity {
         navigation.add(new MeowBottomNavigation.Model(5,R.drawable.profile));
 
         navigation.show(1,true);
-        replace(new HomeFragment());
+
+        HomeActivityAdapter homeActivityAdapter = new HomeActivityAdapter(this);
+        viewPager2.setAdapter(homeActivityAdapter);
+
+        viewPager2.setUserInputEnabled(false);
+        viewPager2.setOffscreenPageLimit(1);
+        viewPager2.setCurrentItem(0);
 
         navigation.setOnClickMenuListener(model -> {
             switch (model.getId())
             {
                 case 1 :
-                    replace(new HomeFragment());
+                    replace(0);
                     break;
                 case 2 :
-                    replace(new AddJewelleryFragment());
+                    replace(1);
                     break;
                 case 3 :
-                    replace(new SearchFragment());
+                    replace(2);
                     break;
                 case 4 :
-                    replace(new ProfilesDetailFragment());
+                    replace(3);
                     break;
                 case 5 :
-                    replace(new UserProfileFragment());
+                    replace(4);
                     break;
 
             }
@@ -86,23 +91,20 @@ public class HomeActivity extends AppCompatActivity {
                     finish();
                 }else {
                     navigation.show(1,true);
-                    replace(new HomeFragment());
+                    replace(0);
                 }
             }
         });
     }
 
-    private void replace(Fragment fragment)
+    private void replace(int position)
     {
-
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame_layout,fragment);
-        transaction.commit();
+        viewPager2.setCurrentItem(position);
     }
 
     private boolean isHomeFragment()
     {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.frame_layout);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.view_pager2);
         return fragment instanceof HomeFragment;
     }
 

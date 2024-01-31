@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.mainFragments.ProfilesDetailFragment"
-    android:background="@color/profiles_details_background">
+    android:background="@color/profiles_details_background"
+    android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/profile_details_tab_view"
@@ -27,6 +28,5 @@
         android:id="@+id/profile_details_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/profile_details_tab_view"
         />
-</RelativeLayout>
+</LinearLayout>

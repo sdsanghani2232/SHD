@@ -54,8 +54,8 @@
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/form_design_img_1"
-                        android:layout_width="300dp"
-                        android:layout_height="200dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:layout_marginEnd="20dp"
                         android:src="@drawable/default_img"
                         app:layout_constraintEnd_toStartOf="@id/form_design_img_2"
@@ -82,9 +82,9 @@
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/form_design_img_2"
-                        android:layout_width="300dp"
-                        android:layout_height="200dp"
-                        android:layout_marginEnd="20dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="13dp"
                         android:src="@drawable/default_img"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/form_design_img_1"
@@ -106,6 +106,7 @@
                         app:shapeAppearanceOverlay="@style/Theme.SHD.fab_button"
                         android:backgroundTint="@color/floating_button_background"
                         android:contentDescription="@string/img_edit_icon"/>
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -146,7 +147,7 @@
                 android:text="@string/design_code"
                 app:layout_constraintTop_toBottomOf="@id/form_img_indicator_layout"
                 app:layout_constraintStart_toStartOf="parent"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="25dp"
                 />
 
             <com.google.android.material.textfield.TextInputLayout

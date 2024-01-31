@@ -32,11 +32,12 @@ public class AddJewelleryFragment extends Fragment {
 
         addJewellerytablayout = view.findViewById(R.id.add_jewellery_tab_view);
         addJewelleryViewPager = view.findViewById(R.id.add_jewellery_viewpager);
+
         AddJewelleryTabAdapter addJewelleryTabAdapter = new AddJewelleryTabAdapter(requireActivity());
         addJewelleryViewPager.setAdapter(addJewelleryTabAdapter);
 
         addJewelleryViewPager.setUserInputEnabled(false);
-
+        addJewelleryViewPager.setOffscreenPageLimit(1);
         new TabLayoutMediator(addJewellerytablayout, addJewelleryViewPager, (tab, position) -> {
             switch (position)
             {

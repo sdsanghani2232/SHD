@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.mainFragments.AddJewelleryFragment"
-    android:background="@color/add_jewellery_fragment_background">
+    android:background="@color/add_jewellery_fragment_background"
+    android:orientation="vertical">
 
 
     <com.google.android.material.tabs.TabLayout
@@ -28,7 +29,7 @@
         android:id="@+id/add_jewellery_viewpager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/add_jewellery_tab_view"
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         />
-</RelativeLayout>
+</LinearLayout>
