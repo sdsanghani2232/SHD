@@ -2,18 +2,23 @@ package com.shd.ui.fragments.subFragments.addJewellery;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+
+import android.os.Handler;
+import android.os.Looper;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -24,9 +29,12 @@ import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.materialswitch.MaterialSwitch;
@@ -50,24 +58,25 @@ import java.util.Locale;
 import java.util.Objects;
 
 public class FormFragment extends Fragment {
-    private boolean isChanging = false,isInternet = true,isError = false,status = false;
-    private String gold_weight = "0.0",diamond_weight="0.0",length="0.0",width="0.0",height="0.0",designCode,mainType,subType,customerCode,tempCode,customerName,workBy,workPlace,selectedDate;
+    private boolean isChanging = false, isInternet = true, isError = false, status = false;
+    private String gold_weight = "0.0", diamond_weight = "0.0", length = "0.0", width = "0.0", height = "0.0", designCode, mainType, subType, customerCode, tempCode, customerName, workBy, workPlace, selectedDate;
     private final Codes codes = Codes.getInstance();
     private final TempCodeList tempCodeList = TempCodeList.getInstance();
     private final DesignCodeList designCodeList = DesignCodeList.getInstance();
     ScrollView mainScrollView;
     TextView errorText;
-    View indicator1,indicator2;
-    private Uri img1Url = Uri.parse(""),img2Url= Uri.parse("");
-    ShapeableImageView jewelleryImg1,jewelleryImg2;
+    View indicator1, indicator2;
+    private Uri img1Url = Uri.parse(""), img2Url = Uri.parse("");
+    ShapeableImageView jewelleryImg1, jewelleryImg2;
     MaterialSwitch designStatus;
-    FloatingActionButton jewelleryImg1Button,jewelleryImg2Button;
+    FloatingActionButton jewelleryImg1Button, jewelleryImg2Button;
     HorizontalScrollView imgScrollView;
-    TextInputLayout date_layout,jewelleryMainTypeLayout,jewellerySubTypeLayout,gold_layout,diamond_layout,length_layout,width_layout,height_layout,design_code_layout,customer_code_layout,temp_code_layout,errorLayout;
-    TextInputEditText date_text,gold_text,diamond_text,length_text,width_text,height_text,design_code_text,customer_text,work_by_text,work_place_text,customer_code_text,temp_code_text;
-    MaterialAutoCompleteTextView jewelleryMainTypeText,jewellerySubTypeText;
-    Slider gold_slider,diamond_slider,length_slider,width_slider,height_slider;
+    TextInputLayout date_layout, jewelleryMainTypeLayout, jewellerySubTypeLayout, gold_layout, diamond_layout, length_layout, width_layout, height_layout, design_code_layout, customer_code_layout, temp_code_layout, errorLayout;
+    TextInputEditText date_text, gold_text, diamond_text, length_text, width_text, height_text, design_code_text, customer_text, work_by_text, work_place_text, customer_code_text, temp_code_text;
+    MaterialAutoCompleteTextView jewelleryMainTypeText, jewellerySubTypeText;
+    Slider gold_slider, diamond_slider, length_slider, width_slider, height_slider;
     Button save;
+
     public FormFragment() {
         // Required empty public constructor
     }
@@ -77,6 +86,7 @@ public class FormFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     @SuppressLint({"ClickableViewAccessibility"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -89,83 +99,112 @@ public class FormFragment extends Fragment {
         setMainDropDownList();
         jewelleryImg1Button.setOnClickListener(v -> img1.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
         jewelleryImg2Button.setOnClickListener(v -> img2.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
-        date_layout.setStartIconOnClickListener(v ->setDate());
+        date_layout.setStartIconOnClickListener(v -> setDate());
         date_text.setOnClickListener(v -> setDate());
         imgScrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> setIndicator(scrollX));
         jewelleryMainTypeText.setOnItemClickListener((parent, view1, position, id) -> {
             jewelleryMainTypeLayout.setErrorEnabled(false);
             setSubDropDown(parent.getItemAtPosition(position).toString());
         });
-        gold_slider.addOnChangeListener((slider, value, fromUser) -> gold_weight = setInputText(value,gold_text,gold_layout));
-        diamond_slider.addOnChangeListener((slider, value, fromUser) -> diamond_weight = setInputText(value,diamond_text,diamond_layout));
-        length_slider.addOnChangeListener((slider, value, fromUser) -> length = setInputText(value,length_text,length_layout));
-        width_slider.addOnChangeListener((slider, value, fromUser) -> width = setInputText(value,width_text,width_layout));
-        height_slider.addOnChangeListener((slider, value, fromUser) -> height = setInputText(value,height_text,height_layout));
+        gold_slider.addOnChangeListener((slider, value, fromUser) -> gold_weight = setInputText(value, gold_text, gold_layout));
+        diamond_slider.addOnChangeListener((slider, value, fromUser) -> diamond_weight = setInputText(value, diamond_text, diamond_layout));
+        length_slider.addOnChangeListener((slider, value, fromUser) -> length = setInputText(value, length_text, length_layout));
+        width_slider.addOnChangeListener((slider, value, fromUser) -> width = setInputText(value, width_text, width_layout));
+        height_slider.addOnChangeListener((slider, value, fromUser) -> height = setInputText(value, height_text, height_layout));
 
         gold_text.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {gold_text.setSelection(Objects.requireNonNull(gold_text.getText()).length());}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                gold_text.setSelection(Objects.requireNonNull(gold_text.getText()).length());
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                gold_weight = setSlider(gold_text,gold_layout,gold_slider);
+                gold_weight = setSlider(gold_text, gold_layout, gold_slider);
             }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         diamond_text.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {diamond_text.setSelection(Objects.requireNonNull(diamond_text.getText()).length());}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { diamond_weight = setSlider(diamond_text,diamond_layout,diamond_slider); }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                diamond_text.setSelection(Objects.requireNonNull(diamond_text.getText()).length());
+            }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                diamond_weight = setSlider(diamond_text, diamond_layout, diamond_slider);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         length_text.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {length_text.setSelection(Objects.requireNonNull(length_text.getText()).length());}
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { length = setSlider(length_text,length_layout,length_slider);}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                length_text.setSelection(Objects.requireNonNull(length_text.getText()).length());
+            }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                length = setSlider(length_text, length_layout, length_slider);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         width_text.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {width_text.setSelection(Objects.requireNonNull(width_text.getText()).length());}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                width_text.setSelection(Objects.requireNonNull(width_text.getText()).length());
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { width = setSlider(width_text,width_layout,width_slider);}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                width = setSlider(width_text, width_layout, width_slider);
+            }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         height_text.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {height_text.setSelection(Objects.requireNonNull(height_text.getText()).length());}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                height_text.setSelection(Objects.requireNonNull(height_text.getText()).length());
+            }
+
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) { height = setSlider(height_text,height_layout,height_slider);}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                height = setSlider(height_text, height_layout, height_slider);
+            }
+
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         save.setOnTouchListener((v, event) -> {
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
                     checkInternet();
-                    if(isInternet)
-                    {
+                    if (isInternet) {
                         checkData();
                         save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_onClick_color));
                     }
                     break;
                 case MotionEvent.ACTION_UP:
-                    if(isInternet)
-                    {
+                    if (isInternet) {
                         save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_color));
-                    }else {
+                    } else {
                         save.setBackgroundColor(requireContext().getColor(R.color.form_not_enable_button_color));
                     }
                     break;
@@ -176,21 +215,19 @@ public class FormFragment extends Fragment {
         return view;
     }
 
-    @SuppressLint("SetTextI18n")
     private void checkInternet() {
-        if(new CheckInternet(requireContext()).Check())
-        {
+        if (new CheckInternet(requireContext()).Check()) {
             isInternet = true;
             save.setClickable(true);
             save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_color));
             errorText.setVisibility(View.GONE);
-        }else {
+        } else {
             isInternet = false;
             save.setClickable(false);
             save.setBackgroundColor(requireContext().getColor(R.color.form_not_enable_button_color));
-            errorText.setText("Check Internet Connectivity");
+            errorText.setText(requireContext().getResources().getString(R.string.check_internet_connectivity));
             errorText.setVisibility(View.VISIBLE);
-            mainScrollView.scrollTo(0,0);
+            mainScrollView.scrollTo(0, 0);
         }
     }
 
@@ -207,13 +244,13 @@ public class FormFragment extends Fragment {
         jewellerySubTypeLayout = view.findViewById(R.id.form_jewellery_sub_type_layout);
         jewellerySubTypeText = view.findViewById(R.id.form_jewellery_sub_type_drop_down);
         gold_slider = view.findViewById(R.id.form_gold_slider);
-        gold_text= view.findViewById(R.id.form_gold_input_text);
+        gold_text = view.findViewById(R.id.form_gold_input_text);
         gold_layout = view.findViewById(R.id.form_gold_text_layout);
         diamond_layout = view.findViewById(R.id.form_diamond_text_layout);
         diamond_text = view.findViewById(R.id.form_diamond_input_text);
         diamond_slider = view.findViewById(R.id.form_diamond_slider);
         length_layout = view.findViewById(R.id.form_length_text_layout);
-        length_text= view.findViewById(R.id.form_length_input_text);
+        length_text = view.findViewById(R.id.form_length_input_text);
         length_slider = view.findViewById(R.id.form_length_slider);
         width_layout = view.findViewById(R.id.form_width_text_layout);
         width_text = view.findViewById(R.id.form_width_input_text);
@@ -241,8 +278,7 @@ public class FormFragment extends Fragment {
     public final ActivityResultLauncher<Intent> img1 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-            if(result.getResultCode() == Activity.RESULT_OK || result.getData() != null)
-            {
+            if (result.getResultCode() == Activity.RESULT_OK || result.getData() != null) {
                 assert result.getData() != null;
                 img1Url = result.getData().getData();
                 jewelleryImg1.setImageURI(img1Url);
@@ -252,8 +288,7 @@ public class FormFragment extends Fragment {
     public final ActivityResultLauncher<Intent> img2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
         @Override
         public void onActivityResult(ActivityResult result) {
-            if(result.getResultCode() == Activity.RESULT_OK || result.getData() != null)
-            {
+            if (result.getResultCode() == Activity.RESULT_OK || result.getData() != null) {
                 assert result.getData() != null;
                 img2Url = result.getData().getData();
                 jewelleryImg2.setImageURI(img2Url);
@@ -261,29 +296,26 @@ public class FormFragment extends Fragment {
         }
     });
 
-    private void setIndicator(int scrollX)
-    {
+    private void setIndicator(int scrollX) {
         int maxScrollX = imgScrollView.getChildAt(0).getWidth() - imgScrollView.getWidth();
         float scroll = (float) scrollX / maxScrollX * 100;
 
-        if(scroll < 50 )
-        {
+        if (scroll < 50) {
             indicator1.setBackgroundResource(R.drawable.img_scroll_indicator_selected);
             indicator2.setBackgroundResource(R.drawable.img_scroll_indicator_not_selected);
-        }else {
+        } else {
             indicator1.setBackgroundResource(R.drawable.img_scroll_indicator_not_selected);
             indicator2.setBackgroundResource(R.drawable.img_scroll_indicator_selected);
         }
     }
 
-    private void currentDate()
-    {
+    private void currentDate() {
         Calendar calendars = Calendar.getInstance();
         SimpleDateFormat format = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
         date_text.setText(format.format(calendars.getTime()));
     }
-    private void setDate()
-    {
+
+    private void setDate() {
         CalendarConstraints.Builder builder = new CalendarConstraints.Builder();
         builder.setValidator(DateValidatorPointBackward.now());
 
@@ -310,53 +342,49 @@ public class FormFragment extends Fragment {
     }
 
     private void setMainDropDownList() {
-        ArrayAdapter<CharSequence> mainList = ArrayAdapter.createFromResource(requireContext(),R.array.jewellery_main_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
+        ArrayAdapter<CharSequence> mainList = ArrayAdapter.createFromResource(requireContext(), R.array.jewellery_main_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
         jewelleryMainTypeText.setAdapter(mainList);
         jewellerySubTypeLayout.setEnabled(false);
         jewellerySubTypeText.setEnabled(false);
     }
 
-    @SuppressLint("SetTextI18n")
     private void setSubDropDown(String subType) {
         List<String> mainList = Arrays.asList(getResources().getStringArray(R.array.jewellery_main_type));
 
-        if(subType.equals(mainList.get(0)))
-        {
+        if (subType.equals(mainList.get(0))) {
             jewellerySubTypeLayout.setEnabled(true);
             jewellerySubTypeText.setEnabled(true);
-            jewellerySubTypeText.setText("Sub Type");
-            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(),R.array.jewellery_ring_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
+            jewellerySubTypeText.setText(requireContext().getResources().getString(R.string.sub_type));
+            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(), R.array.jewellery_ring_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
             jewellerySubTypeText.setAdapter(subList);
         } else if (subType.equals(mainList.get(1))) {
             jewellerySubTypeLayout.setEnabled(true);
             jewellerySubTypeText.setEnabled(true);
-            jewellerySubTypeText.setText("Sub Type");
-            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(),R.array.jewellery_nkc_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
+            jewellerySubTypeText.setText(requireContext().getResources().getString(R.string.sub_type));
+            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(), R.array.jewellery_nkc_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
             jewellerySubTypeText.setAdapter(subList);
         } else if (subType.equals(mainList.get(2))) {
             jewellerySubTypeLayout.setEnabled(true);
             jewellerySubTypeText.setEnabled(true);
-            jewellerySubTypeText.setText("Sub Type");
-            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(),R.array.jewellery_er_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
+            jewellerySubTypeText.setText(requireContext().getResources().getString(R.string.sub_type));
+            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(), R.array.jewellery_er_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
             jewellerySubTypeText.setAdapter(subList);
         } else if (subType.equals(mainList.get(3))) {
             jewellerySubTypeLayout.setEnabled(true);
             jewellerySubTypeText.setEnabled(true);
-            jewellerySubTypeText.setText("Sub Type");
-            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(),R.array.jewellery_br_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
+            jewellerySubTypeText.setText(requireContext().getResources().getString(R.string.sub_type));
+            ArrayAdapter<CharSequence> subList = ArrayAdapter.createFromResource(requireContext(), R.array.jewellery_br_sub_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
             jewellerySubTypeText.setAdapter(subList);
         } else {
-            jewellerySubTypeText.setText("No Sub Type");
+            jewellerySubTypeText.setText(requireContext().getResources().getString(R.string.sub_type));
             jewellerySubTypeLayout.setEnabled(false);
             jewellerySubTypeText.setEnabled(false);
         }
     }
 
-    private String setInputText(float sliderValue , TextInputEditText editText ,TextInputLayout layout)
-    {
+    private String setInputText(float sliderValue, TextInputEditText editText, TextInputLayout layout) {
         float formComponent;
-        if(!isChanging)
-        {
+        if (!isChanging) {
             isChanging = true;
             layout.setErrorEnabled(false);
             formComponent = (float) (Math.ceil(sliderValue * 100) / 100);
@@ -368,19 +396,16 @@ public class FormFragment extends Fragment {
         return "0.00";
     }
 
-    private String setSlider(TextInputEditText editText ,TextInputLayout layout,Slider slider)
-    {
-        if(!isChanging)
-        {
+    private String setSlider(TextInputEditText editText, TextInputLayout layout, Slider slider) {
+        if (!isChanging) {
             isChanging = true;
             isError = false;
             String number = Objects.requireNonNull(editText.getText()).toString();
-            if(number.isEmpty()) {
+            if (number.isEmpty()) {
                 slider.setValue(0.00f);
                 isChanging = false;
                 return "0.00";
-            }
-            else if (number.equals(".")) {
+            } else if (number.equals(".")) {
                 number = "0.";
                 editText.setText(number);
                 editText.setSelection(editText.getText().length());
@@ -393,19 +418,16 @@ public class FormFragment extends Fragment {
                 isChanging = false;
                 return "0.00";
             } else {
-                if(number.matches("^(\\d+\\.\\d{1,2}|\\d+|\\d+\\.)$"))
-                {
+                if (number.matches("^(\\d+\\.\\d{1,2}|\\d+|\\d+\\.)$")) {
                     float sliderValue = Float.parseFloat(number);
-                    if(sliderValue >= 0.00 && sliderValue <= 100.00)
-                    {
+                    if (sliderValue >= 0.00 && sliderValue <= 100.00) {
                         layout.setErrorEnabled(false);
                         slider.setValue(sliderValue);
                         editText.setSelection(editText.getText().length());
                         isChanging = false;
 
                         return String.valueOf(Math.ceil(sliderValue * 100) / 100);
-                    }
-                    else {
+                    } else {
                         layout.setErrorEnabled(true);
                         layout.setError(" ");
 //                            TODO : make custom Toast
@@ -416,7 +438,7 @@ public class FormFragment extends Fragment {
                         isChanging = false;
                         return "0.00";
                     }
-                }else {
+                } else {
                     layout.setErrorEnabled(true);
                     layout.setError(" ");
                     isError = true;
@@ -431,8 +453,6 @@ public class FormFragment extends Fragment {
         isChanging = false;
         return "0.00";
     }
-
-
 
     private void checkData() {
 
@@ -453,123 +473,178 @@ public class FormFragment extends Fragment {
         jewelleryMainTypeLayout.setErrorEnabled(false);
         jewellerySubTypeLayout.setErrorEnabled(false);
 
-        FormValidation fv = new FormValidation(designCode,customerCode,tempCode,mainType,subType,workBy,workPlace);
+        FormValidation fv = new FormValidation(designCode, customerCode, tempCode, mainType, subType, workBy, workPlace);
         fv.validate(result -> {
-            switch (result){
-                case "Small Design Code" :
-                {
+            switch (result) {
+                case "Small Design Code": {
                     design_code_layout.setErrorEnabled(true);
                     design_code_layout.setError(" ");
                     design_code_text.setError("Enter minimum 5 charter Design Code ");
-                    mainScrollView.scrollTo(0,design_code_layout.getTop());
+                    mainScrollView.scrollTo(0, design_code_layout.getTop());
                     break;
                 }
-                case "Small Customer Code" :
-                {
+                case "Small Customer Code": {
                     customer_code_layout.setErrorEnabled(true);
                     customer_code_layout.setError(" ");
                     customer_code_text.setError("Enter minimum 5 charter Customer Code");
-                    mainScrollView.scrollTo(0,customer_code_layout.getTop());
+                    mainScrollView.scrollTo(0, customer_code_layout.getTop());
                     break;
                 }
-                case "Empty Temp Code" :
-                {
+                case "Empty Temp Code": {
                     temp_code_layout.setErrorEnabled(true);
                     temp_code_layout.setError(" ");
                     temp_code_text.setError("Enter Temp Code Required");
-                    mainScrollView.scrollTo(0,temp_code_layout.getTop());
+                    mainScrollView.scrollTo(0, temp_code_layout.getTop());
                     break;
                 }
-                case "Small Temp Code" :
-                {
+                case "Small Temp Code": {
                     temp_code_layout.setErrorEnabled(true);
                     temp_code_layout.setError(" ");
                     temp_code_text.setError("Enter minimum 5 charter Temp Code");
-                    mainScrollView.scrollTo(0,temp_code_layout.getTop());
+                    mainScrollView.scrollTo(0, temp_code_layout.getTop());
                     break;
                 }
-                case "Empty Main Type" :
-                {
+                case "Empty Main Type": {
                     jewelleryMainTypeLayout.setErrorEnabled(true);
-                    jewelleryMainTypeLayout.setError(" ");
-                    mainScrollView.scrollTo(0,jewelleryMainTypeLayout.getTop());
+                    jewelleryMainTypeLayout.setError("");
+                    mainScrollView.scrollTo(0, jewelleryMainTypeLayout.getTop());
                     break;
                 }
-                case "Empty sub Type" :
-                {
+                case "Empty sub Type": {
                     jewellerySubTypeLayout.setErrorEnabled(true);
-                    jewellerySubTypeLayout.setError(" ");
-                    mainScrollView.scrollTo(0,jewellerySubTypeLayout.getTop());
+                    jewellerySubTypeLayout.setError("");
+                    mainScrollView.scrollTo(0, jewellerySubTypeLayout.getTop());
                     break;
                 }
-                case "work by empty" :
-                {
+                case "work by empty": {
                     workBy = "SHD";
                     break;
                 }
-                case "work place empty" :
-                {
+                case "work place empty": {
                     workPlace = "SHD office";
                     break;
                 }
-                case "NO Error" :
-                {
+                case "NO Error": {
+                    isError = false;
+                    errorLayout = null;
                     if (!designCode.isEmpty() && designCodeList.documentExits()) {
-                        if(codes.isDesignCodeExists(designCode))
-                        {
+                        if (codes.isDesignCodeExists(designCode)) {
+                            isError = true;
+                            errorLayout = design_code_layout;
                             design_code_layout.setErrorEnabled(true);
                             design_code_layout.setError(" ");
                             design_code_text.setError("Design Code already exits");
-                            mainScrollView.scrollTo(0, design_code_layout.getTop());
                         }
                     }
                     if (!tempCode.isEmpty() && tempCodeList.documentExits()) {
-                        if(codes.isTempCodeExits(tempCode))
-                        {
+                        if (codes.isTempCodeExits(tempCode)) {
+                            isError = true;
+                            errorLayout = temp_code_layout;
                             temp_code_layout.setErrorEnabled(true);
                             temp_code_layout.setError(" ");
                             temp_code_text.setError("Temp Code already exits");
-                            mainScrollView.scrollTo(0,temp_code_layout.getTop());
                         }
                     }
-                    if(isError) mainScrollView.scrollTo(0,errorLayout.getTop());
+                    if (isError) mainScrollView.scrollTo(0, errorLayout.getTop());
                     else {
                         errorText.setVisibility(View.GONE);
                         storeData();
+                        resetForm();
                     }
                 }
             }
         });
     }
 
-
-    @SuppressLint("SetTextI18n")
     private void storeData() {
-        Log.d("values","img 1 :"+img1Url+"\nimg 2 :"+img2Url+"\nCustomer Name :"+customerName+"\ncustomer code :"+customerCode+
-                "\ndesign code :"+designCode+"\ntemp code :"+tempCode+"\nstatus :"+status+"\nwork by :"+workBy+"\nwork place :"+workPlace+
-                "\ndate :"+selectedDate+"\nmain type :"+mainType+"\nsub type :"+subType+"\ngold :"+gold_weight+"\ndiamond :"+diamond_weight+
-                "\nlength :"+length+"\nwidth :"+width+"\nheight :"+height);
 
-        JewelleryDetailsStore jds = new JewelleryDetailsStore(img1Url,img2Url,customerName,designCode,status,customerCode,tempCode,workBy,workPlace,selectedDate,mainType,subType,length,width,height,gold_weight,diamond_weight);
-        jds.StoreJewelleryImg(result -> {
-            switch (result)
-            {
-                case "Img Not Store" :
-                {
-                    errorText.setVisibility(View.VISIBLE);
-                    errorText.setText("Img Not Stored");
-                    mainScrollView.scrollTo(0,0);
+        LayoutInflater inflater2 = (LayoutInflater) requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View dialogBoxView = inflater2.inflate(R.layout.custom_dialog_box, null);
+        Button dialogCancel = dialogBoxView.findViewById(R.id.cancel_button);
+        LottieAnimationView animationView = dialogBoxView.findViewById(R.id.lottie_animation_view);
+        TextView dialogMsg = dialogBoxView.findViewById(R.id.description);
+        dialogCancel.setEnabled(false);
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_SHD_dialogBox)
+                .setTitle("Processing..")
+                .setCancelable(false);
+
+        dialogBuilder.setView(dialogBoxView);
+        Handler handler = new Handler(Looper.getMainLooper());
+        animationView.setAnimation("spinner_circle.json");
+        AlertDialog dialog = dialogBuilder.create();
+
+        JewelleryDetailsStore jds = new JewelleryDetailsStore(img1Url, img2Url, customerName, designCode, status, customerCode, tempCode, workBy, workPlace, selectedDate, mainType, subType, length, width, height, gold_weight, diamond_weight);
+        jds.StoreJewelleryImg(result -> requireActivity().runOnUiThread(() -> {
+            switch (result) {
+                case "Img Not Stored": {
+                    dialogCancel.setEnabled(true);
+                    dialog.setTitle("Warning");
+                    dialogMsg.setTextColor(requireContext().getColor(R.color.dialogBox_error_text_color));
+                    dialogMsg.setText(requireContext().getResources().getString(R.string.Design_Img_Not_Stored));
+                    animationView.setAnimation("warning.json");
                     break;
                 }
-                case "Design Not Store" :
-                {
-                    errorText.setVisibility(View.VISIBLE);
-                    errorText.setText("Design Not Stored");
-                    mainScrollView.scrollTo(0,0);
+                case "Design Not Store": {
+                    dialogCancel.setEnabled(true);
+                    dialog.setTitle("Warning");
+                    dialogMsg.setTextColor(requireContext().getColor(R.color.dialogBox_error_text_color));
+                    dialogMsg.setText(requireContext().getResources().getString(R.string.Design_Not_Stored));
+                    animationView.setAnimation("warning.json");
+                    break;
+                }
+                case "Successfully": {
+                    dialogCancel.setEnabled(true);
+                    dialog.setTitle("Successfully");
+                    dialogMsg.setTextColor(requireContext().getColor(R.color.dialogBox_text_color));
+                    dialogMsg.setText(requireContext().getResources().getString(R.string.Design_Stored_Successfully));
+                    animationView.setAnimation("complete.json");
                     break;
                 }
             }
+        }));
+
+        Runnable animationRunnable = new Runnable() {
+            @Override
+            public void run() {
+                animationView.playAnimation();
+                handler.postDelayed(this, 2000);
+            }
+        };
+        handler.postDelayed(animationRunnable, 200);
+        dialog.show();
+
+        dialogCancel.setOnClickListener(v -> {
+            handler.removeCallbacks(animationRunnable);
+            animationView.cancelAnimation();
+            dialog.dismiss();
         });
     }
 
+
+    private void resetForm() {
+        jewelleryImg1.setImageResource(R.drawable.default_img);
+        jewelleryImg2.setImageResource(R.drawable.default_img);
+        currentDate();
+        designStatus.setChecked(false);
+        jewelleryMainTypeText.setText(requireContext().getResources().getString(R.string.select_jewellery));
+        jewellerySubTypeText.setText(requireContext().getResources().getString(R.string.select_sub_type));
+        jewellerySubTypeLayout.setEnabled(false);
+        setMainDropDownList();
+        gold_slider.setValue(0.00f);
+        diamond_slider.setValue(0.00f);
+        length_slider.setValue(0.00f);
+        width_slider.setValue(0.00f);
+        height_slider.setValue(0.00f);
+        gold_text.setText(requireContext().getResources().getString(R.string.form_starting_number));
+        diamond_text.setText(requireContext().getResources().getString(R.string.form_starting_number));
+        length_text.setText(requireContext().getResources().getString(R.string.form_starting_number));
+        width_text.setText(requireContext().getResources().getString(R.string.form_starting_number));
+        height_text.setText(requireContext().getResources().getString(R.string.form_starting_number));
+        design_code_text.setText("");
+        customer_text.setText("");
+        work_by_text.setText(requireContext().getResources().getString(R.string.work_by_text));
+        work_place_text.setText(requireContext().getResources().getString(R.string.work_place_text));
+        customer_code_text.setText("");
+        temp_code_text.setText("");
+    }
 }

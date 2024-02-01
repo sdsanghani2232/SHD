@@ -14,10 +14,8 @@ import com.shd.halperclass.tabsadapaters.ProfilesDetailsAdapter;
 public class ProfilesDetailFragment extends Fragment {
     TabLayout profilestablayout;
     ViewPager2 profilesViewPager;
-
     public ProfilesDetailFragment() {
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

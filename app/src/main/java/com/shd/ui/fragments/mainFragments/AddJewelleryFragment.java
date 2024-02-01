@@ -16,10 +16,10 @@ public class AddJewelleryFragment extends Fragment {
     TabLayout addJewellerytablayout;
     ViewPager2 addJewelleryViewPager;
 
+
     public AddJewelleryFragment() {
         // Required empty public constructor
     }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +38,7 @@ public class AddJewelleryFragment extends Fragment {
 
         addJewelleryViewPager.setUserInputEnabled(false);
         addJewelleryViewPager.setOffscreenPageLimit(1);
+
         new TabLayoutMediator(addJewellerytablayout, addJewelleryViewPager, (tab, position) -> {
             switch (position)
             {

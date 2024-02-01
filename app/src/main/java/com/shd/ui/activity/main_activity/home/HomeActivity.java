@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
+import android.util.Log;
+
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.shd.R;
 import com.shd.halperclass.informationclass.AdminInfo;
@@ -99,13 +101,17 @@ public class HomeActivity extends AppCompatActivity {
 
     private void replace(int position)
     {
-        viewPager2.setCurrentItem(position);
+        viewPager2.setCurrentItem(position,true);
     }
 
     private boolean isHomeFragment()
     {
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.view_pager2);
-        return fragment instanceof HomeFragment;
+        ViewPager2 viewPager2 = findViewById(R.id.view_pager2);
+
+        if(viewPager2 == null || viewPager2.getAdapter() == null || viewPager2.getAdapter().getItemCount() == 0) return false;
+
+        int currentFragment = viewPager2.getCurrentItem();
+        return currentFragment == 0 ;
     }
 
 //    @Override

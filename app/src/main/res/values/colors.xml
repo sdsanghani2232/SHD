@@ -94,4 +94,10 @@
     <color name="slider_label_text_color">#000000</color>
     <color name="slider_label_background_color">#3363DE</color>
 
+<!--    Dialog Box-->
+    <color name="dialogBox_button_text_color">#3363DE</color>
+    <color name="dialogBox_text_color">#009A19</color>
+    <color name="dialogBox_error_text_color">#EC0505</color>
+
+
 </resources>

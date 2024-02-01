@@ -37,6 +37,12 @@
     <string name="enter_customer_code">Enter Customer Code</string>
     <string name="temp_code">Temp Code :</string>
     <string name="enter_temp_code">Enter temp code</string>
+    <string name="cancel">Cancel\n</string>
+    <string name="check_internet_connectivity">Check Internet Connectivity</string>
+    <string name="sub_type">Sub Type</string>
+    <string name="Design_Img_Not_Stored">Design Img Not Stored</string>
+    <string name="Design_Not_Stored">Design Img Not Stored</string>
+    <string name="Design_Stored_Successfully">Design Stored Successfully</string>
 
 
     <string-array name="jewellery_main_type">

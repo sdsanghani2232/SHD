@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.shd.R;
 public class SearchFragment extends Fragment {
+
     public SearchFragment() {
         // Required empty public constructor
     }
