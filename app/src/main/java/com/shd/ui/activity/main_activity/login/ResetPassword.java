@@ -72,7 +72,6 @@ public class ResetPassword extends AppCompatActivity {
         });
     }
 
-    @SuppressLint("SetTextI18n")
     private void checkConnection() {
         CheckInternet internet = new CheckInternet(getApplicationContext());
         if(!internet.Check())
@@ -81,7 +80,7 @@ public class ResetPassword extends AppCompatActivity {
             error.setVisibility(View.VISIBLE);
             send.setBackgroundColor(getColor(R.color.RP_not_enable_button_color));
             send.setClickable(false);
-            error.setText("Check Internet Connectivity");
+            error.setText(getResources().getString(R.string.check_internet_connectivity));
         }else {
             isConnection = true;
             error.setVisibility(View.GONE);
@@ -104,7 +103,7 @@ public class ResetPassword extends AppCompatActivity {
         if(emailId.isEmpty() || emailId.trim().length() == 0 )
         {
             emailLayout.setErrorEnabled(true);
-            emailLayout.setError("Enter The email id ");
+            emailLayout.setError(getResources().getString(R.string.empty_email_error));
         }else {
             AdminInfo adminInfo = AdminInfo.getInstance();
             if(adminInfo.isAdmin(emailId))
@@ -112,14 +111,14 @@ public class ResetPassword extends AppCompatActivity {
                 sendEmail(emailId);
             }else {
                 emailLayout.setErrorEnabled(true);
-                emailLayout.setError("Enter valid email id ");
+                emailLayout.setError(getResources().getString(R.string.invalid_email_error));
             }
         }
     }
 
     private void sendEmail(String emailId) {
         auth.sendPasswordResetEmail(emailId)
-                .addOnCompleteListener(task -> Toast.makeText(ResetPassword.this, "Password Rest Email send", Toast.LENGTH_SHORT).show()).
-                addOnFailureListener(e -> Toast.makeText(ResetPassword.this, "Some Thing was Wrong please try again", Toast.LENGTH_SHORT).show());
+                .addOnCompleteListener(task -> Toast.makeText(ResetPassword.this, getResources().getString(R.string.reset_password_email), Toast.LENGTH_SHORT).show()).
+                addOnFailureListener(e -> Toast.makeText(ResetPassword.this, getResources().getString(R.string.other_error), Toast.LENGTH_SHORT).show());
     }
 }

@@ -7,8 +7,6 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
-import android.util.Log;
-
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.shd.R;
 import com.shd.halperclass.informationclass.AdminInfo;
@@ -33,14 +31,15 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         viewPager2 = findViewById(R.id.view_pager2);
-        adminModel = new ViewModelProvider(this).get(AdminModel.class);
-        adminModel.getAdminMap().observe(this, adminInfo::updateAdminList);
-
-        designCodeModel = new ViewModelProvider(this).get(DesignCodeModel.class);
-        designCodeModel.getDesignCodeList().observe(this, codes::updateDesignCodes);
-
-        tempCodeModel = new ViewModelProvider(this).get(TempCodeModel.class);
-        tempCodeModel.getTempCodeList().observe(this, codes::updateTempCodes);
+        // TODO : that code is working. after complete Entire app remove comment
+//        adminModel = new ViewModelProvider(this).get(AdminModel.class);
+//        adminModel.getAdminMap().observe(this, adminInfo::updateAdminList);
+//
+//        designCodeModel = new ViewModelProvider(this).get(DesignCodeModel.class);
+//        designCodeModel.getDesignCodeList().observe(this, codes::updateDesignCodes);
+//
+//        tempCodeModel = new ViewModelProvider(this).get(TempCodeModel.class);
+//        tempCodeModel.getTempCodeList().observe(this, codes::updateTempCodes);
 
         navigation = findViewById(R.id.bottom_navigation);
 

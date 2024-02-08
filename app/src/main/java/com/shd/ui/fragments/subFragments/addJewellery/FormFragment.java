@@ -103,6 +103,7 @@ public class FormFragment extends Fragment {
         date_text.setOnClickListener(v -> setDate());
         imgScrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> setIndicator(scrollX));
         jewelleryMainTypeText.setOnItemClickListener((parent, view1, position, id) -> {
+            jewelleryMainTypeLayout.setFocusable(true);
             jewelleryMainTypeLayout.setErrorEnabled(false);
             setSubDropDown(parent.getItemAtPosition(position).toString());
         });
@@ -328,7 +329,7 @@ public class FormFragment extends Fragment {
 
         MaterialDatePicker<Long> datePicker = dateBuilder.build();
 
-        dateBuilder.setTitleText("Select Date");
+        dateBuilder.setTitleText(requireContext().getResources().getString(R.string.select_date));
         dateBuilder.setSelection(System.currentTimeMillis());
 
         datePicker.addOnPositiveButtonClickListener(selection -> {
@@ -433,7 +434,7 @@ public class FormFragment extends Fragment {
 //                            TODO : make custom Toast
                         isError = true;
                         errorLayout = layout;
-                        Toast.makeText(requireContext(), "Only 0.00 to 100.00 number Allow", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(requireContext(), requireContext().getResources().getString(R.string.slider_error1), Toast.LENGTH_SHORT).show();
                         slider.setValue(0.00f);
                         isChanging = false;
                         return "0.00";
@@ -443,7 +444,7 @@ public class FormFragment extends Fragment {
                     layout.setError(" ");
                     isError = true;
                     errorLayout = layout;
-                    Toast.makeText(requireContext(), "Only 2 Decimal Allow", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), requireContext().getResources().getString(R.string.slider_error2), Toast.LENGTH_SHORT).show();
                     slider.setValue(0.00f);
                     isChanging = false;
                     return "0.00";
@@ -478,29 +479,29 @@ public class FormFragment extends Fragment {
             switch (result) {
                 case "Small Design Code": {
                     design_code_layout.setErrorEnabled(true);
-                    design_code_layout.setError(" ");
-                    design_code_text.setError("Enter minimum 5 charter Design Code ");
+                    design_code_layout.setError("");
+                    design_code_text.setError(requireContext().getResources().getString(R.string.small_design_code));
                     mainScrollView.scrollTo(0, design_code_layout.getTop());
                     break;
                 }
                 case "Small Customer Code": {
                     customer_code_layout.setErrorEnabled(true);
-                    customer_code_layout.setError(" ");
-                    customer_code_text.setError("Enter minimum 5 charter Customer Code");
+                    customer_code_layout.setError("");
+                    customer_code_text.setError(requireContext().getResources().getString(R.string.small_customer_code));
                     mainScrollView.scrollTo(0, customer_code_layout.getTop());
                     break;
                 }
                 case "Empty Temp Code": {
                     temp_code_layout.setErrorEnabled(true);
                     temp_code_layout.setError(" ");
-                    temp_code_text.setError("Enter Temp Code Required");
+                    temp_code_text.setError(requireContext().getResources().getString(R.string.required_temp_code));
                     mainScrollView.scrollTo(0, temp_code_layout.getTop());
                     break;
                 }
                 case "Small Temp Code": {
                     temp_code_layout.setErrorEnabled(true);
                     temp_code_layout.setError(" ");
-                    temp_code_text.setError("Enter minimum 5 charter Temp Code");
+                    temp_code_text.setError(requireContext().getResources().getString(R.string.small_temp_code));
                     mainScrollView.scrollTo(0, temp_code_layout.getTop());
                     break;
                 }
@@ -517,11 +518,11 @@ public class FormFragment extends Fragment {
                     break;
                 }
                 case "work by empty": {
-                    workBy = "SHD";
+                    workBy = requireContext().getResources().getString(R.string.work_by_text);
                     break;
                 }
                 case "work place empty": {
-                    workPlace = "SHD office";
+                    workPlace = requireContext().getResources().getString(R.string.work_place_text);
                     break;
                 }
                 case "NO Error": {
@@ -532,8 +533,8 @@ public class FormFragment extends Fragment {
                             isError = true;
                             errorLayout = design_code_layout;
                             design_code_layout.setErrorEnabled(true);
-                            design_code_layout.setError(" ");
-                            design_code_text.setError("Design Code already exits");
+                            design_code_layout.setError("");
+                            design_code_text.setError(requireContext().getResources().getString(R.string.exits_design_code));
                         }
                     }
                     if (!tempCode.isEmpty() && tempCodeList.documentExits()) {
@@ -542,7 +543,7 @@ public class FormFragment extends Fragment {
                             errorLayout = temp_code_layout;
                             temp_code_layout.setErrorEnabled(true);
                             temp_code_layout.setError(" ");
-                            temp_code_text.setError("Temp Code already exits");
+                            temp_code_text.setError(requireContext().getResources().getString(R.string.exits_temp_code));
                         }
                     }
                     if (isError) mainScrollView.scrollTo(0, errorLayout.getTop());
@@ -565,7 +566,7 @@ public class FormFragment extends Fragment {
         TextView dialogMsg = dialogBoxView.findViewById(R.id.description);
         dialogCancel.setEnabled(false);
         MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_SHD_dialogBox)
-                .setTitle("Processing..")
+                .setTitle(requireContext().getResources().getString(R.string.processing))
                 .setCancelable(false);
 
         dialogBuilder.setView(dialogBoxView);
@@ -578,7 +579,7 @@ public class FormFragment extends Fragment {
             switch (result) {
                 case "Img Not Stored": {
                     dialogCancel.setEnabled(true);
-                    dialog.setTitle("Warning");
+                    dialog.setTitle(requireContext().getResources().getString(R.string.warning));
                     dialogMsg.setTextColor(requireContext().getColor(R.color.dialogBox_error_text_color));
                     dialogMsg.setText(requireContext().getResources().getString(R.string.Design_Img_Not_Stored));
                     animationView.setAnimation("warning.json");
@@ -586,7 +587,7 @@ public class FormFragment extends Fragment {
                 }
                 case "Design Not Store": {
                     dialogCancel.setEnabled(true);
-                    dialog.setTitle("Warning");
+                    dialog.setTitle(requireContext().getResources().getString(R.string.warning));
                     dialogMsg.setTextColor(requireContext().getColor(R.color.dialogBox_error_text_color));
                     dialogMsg.setText(requireContext().getResources().getString(R.string.Design_Not_Stored));
                     animationView.setAnimation("warning.json");
@@ -594,7 +595,7 @@ public class FormFragment extends Fragment {
                 }
                 case "Successfully": {
                     dialogCancel.setEnabled(true);
-                    dialog.setTitle("Successfully");
+                    dialog.setTitle(requireContext().getResources().getString(R.string.successfully));
                     dialogMsg.setTextColor(requireContext().getColor(R.color.dialogBox_text_color));
                     dialogMsg.setText(requireContext().getResources().getString(R.string.Design_Stored_Successfully));
                     animationView.setAnimation("complete.json");

@@ -14,16 +14,16 @@ import com.shd.ui.activity.main_activity.home.HomeActivity;
 @SuppressLint("CustomSplashScreen")
 public class SplashScreen extends AppCompatActivity {
 
-    // TODO : that code is working. after complete Entire app remove comment
+
     AdminModel model;
     final AdminInfo adminInfo = AdminInfo.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
-
-        model = new ViewModelProvider(this).get(AdminModel.class);
-        model.getAdminMap().observe(this, adminInfo::updateAdminList);
+// TODO : that code is working. after complete Entire app remove comment
+//        model = new ViewModelProvider(this).get(AdminModel.class);
+//        model.getAdminMap().observe(this, adminInfo::updateAdminList);
 
         new Handler().postDelayed(() -> {
 //            startActivity(new Intent(getApplicationContext(), LogIn.class));

@@ -37,10 +37,10 @@ public class ProfilesDetailFragment extends Fragment {
             switch (position)
             {
                 case 0 :
-                    tab.setText("EMPLOYEES");
+                    tab.setText(requireContext().getResources().getString(R.string.profile_tab_emp));
                     break;
                 case 1 :
-                    tab.setText("CUSTOMER");
+                    tab.setText(requireContext().getResources().getString(R.string.profile_tab_customer));
                     break;
             }
         }).attach();

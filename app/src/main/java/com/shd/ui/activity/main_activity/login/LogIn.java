@@ -83,34 +83,34 @@ public class LogIn extends AppCompatActivity {
                 case "Empty Email" :
                 {
                     emailLayout.setErrorEnabled(true);
-                    emailLayout.setError("Enter The email id ");
+                    emailLayout.setError(getResources().getString(R.string.empty_email_error));
                     break;
                 }
                 case "Empty Password" :
                 {
                     passwordLayout.setErrorEnabled(true);
-                    passwordLayout.setError("Enter Password..");
+                    passwordLayout.setError(getResources().getString(R.string.empty_email_error));
                     break;
                 }
                 case "Invalid Email" :
                 {
                     emailLayout.setErrorEnabled(true);
-                    emailLayout.setError("Enter valid email Id ");
+                    emailLayout.setError(getResources().getString(R.string.invalid_email_error));
                     break;
                 }
                 case "Invalid Password" :
                 {
                     passwordLayout.setErrorEnabled(true);
-                    passwordLayout.setError("Enter valid Password");
+                    passwordLayout.setError(getResources().getString(R.string.invalid_password_error));
                     break;
                 }
                 case "other" :
                 {
-                    Toast.makeText(getApplicationContext(), "Some Thing was Wrong please try again", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), getResources().getString(R.string.other_error), Toast.LENGTH_SHORT).show();
                     emailLayout.setErrorEnabled(true);
-                    emailLayout.setError("Enter valid email Id ");
+                    emailLayout.setError(getResources().getString(R.string.invalid_email_error));
                     passwordLayout.setErrorEnabled(true);
-                    passwordLayout.setError("Enter valid Password");
+                    passwordLayout.setError(getResources().getString(R.string.invalid_password_error));
                     break;
                 }
             }

@@ -43,10 +43,10 @@ public class AddJewelleryFragment extends Fragment {
             switch (position)
             {
                 case 0 :
-                    tab.setText("FORM");
+                    tab.setText(requireContext().getResources().getString(R.string.add_jewellery_tab_form));
                     break;
                 case 1 :
-                    tab.setText("EXCEL");
+                    tab.setText(requireContext().getResources().getString(R.string.add_jewellery_tab_excel));
                     break;
             }
         }).attach();

@@ -40,6 +40,8 @@
     <color name="form_button_background_onClick_color">#3363DE</color>
     <color name="form_not_enable_button_color">#302C2C</color>
 
+    <color name="excel_button_background_color">#31DA0C</color>
+
 <!--    3) Search -->
 <!--    4) Profiles Detail -->
     <color name="profiles_details_background">#CA9F85</color>

@@ -78,4 +78,11 @@
         <item name="fontFamily">@font/poppins_bold</item>
         <item name="android:textSize">20sp</item>
     </style>
+
+    <style name="Theme.SHD.excel.fileSelect.Button" parent="Widget.Material3.Button.ElevatedButton">
+        <item name="backgroundTint">@color/excel_button_background_color</item>
+        <item name="android:textColor">@color/form_button_text_color</item>
+        <item name="fontFamily">@font/poppins_bold</item>
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

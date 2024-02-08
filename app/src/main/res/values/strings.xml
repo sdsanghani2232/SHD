@@ -5,10 +5,18 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="log_in">Log In</string>
+    <string name="empty_email_error">Enter The email id</string>
+    <string name="invalid_email_error">Enter The valid email id</string>
+    <string name="empty_password_error">Enter Password</string>
+    <string name="invalid_password_error">Enter valid Password</string>
+    <string name="other_error">Some Thing was Wrong please try again</string>
+    <string name="reset_password_email">Reset Password Email Send</string>
     <string name="forgot_password">Forgot Password</string>
     <string name="login_page_img">Login page img</string>
     <string name="request_pass_string">Request to reset your password. Please provide a valid email to initiate the reset process via email confirmation.</string>
     <string name="send">Send</string>
+    <string name="add_jewellery_tab_form">FORM</string>
+    <string name="add_jewellery_tab_excel">EXCEL</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="img_edit_icon">img_edit_icon</string>
     <string name="design_code">Design Code :</string>
@@ -19,7 +27,10 @@
     <string name="work_by">Work By :</string>
     <string name="work_by_text">SHD</string>
     <string name="work_place_text">SHD office</string>
+    <string name="select_date">Select Date</string>
     <string name="date">Date :</string>
+    <string name="slider_error1">Only 0.00 to 100.00 number Allow</string>
+    <string name="slider_error2">Only 2 Decimal Allow</string>
     <string name="jewellery_types">Jewellery Types :</string>
     <string name="select_jewellery">Jewellery</string>
     <string name="select_sub_type">Sub type</string>
@@ -37,13 +48,27 @@
     <string name="enter_customer_code">Enter Customer Code</string>
     <string name="temp_code">Temp Code :</string>
     <string name="enter_temp_code">Enter temp code</string>
-    <string name="cancel">Cancel\n</string>
+    <string name="cancel">Cancel</string>
+    <string name="small_design_code">Enter minimum 5 charter Design Code </string>
+    <string name="small_customer_code">Enter minimum 5 charter customer Code </string>
+    <string name="small_temp_code">Enter minimum 5 charter temp Code </string>
+    <string name="required_temp_code">Temp Code Required</string>
+    <string name="exits_temp_code">Temp Code already exits</string>
+    <string name="exits_design_code">Design Code already exits</string>
     <string name="check_internet_connectivity">Check Internet Connectivity</string>
     <string name="sub_type">Sub Type</string>
+    <string name="processing">Processing</string>
+    <string name="warning">Warning</string>
+    <string name="successfully">Successfully</string>
     <string name="Design_Img_Not_Stored">Design Img Not Stored</string>
     <string name="Design_Not_Stored">Design Img Not Stored</string>
     <string name="Design_Stored_Successfully">Design Stored Successfully</string>
 
+    <string name="profile_tab_emp">EMPLOYEES</string>
+    <string name="profile_tab_customer">CUSTOMER</string>
+    <string name="excel_img">excel img</string>
+    <string name="file_name">File Name</string>
+    <string name="select_excel">Select Excel</string>
 
     <string-array name="jewellery_main_type">
       <item>Ring</item>
