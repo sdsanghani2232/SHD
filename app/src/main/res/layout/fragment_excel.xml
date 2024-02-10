@@ -20,6 +20,22 @@
            android:layout_height="wrap_content">
 
            <TextView
+               android:id="@+id/excel_error_text"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginTop="5dp"
+               android:layout_marginBottom="5dp"
+               android:textColor="@color/Edit_Text_error_text_color"
+               app:layout_constraintTop_toTopOf="@id/excel_main_layout"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintBottom_toTopOf="@id/excel_customer_text"
+               android:fontFamily="@font/poppins_medium"
+               android:textSize="20sp"
+               android:visibility="gone"
+               />
+
+           <TextView
                android:id="@+id/excel_customer_text"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
@@ -249,6 +265,8 @@
                app:boxCornerRadiusTopEnd="10dp"
                app:boxCornerRadiusTopStart="10dp"
                app:boxStrokeWidth="3dp"
+               app:errorTextColor="@color/Edit_Text_error_text_color"
+               app:boxStrokeErrorColor="@color/Edit_Text_box_stroke_error_color"
                app:errorIconTint="@color/Edit_Text_end_error_icon_color"
                app:layout_constraintBottom_toTopOf="@id/excel_save_button"
                app:layout_constraintTop_toBottomOf="@id/excel_date_layout"
