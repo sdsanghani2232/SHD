@@ -16,9 +16,7 @@
 
 <!--    Reset Password-->
     <color name="RP_background">#CA9F85</color>
-    <color name="RP_title_color">#FF000000</color>
-    <color name="RP_navigation_icon_color">#FF000000</color>
-    <color name="RP_app_bar_color">#CA9F85</color>
+
     <color name="RP_msg_color">#000000</color>
     <color name="RP_not_enable_button_color">#302C2C</color>
     <color name="RP_color_primary">#FF000000</color>
@@ -49,6 +47,14 @@
     <!--    5) Profile -->
 
 <!--    component-->
+
+
+<!--    App bar-->
+    <color name="app_bar_title_color">#FF000000</color>
+    <color name="app_bar_navigation_icon_color">#FF000000</color>
+    <color name="app_bar_bg_color">#CA9F85</color>
+    <color name="app_bar_button_color">#000DFF</color>
+
 <!--    Edit Text -->
     <color name="Edit_Text_box_stroke_color">#FF000000</color>
     <color name="Edit_Text_box_stroke_error_color">#FF0000</color>
@@ -100,6 +106,15 @@
     <color name="dialogBox_button_text_color">#3363DE</color>
     <color name="dialogBox_text_color">#009A19</color>
     <color name="dialogBox_error_text_color">#EC0505</color>
+
+<!--    Card view-->
+    <color name="cv_stroke_color">#00FF29</color>
+    <color name="cv_stroke_error_color">#FF0000</color>
+    <color name="cv_bg_color">#B3000000</color>
+    <color name="cv_text_color">#FFFFFF</color>
+    <color name="cv_cancel_text_color">#FF0000</color>
+    <color name="cv_text_view_border_color">#FFFFFF</color>
+    <color name="cv_update_bg_color">#002430</color>
 
 
 </resources>

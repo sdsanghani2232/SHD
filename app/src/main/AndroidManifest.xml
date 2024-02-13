@@ -13,14 +13,22 @@
         android:theme="@style/Theme.SHD"
         tools:targetApi="31" >
         <activity
+            android:name=".ui.activity.sub_activity.ExcelDataListActivity"
+            android:enableOnBackInvokedCallback="true"
+            android:exported="false"
+            android:theme="@style/Theme.SHD.Main"
+            tools:targetApi="tiramisu" />
+        <activity
             android:name=".ui.activity.main_activity.home.HomeActivity"
             android:exported="false"
             android:theme="@style/Theme.SHD.Main"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.activity.main_activity.login.ResetPassword"
+            android:enableOnBackInvokedCallback="true"
             android:exported="false"
-            android:theme="@style/Theme.SHD.Login.ResetPassword" />
+            android:theme="@style/Theme.SHD.Login.ResetPassword"
+            tools:targetApi="tiramisu" />
         <activity
             android:name=".ui.activity.main_activity.login.LogIn"
             android:exported="false"

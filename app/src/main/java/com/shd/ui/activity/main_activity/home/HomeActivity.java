@@ -3,8 +3,6 @@ package com.shd.ui.activity.main_activity.home;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
@@ -13,7 +11,6 @@ import com.shd.halperclass.informationclass.AdminInfo;
 import com.shd.halperclass.informationclass.Codes;
 import com.shd.halperclass.tabsadapaters.HomeActivityAdapter;
 import com.shd.viewmodes.AdminModel;
-import com.shd.ui.fragments.mainFragments.HomeFragment;
 import com.shd.viewmodes.DesignCodeModel;
 import com.shd.viewmodes.TempCodeModel;
 

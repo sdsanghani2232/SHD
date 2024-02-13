@@ -36,6 +36,7 @@ public class JewelleryDetailsStore {
         this.img2 = img2;
         this.customerName = customerName;
         this.designCode = designCode;
+        this.status = status;
         this.customerCode = customerCode;
         this.tempCode = tempCode;
         this.work_by = work_by;
@@ -48,7 +49,6 @@ public class JewelleryDetailsStore {
         this.height = height;
         this.gold = gold;
         this.diamond = diamond;
-        this.status = status;
     }
 
     public void StoreJewelleryImg(Result result)

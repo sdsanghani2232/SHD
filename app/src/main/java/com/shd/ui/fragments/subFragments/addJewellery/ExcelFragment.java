@@ -3,6 +3,8 @@ package com.shd.ui.fragments.subFragments.addJewellery;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
@@ -24,7 +26,10 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.shd.R;
 import com.shd.halperclass.otherClass.CheckInternet;
-import com.shd.halperclass.otherClass.ExcelImgData;
+import com.shd.viewmodes.ExcelFileData;
+import com.shd.viewmodes.ExcelImgData;
+import com.shd.ui.activity.sub_activity.ExcelDataListActivity;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.ClientAnchor;
@@ -38,7 +43,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -222,7 +226,10 @@ public class ExcelFragment extends Fragment {
                         {
                             Picture picture = (Picture) shape;
                             ClientAnchor anchor = picture.getClientAnchor();
-                            ExcelImgData data = new ExcelImgData(anchor.getRow1(),anchor.getCol1(),picture.getPictureData().getData());
+                            byte[] data1 = picture.getPictureData().getData();
+                            Bitmap bitmap = BitmapFactory.decodeByteArray(data1,0, data1.length);
+
+                            ExcelImgData data = new ExcelImgData(anchor.getRow1(),anchor.getCol1(),bitmap);
                             img.add(data);
                         }
                     }
@@ -232,17 +239,17 @@ public class ExcelFragment extends Fragment {
 
                 // get data form sheet also add img and other data
                 int sheetCount = 0;
-                Map<Integer,List<List<String>>> sheetData = new HashMap<>();
+                Map<Integer, List<List<Object>>> sheetData = new HashMap<>();
                 for(Sheet sheet :workbook)
                 {
-                    List<List<String>> rowsData = new ArrayList<>();
+                    List<List<Object>> rowsData = new ArrayList<>();
                     sheetCount++;
                     for(Row row : sheet)
                     {
                         int nullCell = 0;
                         short firstCol = 0;
                         short lastCol = 11;
-                        List<String> rowData = new ArrayList<>();
+                        List<Object> rowData = new ArrayList<>();
                         for(short currentCol = firstCol ;currentCol<lastCol;currentCol++) {
                             if (currentCol < 10) {
                                 Cell cell = row.getCell(currentCol);
@@ -262,11 +269,11 @@ public class ExcelFragment extends Fragment {
                                     if (integer == finalSheetCount) {
                                         imgData.forEach(imgData1 -> {
                                             if (row.getRowNum() == imgData1.getRow() && imgData1.getCol() == 10) {
-                                                rowData.add(Arrays.toString(imgData1.getImg()));
+                                                rowData.add(imgData1.getBitmap());
                                                 isImg1Set.set(true);
                                             }
                                             if (row.getRowNum() == imgData1.getRow() && imgData1.getCol() == 11) {
-                                                rowData.add(Arrays.toString(imgData1.getImg()));
+                                                rowData.add(imgData1.getBitmap());
                                                 isImg2Set.set(true);
                                             }
                                         });
@@ -276,7 +283,7 @@ public class ExcelFragment extends Fragment {
                                 if (!isImg2Set.get()) rowData.add("null");
                             }
                         }
-                        List<String> designDetails = new ArrayList<>();
+                        List<Object> designDetails = new ArrayList<>();
                         designDetails.add(0,rowData.get(10));
                         designDetails.add(1,rowData.get(11));
                         designDetails.add(2,customerName);
@@ -303,11 +310,15 @@ public class ExcelFragment extends Fragment {
                 }
                 inputStream.close();
 
-                List<List<String>> excelData = new ArrayList<>();
+                List<List<Object>> excelData = new ArrayList<>();
                 sheetData.forEach((integer, lists) -> excelData.addAll(lists));
 
-                excelData.forEach(strings -> strings.forEach(s -> Log.d("data get",s)));
+                ExcelFileData fileData = ExcelFileData.getInstance();
+                fileData.setExcelDataList(excelData);
+                excelData.forEach(strings -> strings.forEach(s -> Log.d("data get",s.toString())));
 
+                Intent intent = new Intent(requireContext(), ExcelDataListActivity.class);
+                requireContext().startActivity(intent);
             }
         }catch (Exception e){
             e.printStackTrace();

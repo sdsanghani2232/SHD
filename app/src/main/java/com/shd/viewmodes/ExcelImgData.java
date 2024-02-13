@@ -1,13 +1,17 @@
-package com.shd.halperclass.otherClass;
+package com.shd.viewmodes;
+
+import android.graphics.Bitmap;
 
 public class ExcelImgData {
     int row ,col;
-    byte[] img ;
+//    byte[] img ;
+    Bitmap img;
 
-    public ExcelImgData(int row, int col, byte[] img) {
+    public ExcelImgData(int row, int col, Bitmap img) {
         this.row = row;
         this.col = col;
         this.img = img;
+
     }
 
     public int getRow() {
@@ -18,7 +22,7 @@ public class ExcelImgData {
         return col;
     }
 
-    public byte[] getImg() {
+    public Bitmap getBitmap() {
         return img;
     }
 }

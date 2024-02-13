@@ -69,19 +69,24 @@
     <string name="excel_img">excel img</string>
     <string name="file_name">File Name</string>
     <string name="select_excel">Select Excel</string>
+    <string name="design">Design</string>
+    <string name="design_img">Design img</string>
+    <string name="update">UPDATE</string>
+
+    <string name="delete">DELETE</string>
 
     <string-array name="jewellery_main_type">
-      <item>Ring</item>
-      <item>NKC</item>
-      <item>ER</item>
-      <item>BR</item>
-      <item>PND</item>
-      <item>BA</item>
-      <item>MS</item>
-      <item>NP</item>
-      <item>PDSet</item>
+        <item>Ring</item>
+        <item>NKC</item>
+        <item>ER</item>
+        <item>BR</item>
+        <item>PND</item>
+        <item>BA</item>
+        <item>MS</item>
+        <item>NP</item>
+        <item>PDSet</item>
 
-  </string-array>
+    </string-array>
 
     <string-array name="jewellery_ring_sub_type">
         <item>GR</item>
