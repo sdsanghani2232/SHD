@@ -228,7 +228,6 @@ public class ExcelFragment extends Fragment {
                             ClientAnchor anchor = picture.getClientAnchor();
                             byte[] data1 = picture.getPictureData().getData();
                             Bitmap bitmap = BitmapFactory.decodeByteArray(data1,0, data1.length);
-
                             ExcelImgData data = new ExcelImgData(anchor.getRow1(),anchor.getCol1(),bitmap);
                             img.add(data);
                         }

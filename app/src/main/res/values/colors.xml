@@ -52,7 +52,7 @@
 <!--    App bar-->
     <color name="app_bar_title_color">#FF000000</color>
     <color name="app_bar_navigation_icon_color">#FF000000</color>
-    <color name="app_bar_bg_color">#CA9F85</color>
+    <color name="app_bar_bg_color">#21CC27</color>
     <color name="app_bar_button_color">#000DFF</color>
 
 <!--    Edit Text -->

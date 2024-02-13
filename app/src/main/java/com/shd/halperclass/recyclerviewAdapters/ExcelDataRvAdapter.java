@@ -4,8 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +18,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 import com.shd.R;
+import com.shd.ui.activity.sub_activity.UpdateJWDataActivity;
 import com.shd.viewmodes.ExcelFileData;
 import java.util.List;
 
@@ -62,11 +63,11 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             ((DataView)holder).bindDataView(row);
 
             ((DataView)holder).update.setOnClickListener(v->{
-//                Context context = v.getContext();
-//                Intent intent = new Intent(context, UpdateActivity.class);
-//                intent.putExtra("position",position);
-//                context.startActivity(intent);
-//                ((DataView)holder).complete();
+                Context context = v.getContext();
+                Intent intent = new Intent(context, UpdateJWDataActivity.class);
+                intent.putExtra("position",position);
+                context.startActivity(intent);
+                ((DataView)holder).complete();
             });
 
             ((DataView)holder).delete.setOnClickListener(v -> {
@@ -126,9 +127,11 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
         @SuppressLint("SetTextI18n")
         public void bindDataView(List<Object> row) {
+//            TODO : design code and temp code validation
             Bitmap img1Data ,img2Data;
             cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(),R.color.cv_stroke_color));
             if(!row.get(0).equals("null")) {
+                Log.d("Data of list ",row.get(0).toString());
                 img1Data = (Bitmap) row.get(0);
                 img1.setImageBitmap(img1Data);
             }else img1.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(),R.drawable.default_img));

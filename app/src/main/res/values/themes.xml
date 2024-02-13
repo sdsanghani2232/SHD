@@ -37,7 +37,6 @@
         <item name="titleTextColor">@color/app_bar_title_color</item>
         <item name="navigationIcon">@drawable/back_menu</item>
         <item name="navigationIconTint">@color/app_bar_navigation_icon_color</item>
-        <item name="android:background">@color/app_bar_bg_color</item>
     </style>
 
     <style name="Theme.SHD.fab_button" parent="">
