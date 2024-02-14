@@ -39,18 +39,12 @@ public class ExcelDataListActivity extends AppCompatActivity {
 
         data = excelFileData.getExcelDataList();
 
-        ExcelDataRvAdapter adapter = new ExcelDataRvAdapter(totalDesign,totalErrorDesign);
+        ExcelDataRvAdapter adapter = new ExcelDataRvAdapter(totalDesign,totalErrorDesign,this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         toolbar.setNestedScrollingEnabled(true);
         toolbar.setNavigationOnClickListener(v -> finish());
-
-        save.setOnClickListener(v ->
-        {
-
-        });
-
 
         OnBackPressedDispatcher dispatcher = getOnBackPressedDispatcher();
         dispatcher.addCallback(this, new OnBackPressedCallback(true) {
@@ -63,6 +57,12 @@ public class ExcelDataListActivity extends AppCompatActivity {
                     new Handler().postDelayed(() -> exit = false,5000);
                 }else finish();
             }
+        });
+
+        save.setOnClickListener(v->
+        {
+            adapter.storeData();
+            save.setClickable(false);
         });
 
     }

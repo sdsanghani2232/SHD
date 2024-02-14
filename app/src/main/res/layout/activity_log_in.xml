@@ -60,18 +60,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="@string/email"
-            app:boxStrokeWidth="3dp"
+            style="@style/Theme.SHD.inputText"
             app:layout_constraintTop_toBottomOf="@id/text"
             app:startIconDrawable="@drawable/email"
-            android:textColorHint="@color/Edit_Text_hint_text_color"
-            app:boxStrokeColor="@color/Edit_Text_box_stroke_color"
-            app:boxStrokeErrorColor="@color/Edit_Text_box_stroke_error_color"
             app:hintTextColor="@color/Edit_Text_hint_text_color"
             app:startIconTint="@color/login_start_icon_color"
-            app:errorTextColor="@color/Edit_Text_error_text_color"
-            app:errorIconTint="@color/Edit_Text_end_error_icon_color"
-            app:cursorColor="@color/Edit_Text_cursor_color"
-            app:cursorErrorColor="@color/Edit_Text_cursor_error_color">
+            app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_text"
@@ -91,22 +85,13 @@
             android:layout_height="wrap_content"
             android:layout_margin="15dp"
             android:hint="@string/password"
-            android:textColorHint="@color/Edit_Text_hint_text_color"
-            app:boxStrokeColor="@color/Edit_Text_box_stroke_color"
-            app:boxStrokeErrorColor="@color/Edit_Text_box_stroke_error_color"
+            style="@style/Theme.SHD.inputText"
+            app:hintEnabled="true"
             app:hintTextColor="@color/Edit_Text_hint_text_color"
             app:startIconTint="@color/login_start_icon_color"
-            app:errorTextColor="@color/Edit_Text_error_text_color"
-            app:errorIconTint="@color/Edit_Text_end_error_icon_color"
-            app:cursorColor="@color/Edit_Text_cursor_color"
-            app:cursorErrorColor="@color/Edit_Text_cursor_error_color"
-            app:boxStrokeWidth="3dp"
-            app:endIconTint="@color/Edit_Text_end_icon_color"
-            app:endIconMode="password_toggle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email_layout"
-            app:startIconDrawable="@drawable/login_lock_password"
-            >
+            app:startIconDrawable="@drawable/login_lock_password">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/pass_text"

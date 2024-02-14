@@ -575,7 +575,7 @@ public class FormFragment extends Fragment {
         AlertDialog dialog = dialogBuilder.create();
 
         JewelleryDetailsStore jds = new JewelleryDetailsStore(img1Url, img2Url, customerName, designCode, status, customerCode, tempCode, workBy, workPlace, selectedDate, mainType, subType, length, width, height, gold_weight, diamond_weight);
-        jds.StoreJewelleryImg(result -> requireActivity().runOnUiThread(() -> {
+        jds.storeFormJewelleryImg(result -> requireActivity().runOnUiThread(() -> {
             switch (result) {
                 case "Img Not Stored": {
                     dialogCancel.setEnabled(true);

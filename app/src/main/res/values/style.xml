@@ -31,5 +31,21 @@
         <item name="android:backgroundDimAmount">35.00</item>
     </style>
 
+    <style name="Theme.SHD.inputText" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="android:textColorHint">@color/Edit_Text_hint_text_color</item>
+        <item name="boxStrokeColor">@color/Edit_Text_box_stroke_color</item>
+        <item name="boxStrokeErrorColor">@color/Edit_Text_box_stroke_error_color</item>
+        <item name="errorIconTint">@color/Edit_Text_end_error_icon_color</item>
+        <item name="errorTextColor">@color/Edit_Text_error_text_color</item>
+        <item name="cursorColor">@color/Edit_Text_cursor_color</item>
+        <item name="cursorErrorColor">@color/Edit_Text_cursor_error_color</item>
+        <item name="boxStrokeWidth">3dp</item>
+        <item name="boxCornerRadiusBottomEnd">10dp</item>
+        <item name="boxCornerRadiusBottomStart">10dp</item>
+        <item name="boxCornerRadiusTopEnd">10dp</item>
+        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="hintEnabled">false</item>
+
+    </style>
 
 </resources>

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,35 +19,49 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 import com.shd.R;
+import com.shd.halperclass.informationclass.Codes;
+import com.shd.halperclass.otherClass.ExcelDesignStoreHelper;
 import com.shd.ui.activity.sub_activity.UpdateJWDataActivity;
 import com.shd.viewmodes.ExcelFileData;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final int VIEW_TYPE_ITEM= 0 ;
     private static final int VIEW_TYPE_EMPTY= 1 ;
+    private final Codes codes = Codes.getInstance();
     TextView totalDesign,totalErrorDesign;
     Context context;
     private static int errorCount;
-
+    private boolean emptyView =false;
     ExcelFileData data = ExcelFileData.getInstance();
     List<List<Object>> sheetData = data.getExcelDataList();
 
-    public ExcelDataRvAdapter(TextView totalDesign, TextView totalErrorDesign) {
+    List<String> mainJw = new ArrayList<>();
+
+    public ExcelDataRvAdapter(TextView totalDesign, TextView totalErrorDesign,Context context) {
         this.totalDesign = totalDesign;
         this.totalErrorDesign = totalErrorDesign;
+        this.context = context;
         errorCount = -1;
         setErrorCount(true);
+        mainJw.addAll(Arrays.asList(context.getResources().getStringArray(R.array.jewellery_main_type)));
+        mainJw.addAll(mainJw.size(),Arrays.asList(context.getResources().getStringArray(R.array.jewellery_ring_sub_type)));
+        mainJw.addAll(mainJw.size(),Arrays.asList(context.getResources().getStringArray(R.array.jewellery_nkc_sub_type)));
+        mainJw.addAll(mainJw.size(),Arrays.asList(context.getResources().getStringArray(R.array.jewellery_er_sub_type)));
+        mainJw.addAll(mainJw.size(),Arrays.asList(context.getResources().getStringArray(R.array.jewellery_br_sub_type)));
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        context = parent.getContext();
         if(viewType == VIEW_TYPE_EMPTY)
         {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.excel_empty_data_view,parent,false);
+            emptyView = true;
             return new EmptyDataView(view);
         }else {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.excel_data_view,parent,false);
@@ -60,7 +75,7 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         if(holder instanceof DataView)
         {
             List<Object> row = sheetData.get(position);
-            ((DataView)holder).bindDataView(row);
+            ((DataView)holder).bindDataView(row,codes,mainJw);
 
             ((DataView)holder).update.setOnClickListener(v->{
                 Context context = v.getContext();
@@ -80,12 +95,17 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
 
-
     @SuppressLint("SetTextI18n")
     @Override
     public int getItemCount() {
         totalDesign.setText("Total number of Design : " + sheetData.size());
-        totalErrorDesign.setText("Error Designs : "+errorCount);
+        if(errorCount <= 0 )
+        {
+            totalErrorDesign.setVisibility(View.GONE);
+        }else {
+            totalErrorDesign.setVisibility(View.VISIBLE);
+            totalErrorDesign.setText("Error Designs : "+errorCount);
+        }
         return sheetData.isEmpty() ? 1 : sheetData.size();
     }
 
@@ -96,13 +116,36 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public static void setErrorCount(boolean increment) {
-        if (errorCount >= 0 )
+
+        if (errorCount >= 0)
         {
             if(increment) errorCount++;
             else errorCount--;
         }else {
             if (increment) errorCount++;
         }
+    }
+
+    public void storeData()
+    {
+        if(!emptyView)
+        {
+            if(errorCount <= 0)
+            {
+                ExcelDesignStoreHelper helper = new ExcelDesignStoreHelper();
+                helper.store(result -> {
+                    if(result.equals("Error"))
+                    {
+                        Log.d("not store","not store");
+                    }else if(result.equals("Successfully"))
+                    {
+                        Log.d("not store","complate");
+                    }
+                });
+            }else{
+                Toast.makeText(context, "Design Have Errors..", Toast.LENGTH_SHORT).show();
+            }
+        }else Toast.makeText(context, "No File to Store..", Toast.LENGTH_SHORT).show();
     }
 
     public static class DataView extends RecyclerView.ViewHolder {
@@ -126,8 +169,8 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         }
 
         @SuppressLint("SetTextI18n")
-        public void bindDataView(List<Object> row) {
-//            TODO : design code and temp code validation
+        public void bindDataView(List<Object> row, Codes codes, List<String> mainJw) {
+            boolean setError = false;
             Bitmap img1Data ,img2Data;
             cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(),R.color.cv_stroke_color));
             if(!row.get(0).equals("null")) {
@@ -142,17 +185,77 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             }else img2.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(),R.drawable.default_img));
 
             companyName.setText(row.get(2).equals("null") ? "SHD" : row.get(2).toString());
-            designCode.setText(row.get(3).equals("null") ? "NO Design Code" : row.get(3).toString());
-            date.setText(row.get(8).toString());
-            type.setText(row.get(9) + "("+row.get(10)+")");
 
-            if(row.get(3).equals("null") && row.get(4).equals("null") && row.get(5).equals("null")) {
-                cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(),R.color.cv_stroke_error_color));
-                setErrorCount(true);
+            if(row.get(3).equals("null"))
+            {
+                designCode.setText("NO Design Code");
+                if(row.get(5).equals("null")) {
+                    cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                    setErrorCount(true);
+                    setError = true;
+                }else {
+                    if (row.get(5).toString().length()<6){
+                        cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                        setErrorCount(true);
+                        setError = true;
+                    }else {
+                        if(codes.isTempCodeExits(row.get(5).toString())) {
+                            cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                            setErrorCount(true);
+                            setError = true;
+                        }
+                    }
+                }
+            }else {
+
+                if(row.get(3).toString().length() <6) {
+                    cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                    setErrorCount(true);
+                    setError = true;
+                }else if(row.get(5).toString().length() <6) {
+                    cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                    setErrorCount(true);
+                    setError = true;
+                }else {
+                    if(codes.isDesignCodeExists(row.get(3).toString())) {
+                        cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                        setErrorCount(true);
+                        setError = true;
+                    }
+                    else if (!row.get(5).equals("null") && codes.isTempCodeExits(row.get(5).toString())) {
+                        cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                        setErrorCount(true);
+                        setError = true;
+                    }
+                }
+                designCode.setText(row.get(3).toString());
             }
-            else if(row.get(9).equals("null") || row.get(10).equals("null")) {
-                cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(),R.color.cv_stroke_error_color));
-                setErrorCount(true);
+            date.setText(row.get(8).toString());
+
+            if(row.get(10).equals("null")) // no sub type
+            {
+                if(mainJw.contains(row.get(9).toString())) // main type check
+                {
+                    if(mainJw.indexOf(row.get(9).toString()) < 4) // main type have sub type?
+                    {
+                        cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                        if(!setError) setErrorCount(true);
+                        type.setText(row.get(9).toString());
+                    }else type.setText(row.get(9).toString());
+                }else {
+                    type.setText("No jewellery Type Set..");
+                    cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                    if(!setError) setErrorCount(true);
+                }
+            }else {
+                if (mainJw.contains(row.get(10).toString()))
+                {
+                    type.setText(row.get(9) + "( "+row.get(10)+" )");
+                }else {
+                    type.setText("No jewellery Type Set..");
+                    cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                    if(!setError) setErrorCount(true);
+                }
             }
 
             if(row.get(11).equals("true")) statusImg.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(),R.drawable.complet_mark));

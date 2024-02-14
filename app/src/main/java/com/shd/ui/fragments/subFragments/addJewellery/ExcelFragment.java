@@ -2,6 +2,7 @@ package com.shd.ui.fragments.subFragments.addJewellery;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,9 +20,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointBackward;
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -55,13 +60,16 @@ public class ExcelFragment extends Fragment {
 
     private boolean isInternet = true,status;
     private String customerName = "",date ="",workBy = "SHD",workPlace ="SHD Office";
-    TextView errorText;
+    TextView errorText,dialogMsg;
     ScrollView mainScrollView;
     MaterialSwitch designStatus;
     Uri excelUri;
     TextInputLayout date_layout,file_name_layout;
     TextInputEditText date_text, work_by_text, work_place_text,customer_name_text,file_name_text;
-    Button selectFile,save;
+    Button selectFile,save,dialogCancel;
+    View dialogBoxView;
+    LottieAnimationView animationView;
+    AlertDialog dialog;
 
     public ExcelFragment() {}
 
@@ -175,7 +183,9 @@ public class ExcelFragment extends Fragment {
 
         datePicker.show(requireActivity().getSupportFragmentManager(), "Jewellery Date");
     }
+    @SuppressLint("InflateParams")
     private void checkData() {
+
         customerName = Objects.requireNonNull(customer_name_text.getText()).toString();
         workBy = Objects.requireNonNull(work_by_text.getText()).toString();
         workPlace = Objects.requireNonNull(work_place_text.getText()).toString();
@@ -189,7 +199,28 @@ public class ExcelFragment extends Fragment {
         {
             file_name_layout.setErrorEnabled(true);
             file_name_layout.setError("Select File");
-        }else readExcel(excelUri);
+        }else {
+            save.setEnabled(false);
+            LayoutInflater inflater2 = (LayoutInflater) requireContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            dialogBoxView = inflater2.inflate(R.layout.custom_dialog_box, null);
+            dialogCancel = dialogBoxView.findViewById(R.id.cancel_button);
+            animationView = dialogBoxView.findViewById(R.id.lottie_animation_view);
+            dialogMsg = dialogBoxView.findViewById(R.id.description);
+            dialogCancel.setEnabled(false);
+            dialogCancel.setVisibility(View.GONE);
+            dialogMsg.setText(getResources().getString(R.string.do_not_cancel));
+
+            MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(requireContext(), R.style.Theme_SHD_dialogBox)
+                    .setTitle(getResources().getString(R.string.processing))
+                    .setCancelable(false);
+
+            dialogBuilder.setView(dialogBoxView);
+            animationView.setAnimation("spinner_circle.json");
+            dialog = dialogBuilder.create();
+            animationView.playAnimation();
+            dialog.show();
+            readExcel(excelUri);
+        }
     }
 
     private final ActivityResultLauncher<Intent> filePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -318,6 +349,15 @@ public class ExcelFragment extends Fragment {
 
                 Intent intent = new Intent(requireContext(), ExcelDataListActivity.class);
                 requireContext().startActivity(intent);
+                animationView.cancelAnimation();
+                dialog.dismiss();
+                customer_name_text.setText("");
+                designStatus.setChecked(false);
+                work_by_text.setText(requireContext().getResources().getString(R.string.work_by_text));
+                work_place_text.setText(requireContext().getResources().getString(R.string.work_place_text));
+                currentDate();
+                file_name_text.setText("");
+                save.setEnabled(true);
             }
         }catch (Exception e){
             e.printStackTrace();

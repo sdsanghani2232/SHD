@@ -259,6 +259,11 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         jewelleryMainTypeText.setText(designList.get(9).equals("null") ? "" : (CharSequence) designList.get(9));
         jewellerySubTypeText.setText(designList.get(10).equals("null") ? "" : (CharSequence) designList.get(10));
         designStatus.setChecked(designList.get(11).equals("true"));
+        length = designList.get(12).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(12));
+        width =  designList.get(13).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(13));
+        height = designList.get(14).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(14));
+        gold_weight = designList.get(15).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(15));
+        diamond_weight = designList.get(16).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(16));
         length_text.setText(designList.get(12).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(12)));
         width_text.setText(designList.get(13).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(13)));
         height_text.setText(designList.get(14).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(14)));
@@ -461,6 +466,7 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         selectedDate = Objects.requireNonNull(date_text.getText()).toString();
         status = designStatus.isChecked();
 
+
         design_code_layout.setErrorEnabled(false);
         customer_code_layout.setErrorEnabled(false);
         temp_code_layout.setErrorEnabled(false);
@@ -549,10 +555,11 @@ public class UpdateJWDataActivity extends AppCompatActivity {
     }
 
     private void changeList() {
+//        main format
         List<Object> newData = new ArrayList<>();
         newData.add(0,img1Bitmap == null ? "null" : img1Bitmap);
         newData.add(1,img2Bitmap == null ? "null" : img2Bitmap);
-        newData.add(2,customerName);
+        newData.add(2,customerName.equals("") ? "null" : customerName);
         newData.add(3,designCode);
         newData.add(4,customerCode);
         newData.add(5,tempCode);
@@ -560,13 +567,14 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         newData.add(7,workPlace);
         newData.add(8,selectedDate);
         newData.add(9,mainType);
-        newData.add(10,subType);
+        newData.add(10,subType.equals("Sub Type") || subType.equals("") ?"null" : subType );
         newData.add(11,String.valueOf(status));
         newData.add(12,length);
         newData.add(13,width);
         newData.add(14,height);
         newData.add(15,gold_weight);
         newData.add(16,diamond_weight);
+
 
         mainList.set(positionOfUpdate,newData);
         startActivity(new Intent(this, ExcelDataListActivity.class));

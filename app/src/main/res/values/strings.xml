@@ -72,7 +72,7 @@
     <string name="design">Design</string>
     <string name="design_img">Design img</string>
     <string name="update">UPDATE</string>
-
+    <string name="do_not_cancel">Do not Cancel the Process..</string>
     <string name="delete">DELETE</string>
 
     <string-array name="jewellery_main_type">
