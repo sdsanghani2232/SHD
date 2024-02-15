@@ -527,6 +527,14 @@ public class UpdateJWDataActivity extends AppCompatActivity {
                 case "NO Error": {
                     isError = false;
                     errorLayout = null;
+                    if(!tempCode.isEmpty() && tempCode.length()<6)
+                    {
+                        isError = true;
+                        temp_code_layout.setErrorEnabled(true);
+                        temp_code_layout.setError(" ");
+                        temp_code_text.setError(getResources().getString(R.string.small_temp_code));
+                        errorLayout = temp_code_layout;
+                    }
                     if (!designCode.isEmpty() && designCodeList.documentExits()) {
                         if (codes.isDesignCodeExists(designCode)) {
                             isError = true;

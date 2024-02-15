@@ -20,7 +20,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.textview.MaterialTextView;
 import com.shd.R;
 import com.shd.halperclass.informationclass.Codes;
-import com.shd.halperclass.otherClass.ExcelDesignStoreHelper;
+import com.shd.repository.storedata.ExcelDesignStoreHelper;
 import com.shd.ui.activity.sub_activity.UpdateJWDataActivity;
 import com.shd.viewmodes.ExcelFileData;
 
@@ -82,7 +82,7 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 Intent intent = new Intent(context, UpdateJWDataActivity.class);
                 intent.putExtra("position",position);
                 context.startActivity(intent);
-                ((DataView)holder).complete();
+                complete();
             });
 
             ((DataView)holder).delete.setOnClickListener(v -> {
@@ -91,6 +91,12 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                 errorCount = 0;
             });
 
+        }
+    }
+
+    private void complete() {
+        if (context instanceof Activity) {
+            ((Activity) context).finish();
         }
     }
 
@@ -132,16 +138,9 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         {
             if(errorCount <= 0)
             {
-                ExcelDesignStoreHelper helper = new ExcelDesignStoreHelper();
-                helper.store(result -> {
-                    if(result.equals("Error"))
-                    {
-                        Log.d("not store","not store");
-                    }else if(result.equals("Successfully"))
-                    {
-                        Log.d("not store","complate");
-                    }
-                });
+                ExcelDesignStoreHelper helper = new ExcelDesignStoreHelper(context);
+                helper.store();
+                complete();
             }else{
                 Toast.makeText(context, "Design Have Errors..", Toast.LENGTH_SHORT).show();
             }
@@ -207,22 +206,12 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     }
                 }
             }else {
-
                 if(row.get(3).toString().length() <6) {
-                    cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
-                    setErrorCount(true);
-                    setError = true;
-                }else if(row.get(5).toString().length() <6) {
                     cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
                     setErrorCount(true);
                     setError = true;
                 }else {
                     if(codes.isDesignCodeExists(row.get(3).toString())) {
-                        cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
-                        setErrorCount(true);
-                        setError = true;
-                    }
-                    else if (!row.get(5).equals("null") && codes.isTempCodeExits(row.get(5).toString())) {
                         cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
                         setErrorCount(true);
                         setError = true;
@@ -260,14 +249,6 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             if(row.get(11).equals("true")) statusImg.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(),R.drawable.complet_mark));
             else statusImg.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(),R.drawable.clock));
-        }
-
-        public void complete()
-        {
-            if(itemView.getContext() instanceof Activity)
-            {
-                ((Activity) itemView.getContext()).finish();
-            }
         }
     }
 
