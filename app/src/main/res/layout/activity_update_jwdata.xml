@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.sub_activity.UpdateJWDataActivity"
+    tools:context=".ui.activity.sub_activity.excel_file.UpdateJWDataActivity"
     android:background="@color/app_color"
     android:orientation="vertical">
 
@@ -12,7 +12,8 @@
         android:id="@+id/update_appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/appbar_shape">
+        android:background="@drawable/appbar_shape"
+        app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/update_appbar_material"
@@ -20,7 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:minHeight="?attr/actionBarSize"
-            app:layout_scrollEffect="compress">
+            app:layout_scrollEffect="compress"
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

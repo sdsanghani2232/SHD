@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     android:background="@color/app_color"
     android:orientation="vertical"
-    tools:context=".ui.activity.sub_activity.ExcelDataListActivity">
+    tools:context=".ui.activity.sub_activity.excel_file.ExcelDataListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        android:background="@drawable/appbar_shape">
+        android:background="@drawable/appbar_shape"
+        app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/excel_appbar_material"
@@ -21,7 +22,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:minHeight="?attr/actionBarSize"
-            app:layout_scrollEffect="compress">
+            app:layout_scrollEffect="compress"
+            app:layout_scrollFlags="scroll|enterAlways">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

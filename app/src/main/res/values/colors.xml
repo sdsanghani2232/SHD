@@ -41,6 +41,10 @@
     <color name="excel_button_background_color">#31DA0C</color>
 
 <!--    3) Search -->
+    <color name="search_icon_color">#FF000000</color>
+    <color name="search_filter_icon_color">#FF000000</color>
+    <color name="search_bar_bg_color">#9BB2BF</color>
+
 <!--    4) Profiles Detail -->
     <color name="profiles_details_background">#CA9F85</color>
 

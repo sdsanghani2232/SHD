@@ -63,7 +63,7 @@
     <string name="Design_Img_Not_Stored">Design Img Not Stored</string>
     <string name="Design_Not_Stored">Design Img Not Stored</string>
     <string name="Design_Stored_Successfully">Design Stored Successfully</string>
-
+    <string name="excel_file_read_error">Excel file not read properly Please check  excel file… </string>
     <string name="profile_tab_emp">EMPLOYEES</string>
     <string name="profile_tab_customer">CUSTOMER</string>
     <string name="excel_img">excel img</string>
@@ -74,6 +74,12 @@
     <string name="update">UPDATE</string>
     <string name="do_not_cancel">Do not Cancel the Process..</string>
     <string name="delete">DELETE</string>
+    <string name="search">search</string>
+    <string name="filter">Filter</string>
+    <string name="more_menu">More menu</string>
+    <string name="share">Share</string>
+    <string name="download">Download</string>
+    <string name="select">Select</string>
 
     <string-array name="jewellery_main_type">
         <item>Ring</item>

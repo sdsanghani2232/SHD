@@ -2,9 +2,17 @@ package com.shd.ui.activity.main_activity.home;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
+
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
 import com.shd.R;
 import com.shd.halperclass.informationclass.AdminInfo;
@@ -22,21 +30,25 @@ public class HomeActivity extends AppCompatActivity {
     final AdminInfo adminInfo = AdminInfo.getInstance();
     final Codes codes = Codes.getInstance();
     ViewPager2 viewPager2;
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
+            }
 
         viewPager2 = findViewById(R.id.view_pager2);
         // TODO : that code is working. after complete Entire app remove comment
 //        adminModel = new ViewModelProvider(this).get(AdminModel.class);
 //        adminModel.getAdminMap().observe(this, adminInfo::updateAdminList);
-//
-//        designCodeModel = new ViewModelProvider(this).get(DesignCodeModel.class);
-//        designCodeModel.getDesignCodeList().observe(this, codes::updateDesignCodes);
-//
-//        tempCodeModel = new ViewModelProvider(this).get(TempCodeModel.class);
-//        tempCodeModel.getTempCodeList().observe(this, codes::updateTempCodes);
+
+        designCodeModel = new ViewModelProvider(this).get(DesignCodeModel.class);
+        designCodeModel.getDesignCodeList().observe(this, codes::updateDesignCodes);
+
+        tempCodeModel = new ViewModelProvider(this).get(TempCodeModel.class);
+        tempCodeModel.getTempCodeList().observe(this, codes::updateTempCodes);
 
         navigation = findViewById(R.id.bottom_navigation);
 

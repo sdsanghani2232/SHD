@@ -1,4 +1,4 @@
-package com.shd.ui.activity.sub_activity;
+package com.shd.ui.activity.sub_activity.excel_file;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
@@ -259,21 +259,27 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         jewelleryMainTypeText.setText(designList.get(9).equals("null") ? "" : (CharSequence) designList.get(9));
         jewellerySubTypeText.setText(designList.get(10).equals("null") ? "" : (CharSequence) designList.get(10));
         designStatus.setChecked(designList.get(11).equals("true"));
-        length = designList.get(12).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(12));
-        width =  designList.get(13).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(13));
-        height = designList.get(14).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(14));
-        gold_weight = designList.get(15).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(15));
-        diamond_weight = designList.get(16).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(16));
-        length_text.setText(designList.get(12).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(12)));
-        width_text.setText(designList.get(13).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(13)));
-        height_text.setText(designList.get(14).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(14)));
-        gold_text.setText(designList.get(15).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(15)));
-        diamond_text.setText(designList.get(16).equals("null") ?String.valueOf(0.00f): String.valueOf(designList.get(16)));
-        length_slider.setValue(designList.get(12).equals("null") ? 0.00f : Float.parseFloat((String) designList.get(12)));
-        width_slider.setValue(designList.get(13).equals("null") ? 0.00f : Float.parseFloat((String) designList.get(13)));
-        height_slider.setValue(designList.get(14).equals("null") ? 0.00f : Float.parseFloat((String) designList.get(14)));
-        gold_slider.setValue(designList.get(15).equals("null") ? 0.00f : Float.parseFloat((String) designList.get(15)));
-        diamond_slider.setValue(designList.get(16).equals("null") ? 0.00f : Float.parseFloat((String) designList.get(16)));
+
+        // values
+        length = designList.get(12).equals("null") || Float.parseFloat((String) designList.get(12)) > 100 ? String.valueOf(0.00f): String.valueOf(designList.get(12));
+        width =  designList.get(13).equals("null") || Float.parseFloat((String) designList.get(13)) > 100? String.valueOf(0.00f): String.valueOf(designList.get(13));
+        height = designList.get(14).equals("null") || Float.parseFloat((String) designList.get(14)) > 100? String.valueOf(0.00f): String.valueOf(designList.get(14));
+        gold_weight = designList.get(15).equals("null")|| Float.parseFloat((String) designList.get(15)) > 100 ? String.valueOf(0.00f): String.valueOf(designList.get(15));
+        diamond_weight = designList.get(16).equals("null")|| Float.parseFloat((String) designList.get(16)) > 100 ? String.valueOf(0.00f): String.valueOf(designList.get(16));
+
+        // text filed
+        length_text.setText(designList.get(12).equals("null") || Float.parseFloat((String) designList.get(12)) > 100 ? String.valueOf(0.00f): String.valueOf(designList.get(12)));
+        width_text.setText(designList.get(13).equals("null") || Float.parseFloat((String) designList.get(13)) > 100 ? String.valueOf(0.00f): String.valueOf(designList.get(13)));
+        height_text.setText(designList.get(14).equals("null") || Float.parseFloat((String) designList.get(14)) > 100 ? String.valueOf(0.00f): String.valueOf(designList.get(14)));
+        gold_text.setText(designList.get(15).equals("null") || Float.parseFloat((String) designList.get(15)) > 100 ? String.valueOf(0.00f): String.valueOf(designList.get(15)));
+        diamond_text.setText(designList.get(16).equals("null") || Float.parseFloat((String) designList.get(16)) > 100 ? String.valueOf(0.00f): String.valueOf(designList.get(16)));
+
+        // slider
+        length_slider.setValue(designList.get(12).equals("null") || Float.parseFloat((String) designList.get(12)) > 100 ? 0.00f : Float.parseFloat((String) designList.get(12)));
+        width_slider.setValue(designList.get(13).equals("null") || Float.parseFloat((String) designList.get(13)) > 100 ? 0.00f : Float.parseFloat((String) designList.get(13)));
+        height_slider.setValue(designList.get(14).equals("null") || Float.parseFloat((String) designList.get(14)) > 100 ? 0.00f : Float.parseFloat((String) designList.get(14)));
+        gold_slider.setValue(designList.get(15).equals("null") || Float.parseFloat((String) designList.get(15)) > 100 ? 0.00f : Float.parseFloat((String) designList.get(15)));
+        diamond_slider.setValue(designList.get(16).equals("null") || Float.parseFloat((String) designList.get(16)) > 100 ? 0.00f : Float.parseFloat((String) designList.get(16)));
     }
 
     public final ActivityResultLauncher<Intent> img1 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
@@ -465,7 +471,6 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         customerName = Objects.requireNonNull(customer_text.getText()).toString();
         selectedDate = Objects.requireNonNull(date_text.getText()).toString();
         status = designStatus.isChecked();
-
 
         design_code_layout.setErrorEnabled(false);
         customer_code_layout.setErrorEnabled(false);

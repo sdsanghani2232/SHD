@@ -1,6 +1,5 @@
 package com.shd.repository.readdata;
 
-import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,7 +44,6 @@ public class DesignCodeList {
 
     public boolean documentExits()
     {
-        Log.d("value of document ","in method"+documentExits);
         return documentExits;
     }
 }

@@ -5,7 +5,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import com.google.android.material.textview.MaterialTextView;
 import com.shd.R;
 import com.shd.halperclass.informationclass.Codes;
 import com.shd.repository.storedata.ExcelDesignStoreHelper;
-import com.shd.ui.activity.sub_activity.UpdateJWDataActivity;
+import com.shd.ui.activity.sub_activity.excel_file.UpdateJWDataActivity;
 import com.shd.viewmodes.ExcelFileData;
 
 import java.util.ArrayList;
@@ -173,7 +172,6 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             Bitmap img1Data ,img2Data;
             cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(),R.color.cv_stroke_color));
             if(!row.get(0).equals("null")) {
-                Log.d("Data of list ",row.get(0).toString());
                 img1Data = (Bitmap) row.get(0);
                 img1.setImageBitmap(img1Data);
             }else img1.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(),R.drawable.default_img));
@@ -245,6 +243,16 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
                     cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
                     if(!setError) setErrorCount(true);
                 }
+            }
+
+            if((!row.get(12).equals("null") && Float.parseFloat((String) row.get(12)) > 100) ||
+                    (!row.get(13).equals("null") && Float.parseFloat((String) row.get(13)) > 100)||
+                    (!row.get(14).equals("null") && Float.parseFloat((String) row.get(14)) > 100)||
+                    (!row.get(15).equals("null") && Float.parseFloat((String) row.get(15)) > 100)||
+                    (!row.get(16).equals("null") && Float.parseFloat((String) row.get(16)) > 100))
+            {
+                cardView.setStrokeColor(ContextCompat.getColor(itemView.getContext(), R.color.cv_stroke_error_color));
+                if(!setError) setErrorCount(true);
             }
 
             if(row.get(11).equals("true")) statusImg.setImageDrawable(ContextCompat.getDrawable(itemView.getContext(),R.drawable.complet_mark));

@@ -8,7 +8,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.shd.model.JewelleryDesign;
-
+import com.shd.repository.readdata.DesignCodeList;
+import com.shd.repository.readdata.TempCodeList;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +23,6 @@ public class JewelleryDetailsStore {
     private final String customerName,designCode,customerCode,tempCode,work_by,work_place,selectedDate,mainType,subType,length,width,height,gold,diamond;
     String img1DownloadUrl,img2DownloadUrl;
     final boolean status;
-
     final FirebaseFirestore db = FirebaseFirestore.getInstance();
     final FirebaseStorage storage = FirebaseStorage.getInstance();
     StorageReference reference;
@@ -30,6 +30,8 @@ public class JewelleryDetailsStore {
             .setContentType("image/jpg")
             .build();
 
+    DesignCodeList dcList = DesignCodeList.getInstance();
+    TempCodeList tcList = TempCodeList.getInstance();
     public interface Result{
         void onResult(String result);
     }
@@ -159,50 +161,45 @@ public class JewelleryDetailsStore {
             db.collection("jewellery").document().set(design.jewelleryDetails()).addOnCompleteListener(task -> {
                 if(task.isSuccessful())
                 {
-                    if(!designCode.isEmpty()) storeDesignCode(result);
-                    if(!tempCode.isEmpty()) storeTempCode(result);
+                    if (!designCode.isEmpty()) storeDesignCode(result);
+                    if (!tempCode.isEmpty()) storeTempCode(result);
                     result.onResult("Successfully");
                 }
             }).addOnFailureListener(e -> result.onResult("Design Not Store"));
     }
 
+
+
     private void storeDesignCode(Result result) {
-        db.collection("jewelleryCodes").document("designCodes").get().addOnCompleteListener(task -> {
-            if(!task.getResult().exists()) // create document and list
-            {
-                List<String> design = new ArrayList<>();
-                design.add(designCode);
-                Map<String,Object> map = new HashMap<>();
-                map.put("codes",design);
-                db.collection("jewelleryCodes").document("designCodes").set(map)
-                        .addOnFailureListener(e -> result.onResult("DesignCode Not Stored"));
-            }else // update list
-            {
-                db.collection("jewelleryCodes").document("designCodes")
-                        .update("codes", FieldValue.arrayUnion(designCode))
-                        .addOnFailureListener(e -> result.onResult("DesignCode Not Stored"));
-            }
-        });
+
+        if(!dcList.documentExits())
+        {
+            List<String> design = new ArrayList<>();
+            design.add(designCode);
+            Map<String,Object> map = new HashMap<>();
+            map.put("codes",design);
+            db.collection("jewelleryCodes").document("designCodes").set(map)
+                    .addOnFailureListener(e -> result.onResult("DesignCode Not Stored"));
+        }
+        else {
+            db.collection("jewelleryCodes").document("designCodes")
+                    .update("codes", FieldValue.arrayUnion(designCode))
+                    .addOnFailureListener(e -> result.onResult("DesignCode Not Stored"));
+        }
     }
     private void storeTempCode(Result result) {
-        db.collection("jewelleryCodes").document("tempCodes").get().addOnCompleteListener(task -> {
-            if(!task.getResult().exists()) // create document and list
-            {
-                List<String> design = new ArrayList<>();
-                design.add(tempCode);
-                Map<String,Object> map = new HashMap<>();
-                map.put("codes",design);
-                db.collection("jewelleryCodes").document("tempCodes").set(map)
-                        .addOnFailureListener(e -> result.onResult("TempCode Not Stored"));
-            }else // update list
-            {
-                db.collection("jewelleryCodes").document("tempCodes")
-                        .update("codes", FieldValue.arrayUnion(tempCode))
-                        .addOnFailureListener(e -> result.onResult("TempCode Not Stored"));
-            }
-        });
+        if(!tcList.documentExits())
+        {
+            List<String> design = new ArrayList<>();
+            design.add(tempCode);
+            Map<String,Object> map = new HashMap<>();
+            map.put("codes",design);
+            db.collection("jewelleryCodes").document("tempCodes").set(map)
+                    .addOnFailureListener(e -> result.onResult("TempCode Not Stored"));
+        }else {
+            db.collection("jewelleryCodes").document("tempCodes")
+                    .update("codes", FieldValue.arrayUnion(tempCode))
+                    .addOnFailureListener(e -> result.onResult("TempCode Not Stored"));
+        }
     }
-
-
-
 }

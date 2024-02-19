@@ -14,12 +14,15 @@
         android:theme="@style/Theme.SHD"
         tools:targetApi="31" >
         <activity
-            android:name=".ui.activity.sub_activity.UpdateJWDataActivity"
+            android:name=".ui.activity.sub_activity.search.SearchFilterActivity"
             android:exported="false"
-            android:theme="@style/Theme.SHD.Main"
-            />
+            android:theme="@style/Theme.SHD.Main"/>
         <activity
-            android:name=".ui.activity.sub_activity.ExcelDataListActivity"
+            android:name=".ui.activity.sub_activity.excel_file.UpdateJWDataActivity"
+            android:exported="false"
+            android:theme="@style/Theme.SHD.Main" />
+        <activity
+            android:name=".ui.activity.sub_activity.excel_file.ExcelDataListActivity"
             android:enableOnBackInvokedCallback="true"
             android:exported="false"
             android:theme="@style/Theme.SHD.Main"
