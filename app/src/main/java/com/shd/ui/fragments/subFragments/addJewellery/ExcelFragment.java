@@ -229,6 +229,7 @@ public class ExcelFragment extends Fragment {
             file_name_layout.setError("Select File");
         } else {
             save.setClickable(false);
+            resetValue();
             executeTack(excelUri);
         }
     }
@@ -351,14 +352,12 @@ public class ExcelFragment extends Fragment {
 
         executorService.execute(futureTask);
         showMsgDialog();
-
+        Intent intent = new Intent(requireContext(), ExcelDataListActivity.class);
         Handler handler = new Handler(Looper.getMainLooper()) {
             public void handleMessage(Message message) {
                 boolean result = (boolean) message.obj;
                 dismissDialog();
-                resetValue();
                 if (result) {
-                    Intent intent = new Intent(requireContext(), ExcelDataListActivity.class);
                     requireContext().startActivity(intent);
                 } else {
                     showErrorDialog();

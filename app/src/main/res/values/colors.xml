@@ -120,6 +120,9 @@
     <color name="cv_text_view_border_color">#FFFFFF</color>
     <color name="cv_update_bg_color">#002430</color>
 
+<!--    Card View (Shimmer effect)-->
+    <color name="cv_shimmer_bg">#4DFFFFFF</color>
+
 <!--    Progressbar-->
     <color name="pb_track_color">#0048FF</color>
     <color name="pb_indicator_color">#0048FF</color>

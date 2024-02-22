@@ -12,8 +12,8 @@
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
         android:background="@drawable/appbar_shape"
+        app:layout_constraintTop_toTopOf="parent"
         app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -57,11 +57,43 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/excel_file_shimmer_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/appbar_layout"
-        android:layout_marginBottom="5dp">
+        android:animateLayoutChanges="true">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/excel_data_text_shimmer_view" />
+
+                <include layout="@layout/excel_data_text_shimmer_view" />
+                <include layout="@layout/excel_card_shimmer_view"/>
+                <include layout="@layout/excel_card_shimmer_view"/>
+                <include layout="@layout/excel_card_shimmer_view"/>
+                <include layout="@layout/excel_card_shimmer_view"/>
+                <include layout="@layout/excel_card_shimmer_view"/>
+                <include layout="@layout/excel_card_shimmer_view"/>
+            </LinearLayout>
+        </ScrollView>
+    </com.facebook.shimmer.ShimmerFrameLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/excel_file_nested_scrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/appbar_layout"
+        android:layout_marginBottom="5dp"
+        android:visibility="invisible">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -77,34 +109,44 @@
                 android:background="@drawable/card_view_text_border"
                 android:paddingHorizontal="10dp"
                 android:paddingTop="7dp"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/excel_file_error_count"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/excel_file_error_count"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/excel_file_error_count"
                 style="@style/Theme.SHD.Text"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/card_view_text_border"
                 android:layout_marginHorizontal="20sp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/card_view_text_border"
                 android:paddingHorizontal="10dp"
                 android:paddingTop="7dp"
-                android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/excel_file_count"
+
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/excel_file_rv"/>
+                app:layout_constraintTop_toBottomOf="@id/excel_file_count" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/excel_file_rv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/excel_file_error_count"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/excel_file_error_count">
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/excel_file_progress_indicator"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/excel_file_rv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
-
-            </androidx.recyclerview.widget.RecyclerView>
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:indeterminate="true"
+                android:visibility="gone"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

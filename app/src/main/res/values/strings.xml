@@ -80,6 +80,12 @@
     <string name="share">Share</string>
     <string name="download">Download</string>
     <string name="select">Select</string>
+    <string name="total_design_count">Total number of Design : </string>
+    <string name="total_error_count">Total Error Files :</string>
+    <string name="one_more_time">one more time if you wont to exit</string>
+    <string name="design_have_error">Design Have Errors..</string>
+    <string name="empty_design_set">NO Design To have Store</string>
+
 
     <string-array name="jewellery_main_type">
         <item>Ring</item>

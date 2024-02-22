@@ -11,6 +11,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_margin="10dp"
+        app:lottie_repeatMode="restart"
+        app:lottie_repeatCount="-1"
+        app:lottie_autoPlay="true"
         />
 
     <TextView
