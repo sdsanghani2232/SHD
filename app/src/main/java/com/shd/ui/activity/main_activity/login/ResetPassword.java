@@ -3,14 +3,13 @@ package com.shd.ui.activity.main_activity.login;
 import androidx.activity.OnBackPressedCallback;
 import androidx.activity.OnBackPressedDispatcher;
 import androidx.appcompat.app.AppCompatActivity;
-import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.FirebaseAuth;
@@ -24,18 +23,19 @@ public class ResetPassword extends AppCompatActivity {
 
     TextInputEditText email;
     TextInputLayout emailLayout;
+    TextView errorTextView;
     Button send;
-    TextView error;
     private boolean isConnection = true;
     MaterialToolbar toolbar;
     final FirebaseAuth auth = FirebaseAuth.getInstance();
-    @SuppressLint("ClickableViewAccessibility")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
         findId();
         checkConnection();
+        errorTextView.setVisibility(View.GONE);
 
         toolbar.setNavigationOnClickListener(v -> {
             OnBackPressedDispatcher dispatcher = getOnBackPressedDispatcher();
@@ -47,71 +47,51 @@ public class ResetPassword extends AppCompatActivity {
             });
         });
 
-        send.setOnTouchListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    emailLayout.setErrorEnabled(false);
-                    checkConnection();
-                    if(isConnection)
-                    {
-                        send.setBackgroundColor(getColor(R.color.login_button_background_onClick_color));
-                        checkData();
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if(isConnection)
-                    {
-                        send.setBackgroundColor(getColor(R.color.login_button_background_color));
-                    }else {
-                        send.setBackgroundColor(getColor(R.color.RP_not_enable_button_color));
-                    }
-
-                    break;
+        send.setOnClickListener(v ->{
+            emailLayout.setErrorEnabled(false);
+            checkConnection();
+            if(isConnection) checkData();
+            else {
+                Snackbar.make(findViewById(R.id.reset_password_page),R.string.internet_error,Snackbar.LENGTH_LONG)
+                        .setTextColor(getColor(R.color.colorPrimaryText))
+                        .setBackgroundTint(getColor(R.color.colorSecondaryBackground)).show();
             }
-            return true;
         });
     }
 
     private void checkConnection() {
         CheckInternet internet = new CheckInternet(getApplicationContext());
-        if(!internet.Check())
-        {
-            isConnection = false;
-            error.setVisibility(View.VISIBLE);
-            send.setBackgroundColor(getColor(R.color.RP_not_enable_button_color));
-            send.setClickable(false);
-            error.setText(getResources().getString(R.string.check_internet_connectivity));
-        }else {
-            isConnection = true;
-            error.setVisibility(View.GONE);
-            send.setBackgroundColor(getColor(R.color.login_button_background_color));
-            send.setClickable(true);
-        }
+        isConnection = internet.Check();
     }
 
     private void findId() {
         email = findViewById(R.id.conform_email_text);
         emailLayout = findViewById(R.id.conform_email_layout);
         send = findViewById(R.id.send_button);
-        error = findViewById(R.id.error_text);
         toolbar = findViewById(R.id.appbar_material);
+        errorTextView = findViewById(R.id.error_text);
     }
     private void checkData() {
-        send.setBackgroundColor(getColor(R.color.login_button_background_color));
         String emailId = Objects.requireNonNull(email.getText()).toString().trim();
 
         if(emailId.isEmpty() || emailId.trim().length() == 0 )
         {
             emailLayout.setErrorEnabled(true);
-            emailLayout.setError(getResources().getString(R.string.empty_email_error));
+            emailLayout.setError(" ");
+            errorTextView.setVisibility(View.VISIBLE);
+            errorTextView.setText(getResources().getString(R.string.empty_email_error));
+
         }else {
             AdminInfo adminInfo = AdminInfo.getInstance();
             if(adminInfo.isAdmin(emailId))
             {
+                errorTextView.setVisibility(View.GONE);
                 sendEmail(emailId);
             }else {
                 emailLayout.setErrorEnabled(true);
-                emailLayout.setError(getResources().getString(R.string.invalid_email_error));
+                emailLayout.setError(" ");
+                errorTextView.setVisibility(View.VISIBLE);
+                errorTextView.setText(getResources().getString(R.string.invalid_email_error));
             }
         }
     }

@@ -3,9 +3,10 @@ package com.shd.viewmodes;
 import android.graphics.Bitmap;
 
 public class ExcelImgData {
-    int row ,col;
+    final int row;
+    final int col;
 //    byte[] img ;
-    Bitmap img;
+final Bitmap img;
 
     public ExcelImgData(int row, int col, Bitmap img) {
         this.row = row;

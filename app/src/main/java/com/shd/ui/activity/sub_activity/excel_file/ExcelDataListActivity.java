@@ -34,7 +34,7 @@ public class ExcelDataListActivity extends AppCompatActivity implements ExcelDat
     private ShimmerFrameLayout shimmerView;
     private NestedScrollView nestedScrollView;
     private int currentPosition = 0,currentItems = 0;
-    List<List<Object>> sheetData = ExcelFileData.getInstance().getExcelDataList();
+    final List<List<Object>> sheetData = ExcelFileData.getInstance().getExcelDataList();
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -112,7 +112,6 @@ public class ExcelDataListActivity extends AppCompatActivity implements ExcelDat
         });
 
     }
-
     private void findIds() {
         toolbar = findViewById(R.id.excel_appbar_material);
         save = findViewById(R.id.excel_data_save_button);
@@ -147,6 +146,7 @@ public class ExcelDataListActivity extends AppCompatActivity implements ExcelDat
 
     @Override
     public void deleteItem() {
+
         currentPosition -= 1;
         currentItems -= 1;
         if(currentItems < 5 && hasNextList) {

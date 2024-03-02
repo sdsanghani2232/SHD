@@ -4,91 +4,26 @@
     <style name="Theme.SHD" parent="Base.Theme.SHD" />
 
     <style name="Theme.SHD.Main" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryBackground</item>
     </style>
 
-    <style name="Theme.SHD.Login.Button" parent="Widget.Material3.Button.ElevatedButton">
-        <item name="backgroundTint">@color/login_button_background_color</item>
-        <item name="android:textColor">@color/login_button_text_color</item>
-        <item name="fontFamily">@font/poppins_bold</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="Theme.SHD.Login.TextButton" parent="Widget.Material3.Button.TextButton">
-        <item name="android:textColor">@color/login_forgot_text_color</item>
-        <item name="fontFamily">@font/poppins_medium</item>
-        <item name="android:textSize">17sp</item>
-    </style>
-
-    <style name="Theme.SHD.Login.ResetPassword.msg" parent="ThemeOverlay.Material3.AutoCompleteTextView">
-        <item name="android:textColor">@color/RP_msg_color</item>
-        <item name="fontFamily">@font/poppins_medium</item>
-        <item name="android:textSize">17sp</item>
-    </style>
-
-    <style name="Theme.SHD.Login.ResetPassword" parent="Theme.Material3.Dark.NoActionBar">
-        <item name="colorPrimaryDark">@color/RP_background</item>
-        <item name="colorPrimary">@color/RP_color_primary</item>
-    </style>
-
-    <style name="Theme.SHD.AppBar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="fontFamily">@font/poppins_bold</item>
-        <item name="titleTextColor">@color/app_bar_title_color</item>
-        <item name="navigationIcon">@drawable/back_menu</item>
-        <item name="navigationIconTint">@color/app_bar_navigation_icon_color</item>
-    </style>
-
-    <style name="Theme.SHD.fab_button" parent="">
-        <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">50%</item>
-    </style>
-    
-    <style name="Theme.SHD.Text" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">20sp</item>
+    <style name="Theme.SHD.Text.small" parent="">
         <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:textColor">@color/add_jewellery_form_text_color</item>
+        <item name="android:textSize">@dimen/small_text</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
 
-    <style name="Theme.SHD.form.dropdown" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
-        <item name="dropDownBackgroundTint">@color/Edit_Text_drop_down_background</item>
-        <item name="dropDownListViewStyle">@color/Edit_Text_drop_down_list_style_color</item>
+    <style name="Theme.SHD.Text.medium" parent="">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/medium_text</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
 
-    <style name="Theme.SHD.form.calender" parent="ThemeOverlay.Material3.MaterialCalendar">
-        <item name="colorPrimary">@color/calender_text_color</item>
-        <item name="colorOnPrimary">@color/calender_selected_date</item>
-        <item name="materialCalendarHeaderTitle">@style/Theme.SHD.form.calender.header.title</item>
-        <item name="materialCalendarHeaderSelection" >@style/Theme.SHD.form.calender.header.selection</item>
-        <item name="materialCalendarHeaderToggleButton">@style/Theme.SHD.form.calender.switch.keyboard</item>
-        <item name="materialCalendarYearNavigationButton">@style/Theme.SHD.form.calender.year.selection</item>
-        <item name="materialCalendarMonthNavigationButton">@style/Theme.SHD.form.calender.month.selection</item>
-        <item name="materialCalendarHeaderLayout">@style/Theme.SHD.form.calender.header.layout</item>
-    </style>
-    
-    <style name="Theme.SHD.form.slider" parent="@style/Widget.Material3.Slider.Label">
-        <item name="backgroundTint">@color/slider_label_background_color</item>
-        <item name="android:textColor">@color/slider_label_text_color</item>
+    <style name="Theme.SHD.Text.Large" parent="">
+        <item name="fontFamily">@font/poppins_semi_bold</item>
+        <item name="android:textSize">@dimen/large_text</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
     </style>
 
-    <style name="Theme.SHD.form.Button" parent="Widget.Material3.Button.ElevatedButton">
-        <item name="backgroundTint">@color/form_button_background_color</item>
-        <item name="android:textColor">@color/form_button_text_color</item>
-        <item name="fontFamily">@font/poppins_bold</item>
-        <item name="android:textSize">20sp</item>
-    </style>
-
-    <style name="Theme.SHD.excel.fileSelect.Button" parent="Widget.Material3.Button.ElevatedButton">
-        <item name="backgroundTint">@color/excel_button_background_color</item>
-        <item name="android:textColor">@color/form_button_text_color</item>
-        <item name="fontFamily">@font/poppins_bold</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
-    <style name="Theme.SHD.card.Text" parent="Widget.AppCompat.TextView">
-        <item name="android:textSize">15sp</item>
-        <item name="fontFamily">@font/poppins_regular</item>
-        <item name="android:textColor">@color/add_jewellery_form_text_color</item>
-    </style>
 
 </resources>

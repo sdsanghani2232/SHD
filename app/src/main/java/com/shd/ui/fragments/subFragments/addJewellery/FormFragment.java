@@ -1,26 +1,23 @@
 package com.shd.ui.fragments.subFragments.addJewellery;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -29,16 +26,15 @@ import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointBackward;
-import com.google.android.material.datepicker.MaterialDatePicker;
+import com.archit.calendardaterangepicker.customviews.CalendarListener;
+import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.slider.Slider;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -49,7 +45,6 @@ import com.shd.repository.readdata.TempCodeList;
 import com.shd.repository.storedata.JewelleryDetailsStore;
 import com.shd.halperclass.otherClass.CheckInternet;
 import com.shd.halperclass.validationclass.FormValidation;
-
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -63,16 +58,17 @@ public class FormFragment extends Fragment {
     private final Codes codes = Codes.getInstance();
     private final TempCodeList tempCodeList = TempCodeList.getInstance();
     private final DesignCodeList designCodeList = DesignCodeList.getInstance();
+    private final SimpleDateFormat format = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
     ScrollView mainScrollView;
-    TextView errorText;
     View indicator1, indicator2;
     private Uri img1Url = Uri.parse(""), img2Url = Uri.parse("");
     ShapeableImageView jewelleryImg1, jewelleryImg2;
     MaterialSwitch designStatus;
     FloatingActionButton jewelleryImg1Button, jewelleryImg2Button;
     HorizontalScrollView imgScrollView;
-    TextInputLayout date_layout, jewelleryMainTypeLayout, jewellerySubTypeLayout, gold_layout, diamond_layout, length_layout, width_layout, height_layout, design_code_layout, customer_code_layout, temp_code_layout, errorLayout;
-    TextInputEditText date_text, gold_text, diamond_text, length_text, width_text, height_text, design_code_text, customer_text, work_by_text, work_place_text, customer_code_text, temp_code_text;
+    DateRangeCalendarView rangeCalendarView;
+    TextInputLayout jewelleryMainTypeLayout, jewellerySubTypeLayout, gold_layout, diamond_layout, length_layout, width_layout, height_layout, design_code_layout, customer_code_layout, temp_code_layout, errorLayout;
+    TextInputEditText gold_text, diamond_text, length_text, width_text, height_text, design_code_text, customer_text, work_by_text, work_place_text, customer_code_text, temp_code_text;
     MaterialAutoCompleteTextView jewelleryMainTypeText, jewellerySubTypeText;
     Slider gold_slider, diamond_slider, length_slider, width_slider, height_slider;
     Button save;
@@ -87,7 +83,6 @@ public class FormFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    @SuppressLint({"ClickableViewAccessibility"})
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -97,10 +92,17 @@ public class FormFragment extends Fragment {
         checkInternet();
         currentDate();
         setMainDropDownList();
+        rangeCalendarView.setCalendarListener(new CalendarListener() {
+            @Override
+            public void onFirstDateSelected(@NonNull Calendar calendar) {}
+
+            @Override
+            public void onDateRangeSelected(@NonNull Calendar calendar, @NonNull Calendar calendar1) {
+                selectedDate = format.format(calendar.getTime());
+            }
+        });
         jewelleryImg1Button.setOnClickListener(v -> img1.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
         jewelleryImg2Button.setOnClickListener(v -> img2.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
-        date_layout.setStartIconOnClickListener(v -> setDate());
-        date_text.setOnClickListener(v -> setDate());
         imgScrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> setIndicator(scrollX));
         jewelleryMainTypeText.setOnItemClickListener((parent, view1, position, id) -> {
             jewelleryMainTypeLayout.setFocusable(true);
@@ -126,6 +128,7 @@ public class FormFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -193,53 +196,28 @@ public class FormFragment extends Fragment {
             }
         });
 
-        save.setOnTouchListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    checkInternet();
-                    if (isInternet) {
-                        checkData();
-                        save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_onClick_color));
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if (isInternet) {
-                        save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_color));
-                    } else {
-                        save.setBackgroundColor(requireContext().getColor(R.color.form_not_enable_button_color));
-                    }
-                    break;
+        save.setOnClickListener(v ->{
+            checkInternet();
+            if ((isInternet)) checkData();
+            else {
+                Snackbar.make(view.findViewById(R.id.form_page),R.string.internet_error,Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(requireContext().getColor(R.color.colorPrimaryStroke))
+                        .setTextColor(requireContext().getColor(R.color.colorPrimaryText)).show();
             }
-            return true;
         });
-
         return view;
     }
 
     private void checkInternet() {
-        if (new CheckInternet(requireContext()).Check()) {
-            isInternet = true;
-            save.setClickable(true);
-            save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_color));
-            errorText.setVisibility(View.GONE);
-        } else {
-            isInternet = false;
-            save.setClickable(false);
-            save.setBackgroundColor(requireContext().getColor(R.color.form_not_enable_button_color));
-            errorText.setText(requireContext().getResources().getString(R.string.check_internet_connectivity));
-            errorText.setVisibility(View.VISIBLE);
-            mainScrollView.scrollTo(0, 0);
-        }
+        isInternet = new CheckInternet(requireContext()).Check();
     }
 
     private void findIds(View view) {
         mainScrollView = view.findViewById(R.id.main_scroll_view);
-        errorText = view.findViewById(R.id.error_text);
         indicator1 = view.findViewById(R.id.form_img_indicator_1);
         indicator2 = view.findViewById(R.id.form_img_indicator_2);
         imgScrollView = view.findViewById(R.id.form_design_horizontal_scroll_bar);
-        date_layout = view.findViewById(R.id.form_date_layout);
-        date_text = view.findViewById(R.id.form_date_display_text);
+        rangeCalendarView = view.findViewById(R.id.form_calender);
         jewelleryMainTypeLayout = view.findViewById(R.id.form_jewellery_main_type_layout);
         jewelleryMainTypeText = view.findViewById(R.id.form_jewellery_main_type_drop_down);
         jewellerySubTypeLayout = view.findViewById(R.id.form_jewellery_sub_type_layout);
@@ -276,7 +254,7 @@ public class FormFragment extends Fragment {
         temp_code_text = view.findViewById(R.id.form_temp_code_input_text);
     }
 
-    public final ActivityResultLauncher<Intent> img1 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+    public final ActivityResultLauncher<Intent> img1 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<>() {
         @Override
         public void onActivityResult(ActivityResult result) {
             if (result.getResultCode() == Activity.RESULT_OK || result.getData() != null) {
@@ -286,7 +264,7 @@ public class FormFragment extends Fragment {
             }
         }
     });
-    public final ActivityResultLauncher<Intent> img2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+    public final ActivityResultLauncher<Intent> img2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<>() {
         @Override
         public void onActivityResult(ActivityResult result) {
             if (result.getResultCode() == Activity.RESULT_OK || result.getData() != null) {
@@ -311,35 +289,17 @@ public class FormFragment extends Fragment {
     }
 
     private void currentDate() {
+//        set current date in data base
         Calendar calendars = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
-        date_text.setText(format.format(calendars.getTime()));
-    }
+        selectedDate = format.format(calendars.getTime());
 
-    private void setDate() {
-        CalendarConstraints.Builder builder = new CalendarConstraints.Builder();
-        builder.setValidator(DateValidatorPointBackward.now());
+//        set current date in view
+        Calendar currentMonth = Calendar.getInstance();
+        currentMonth.add(Calendar.MONTH,0);
+        Calendar currentDate = (Calendar) currentMonth.clone();
+        currentDate.add(Calendar.DATE, 0);
 
-        MaterialDatePicker.Builder<Long> dateBuilder = MaterialDatePicker.Builder.datePicker();
-        dateBuilder.setTheme(R.style.Theme_SHD_form_calender);
-        dateBuilder.setCalendarConstraints(builder.build());
-
-        long today = MaterialDatePicker.todayInUtcMilliseconds();
-        dateBuilder.setSelection(today);
-
-        MaterialDatePicker<Long> datePicker = dateBuilder.build();
-
-        dateBuilder.setTitleText(requireContext().getResources().getString(R.string.select_date));
-        dateBuilder.setSelection(System.currentTimeMillis());
-
-        datePicker.addOnPositiveButtonClickListener(selection -> {
-            Calendar calendars = Calendar.getInstance();
-            calendars.setTimeInMillis(selection);
-            SimpleDateFormat format = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
-            date_text.setText(format.format(calendars.getTime()));
-        });
-
-        datePicker.show(requireActivity().getSupportFragmentManager(), "Jewellery Date");
+        rangeCalendarView.setSelectedDateRange(currentMonth, currentDate);
     }
 
     private void setMainDropDownList() {
@@ -404,6 +364,7 @@ public class FormFragment extends Fragment {
             String number = Objects.requireNonNull(editText.getText()).toString();
             if (number.isEmpty()) {
                 slider.setValue(0.00f);
+                editText.setHint("0.0");
                 isChanging = false;
                 return "0.00";
             } else if (number.equals(".")) {
@@ -431,7 +392,6 @@ public class FormFragment extends Fragment {
                     } else {
                         layout.setErrorEnabled(true);
                         layout.setError(" ");
-//                            TODO : make custom Toast
                         isError = true;
                         errorLayout = layout;
                         Toast.makeText(requireContext(), requireContext().getResources().getString(R.string.slider_error1), Toast.LENGTH_SHORT).show();
@@ -465,7 +425,6 @@ public class FormFragment extends Fragment {
         workBy = Objects.requireNonNull(work_by_text.getText()).toString();
         workPlace = Objects.requireNonNull(work_place_text.getText()).toString();
         customerName = Objects.requireNonNull(customer_text.getText()).toString();
-        selectedDate = Objects.requireNonNull(date_text.getText()).toString();
         status = designStatus.isChecked();
 
         design_code_layout.setErrorEnabled(false);
@@ -548,7 +507,6 @@ public class FormFragment extends Fragment {
                     }
                     if (isError) mainScrollView.scrollTo(0, errorLayout.getTop());
                     else {
-                        errorText.setVisibility(View.GONE);
                         storeData();
                         resetForm();
                     }
@@ -580,7 +538,7 @@ public class FormFragment extends Fragment {
                 case "Img Not Stored": {
                     dialogCancel.setEnabled(true);
                     dialog.setTitle(requireContext().getResources().getString(R.string.warning));
-                    dialogMsg.setTextColor(requireContext().getColor(R.color.dialogBox_error_text_color));
+                    dialogMsg.setTextColor(requireContext().getColor(R.color.colorPrimaryError));
                     dialogMsg.setText(requireContext().getResources().getString(R.string.Design_Img_Not_Stored));
                     animationView.setAnimation("warning.json");
                     break;
@@ -588,7 +546,7 @@ public class FormFragment extends Fragment {
                 case "Design Not Store": {
                     dialogCancel.setEnabled(true);
                     dialog.setTitle(requireContext().getResources().getString(R.string.warning));
-                    dialogMsg.setTextColor(requireContext().getColor(R.color.dialogBox_error_text_color));
+                    dialogMsg.setTextColor(requireContext().getColor(R.color.colorPrimaryError));
                     dialogMsg.setText(requireContext().getResources().getString(R.string.Design_Not_Stored));
                     animationView.setAnimation("warning.json");
                     break;
@@ -596,7 +554,7 @@ public class FormFragment extends Fragment {
                 case "Successfully": {
                     dialogCancel.setEnabled(true);
                     dialog.setTitle(requireContext().getResources().getString(R.string.successfully));
-                    dialogMsg.setTextColor(requireContext().getColor(R.color.dialogBox_text_color));
+                    dialogMsg.setTextColor(requireContext().getColor(R.color.colorPrimaryButton));
                     dialogMsg.setText(requireContext().getResources().getString(R.string.Design_Stored_Successfully));
                     animationView.setAnimation("complete.json");
                     break;

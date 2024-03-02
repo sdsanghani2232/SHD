@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_color"
     android:orientation="vertical"
     tools:context=".ui.activity.sub_activity.excel_file.ExcelDataListActivity">
 
@@ -12,7 +11,6 @@
         android:id="@+id/appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/appbar_shape"
         app:layout_constraintTop_toTopOf="parent"
         app:liftOnScroll="true">
 
@@ -30,25 +28,21 @@
                 android:layout_height="match_parent">
 
                 <TextView
-                    style="@style/Theme.SHD.Text"
+                    style="@style/Theme.SHD.Text.medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/design"
-                    android:textSize="25sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Button
                     android:id="@+id/excel_data_save_button"
-                    style="@style/Widget.Material3.Button.TextButton"
+                    style="@style/Theme.SHD.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="25dp"
-                    android:fontFamily="@font/poppins_regular"
                     android:text="@string/save"
-                    android:textColor="@color/app_bar_button_color"
-                    android:textSize="23sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -101,11 +95,11 @@
 
             <TextView
                 android:id="@+id/excel_file_count"
-                style="@style/Theme.SHD.Text"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="20sp"
                 android:layout_marginTop="10dp"
+                style="@style/Theme.SHD.Text.small"
                 android:background="@drawable/card_view_text_border"
                 android:paddingHorizontal="10dp"
                 android:paddingTop="7dp"
@@ -115,7 +109,6 @@
 
             <TextView
                 android:id="@+id/excel_file_error_count"
-                style="@style/Theme.SHD.Text"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
                 android:layout_marginHorizontal="20sp"
@@ -123,7 +116,7 @@
                 android:background="@drawable/card_view_text_border"
                 android:paddingHorizontal="10dp"
                 android:paddingTop="7dp"
-
+                style="@style/Theme.SHD.Text.small"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/excel_file_count" />
 
@@ -145,6 +138,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:trackColor="@color/colorSecondaryBackground"
+                app:indicatorColor="@color/colorPrimaryButton"
                 android:indeterminate="true"
                 android:visibility="gone"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

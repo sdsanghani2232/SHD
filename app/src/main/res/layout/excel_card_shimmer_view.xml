@@ -6,13 +6,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_marginTop="10dp">
 
-
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="20dp"
-        app:cardBackgroundColor="@color/cv_shimmer_bg">
+        app:cardBackgroundColor="@color/colorPrimaryStroke"
+        app:strokeColor="@color/colorSecondaryBackground"
+        app:strokeWidth="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -25,31 +26,35 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/card_img1"
+                    style="@style/Theme.SHD.shimmer_img"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_margin="10dp"
-                    android:background="@color/cv_shimmer_bg"
+                    android:background="@color/colorSecondaryBackground"
                     android:contentDescription="@string/design_img"
-                    android:scaleType="fitXY"
                     app:layout_constraintBottom_toTopOf="@id/card_img2"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/Theme.SHD.shimmer_img"
                     tools:ignore="ImageContrastCheck" />
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/card_img2"
+                    style="@style/Theme.SHD.shimmer_img"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_margin="10dp"
-                    android:background="@color/cv_shimmer_bg"
+                    android:background="@color/colorSecondaryBackground"
                     android:contentDescription="@string/design_img"
                     android:scaleType="fitXY"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_img1"
+                    app:shapeAppearanceOverlay="@style/Theme.SHD.shimmer_img"
                     tools:ignore="ImageContrastCheck" />
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
@@ -63,10 +68,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    style="@style/Theme.SHD.Text"
-                    android:textColor="@color/cv_text_color"
-                    />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/card_deign_code_text"
@@ -75,12 +77,9 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_company_name_text"
                     android:layout_marginTop="5dp"
-                    style="@style/Theme.SHD.card.Text"
-                    android:textColor="@color/cv_text_color"
                     android:background="@drawable/card_view_text_border"
                     android:padding="5dp"
-                    android:paddingHorizontal="5dp"
-                    />
+                    android:paddingHorizontal="5dp" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/card_jw_type"
@@ -89,8 +88,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_deign_code_text"
                     android:layout_marginTop="5dp"
-                    style="@style/Theme.SHD.card.Text"
-                    android:textColor="@color/cv_text_color"
                     android:background="@drawable/card_view_text_border"
                     android:padding="5dp"
                     android:paddingHorizontal="5dp"/>
@@ -102,36 +99,36 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_jw_type"
                     android:layout_marginTop="5dp"
-                    style="@style/Theme.SHD.card.Text"
-                    android:textColor="@color/cv_text_color"
                     android:background="@drawable/card_view_text_border"
                     android:padding="5dp"
                     android:paddingHorizontal="5dp"/>
 
                 <Button
                     android:id="@+id/card_delete_button"
-                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    style="@style/Theme.SHD.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:backgroundTint="@color/cv_shimmer_bg"
+                    android:backgroundTint="@color/colorSecondaryBackground"
+                    android:contentDescription="@string/shimmer_button"
                     app:layout_constraintEnd_toStartOf="@id/card_update_button"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/card_date"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    tools:ignore="DuplicateSpeakableTextCheck,RedundantDescriptionCheck" />
 
                 <Button
                     android:id="@+id/card_update_button"
+                    style="@style/Theme.SHD.Button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:backgroundTint="@color/cv_shimmer_bg"
+                    android:backgroundTint="@color/colorSecondaryBackground"
+                    android:contentDescription="@string/shimmer_button"
                     android:fontFamily="@font/poppins_regular"
-                    android:textColor="@color/cv_text_color"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/card_delete_button"
                     app:layout_constraintTop_toBottomOf="@id/card_date"
-                    tools:ignore="SpeakableTextPresentCheck" />
+                    tools:ignore="RedundantDescriptionCheck" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>

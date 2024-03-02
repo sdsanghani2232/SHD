@@ -33,16 +33,19 @@
             android:exported="false"
             android:theme="@style/Theme.SHD.Main"
             android:windowSoftInputMode="adjustPan" />
+
         <activity
             android:name=".ui.activity.main_activity.login.ResetPassword"
             android:enableOnBackInvokedCallback="true"
             android:exported="false"
-            android:theme="@style/Theme.SHD.Login.ResetPassword"
+            android:theme="@style/Theme.SHD.Main"
             tools:targetApi="tiramisu" />
+
         <activity
             android:name=".ui.activity.main_activity.login.LogIn"
             android:exported="false"
             android:theme="@style/Theme.SHD.Main" />
+
         <activity
             android:name=".ui.activity.main_activity.login.SplashScreen"
             android:exported="true"

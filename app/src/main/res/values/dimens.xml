@@ -1,5 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="img_scroll_margin_start">15dp</dimen>
-    <dimen name="img_scroll_margin_Horizontal">15dp</dimen>
+
+    <dimen name="edit_text_box_corner_radius">10dp</dimen>
+    <dimen name="edit_text_box_stroke_width">3dp</dimen>
+
+    <dimen name="small_text">16sp</dimen>
+    <dimen name="medium_text">20sp</dimen>
+    <dimen name="large_text">32sp</dimen>
+
+    <dimen name="button_corner_radius">12dp</dimen>
+
+    <dimen name="staring_margin">15dp</dimen>
+    <dimen name="end_margin">15dp</dimen>
+    <dimen name="top_margin">10dp</dimen>
+    <dimen name="bottom_margin">10dp</dimen>
+    <dimen name="all_side_margin">15dp</dimen>
+
+    <dimen name="tab_indicator_corner">12dp</dimen>
+    <dimen name="tab_indicator_radius">12dp</dimen>
+
+    <dimen name="img_indicator_radios">15dp</dimen>
+
+    <dimen name="slider_starting_valuer">0.0</dimen>
+    <dimen name="slider_end_valuer">100.0</dimen>
+    <dimen name="slider_track_thickness">8dp</dimen>
+
+
+
 </resources>

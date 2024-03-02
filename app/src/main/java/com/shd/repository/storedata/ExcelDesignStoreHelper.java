@@ -8,10 +8,13 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Build;
+import android.util.Log;
+
 import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+
 import com.shd.R;
 import com.shd.viewmodes.ExcelFileData;
 
@@ -23,12 +26,12 @@ public class ExcelDesignStoreHelper {
     private static final int NOTIFICATION_ID = 1;
     private static int totalData = 0;
     private final ExcelFileData excelFileData = ExcelFileData.getInstance();
-    List<List<Object>> mainList = excelFileData.getExcelDataList();
+    final List<List<Object>> mainList = excelFileData.getExcelDataList();
     private NotificationCompat.Builder notification;
     private NotificationManagerCompat managerCompat;
     List<Object> designList;
-    Context context;
-    AtomicBoolean errorSet = new AtomicBoolean(false);
+    final Context context;
+    final AtomicBoolean errorSet = new AtomicBoolean(false);
 
     public ExcelDesignStoreHelper(Context context) {
         this.context = context;
@@ -36,7 +39,9 @@ public class ExcelDesignStoreHelper {
 
     public void store() {
         createNotificationChannel(context);
-        createNotification(mainList.size());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            createNotification(mainList.size());
+        }
         int position = 0;
         processDesign(position);
     }
@@ -44,6 +49,7 @@ public class ExcelDesignStoreHelper {
     private void processDesign(int position) {
         if (position < mainList.size() && !errorSet.get()) {
             designList = mainList.get(position);
+            Log.d("data upload", "upload");
             Bitmap img1Bitmap = designList.get(0).equals("null") ? null : (Bitmap) designList.get(0);
             Bitmap img2Bitmap = designList.get(1).equals("null") ? null : (Bitmap) designList.get(1);
             String customerName = designList.get(2).equals("null") ? "" : (String) designList.get(2);
@@ -87,7 +93,11 @@ public class ExcelDesignStoreHelper {
         manager.createNotificationChannel(channel);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
     private void createNotification(int size) {
+        if (ActivityCompat.checkSelfPermission(context, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
+        }
         notification = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle("Upload")
@@ -97,6 +107,7 @@ public class ExcelDesignStoreHelper {
                 .setSound(null);
 
         managerCompat = NotificationManagerCompat.from(context);
+        managerCompat.notify(NOTIFICATION_ID, notification.build());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -108,12 +119,13 @@ public class ExcelDesignStoreHelper {
         notification.setProgress(mainList.size(), totalData, false);
         managerCompat.notify(NOTIFICATION_ID, notification.build());
 
-        if (totalData == mainList.size()) {
+        if (totalData >= mainList.size()) {
             notification.setContentTitle("Complete");
             notification.setOngoing(false);
             notification.setContentText(totalData + " Files Uploaded");
             notification.setProgress(0, 0, false);
             managerCompat.notify(NOTIFICATION_ID, notification.build());
+            mainList.clear();
         }
     }
 
@@ -126,5 +138,6 @@ public class ExcelDesignStoreHelper {
         notification.setOngoing(false);
         notification.setProgress(0, 0, false);
         managerCompat.notify(NOTIFICATION_ID, notification.build());
+        mainList.clear();
     }
 }

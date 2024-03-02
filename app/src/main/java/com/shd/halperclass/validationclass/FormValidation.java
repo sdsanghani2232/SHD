@@ -19,39 +19,36 @@ public class FormValidation {
 
     public void validate(Result result)
     {
-        boolean isError = false;
         if(!designCode.isEmpty() && designCode.trim().length() <5)
         {
             result.onResult("Small Design Code");
-            isError = true;
+            return;
         }
         if (!customerCode.isEmpty() && customerCode.trim().length() <5) {
             result.onResult("Small Customer Code");
-            isError = true;
+           return;
         }
         if(designCode.isEmpty() && customerCode.isEmpty() && tempCode.isEmpty()) {
             result.onResult("Empty Temp Code");
-            isError = true;
+            return;
         } else if (designCode.isEmpty() && customerCode.isEmpty() && tempCode.trim().length() < 5) {
             result.onResult("Small Temp Code");
-            isError = true;
+            return;
         }
 
         if (mainType.isEmpty()) {
             result.onResult("Empty Main Type");
-            isError = true;
+            return;
         }else if((mainType.equals("Ring") || mainType.equals("NKC") || mainType.equals("ER") || mainType.equals("BR"))&& (subtype.isEmpty() || subtype.equals("Sub Type")))
         {
             result.onResult("Empty sub Type");
-            isError = true;
+            return;
         }
 
         if (workBy.isEmpty()) result.onResult("work by empty");
         if (workPlace.isEmpty()) result.onResult("work place empty");
 
-        if(!isError)
-        {
-            result.onResult("NO Error");
-        }
+        result.onResult("NO Error");
+
     }
 }

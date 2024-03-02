@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.fragments.mainFragments.ProfilesDetailFragment"
-    android:background="@color/profiles_details_background"
     android:orientation="vertical">
 
     <com.google.android.material.tabs.TabLayout
@@ -16,14 +15,11 @@
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:background="@drawable/tab_background"
-        app:tabIndicator="@drawable/tab_indicator"
-        app:tabIndicatorColor="@color/tab_indicator_color"
-        app:tabIndicatorFullWidth="true"
-        app:tabIndicatorGravity="stretch"
-        app:tabTextColor="@color/tab_text_color"
-        app:tabSelectedTextColor="@color/tab_selected_text_color"
+        style="@style/Theme.SHD.tabBar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         />
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/profile_details_viewpager"
         android:layout_width="match_parent"

@@ -7,13 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.ViewPager2;
-
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-
-import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.ismaeldivita.chipnavigation.ChipNavigationBar;
 import com.shd.R;
 import com.shd.halperclass.informationclass.AdminInfo;
 import com.shd.halperclass.informationclass.Codes;
@@ -23,7 +21,7 @@ import com.shd.viewmodes.DesignCodeModel;
 import com.shd.viewmodes.TempCodeModel;
 
 public class HomeActivity extends AppCompatActivity {
-    MeowBottomNavigation navigation;
+    ChipNavigationBar navigation;
     AdminModel adminModel;
     DesignCodeModel designCodeModel;
     TempCodeModel tempCodeModel;
@@ -35,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-            if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 1);
             }
 
@@ -52,42 +50,26 @@ public class HomeActivity extends AppCompatActivity {
 
         navigation = findViewById(R.id.bottom_navigation);
 
-        navigation.add(new MeowBottomNavigation.Model(1,R.drawable.home));
-        navigation.add(new MeowBottomNavigation.Model(2,R.drawable.folderplus));
-        navigation.add(new MeowBottomNavigation.Model(3,R.drawable.search));
-        navigation.add(new MeowBottomNavigation.Model(4,R.drawable.add_user));
-        navigation.add(new MeowBottomNavigation.Model(5,R.drawable.profile));
-
-        navigation.show(1,true);
-
         HomeActivityAdapter homeActivityAdapter = new HomeActivityAdapter(this);
         viewPager2.setAdapter(homeActivityAdapter);
 
         viewPager2.setUserInputEnabled(false);
-        viewPager2.setOffscreenPageLimit(1);
-        viewPager2.setCurrentItem(0);
+        viewPager2.setOffscreenPageLimit(3);
+        viewPager2.setCurrentItem(0,true);
 
-        navigation.setOnClickMenuListener(model -> {
-            switch (model.getId())
-            {
-                case 1 :
-                    replace(0);
-                    break;
-                case 2 :
-                    replace(1);
-                    break;
-                case 3 :
-                    replace(2);
-                    break;
-                case 4 :
-                    replace(3);
-                    break;
-                case 5 :
-                    replace(4);
-                    break;
-
+        navigation.setItemSelected(R.id.home_icon,true);
+        navigation.setOnItemSelectedListener(item -> {
+            if (item == R.id.home_icon) {
+                replace(0);
+            } else if (item == R.id.jewellery_icon) {
+                replace(1);
+            } else if (item == R.id.search_icon) {
+                replace(2);
+            } else if (item == R.id.upload_icon) {
+                replace(3);
+            } else if (item == R.id.add_user_icon) {
+                replace(4);
             }
-            return null;
         });
 
         OnBackPressedDispatcher dispatcher = getOnBackPressedDispatcher();
@@ -100,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
 //                       onDestroy();
                     finish();
                 }else {
-                    navigation.show(1,true);
+                    navigation.setItemSelected(R.id.home_icon,true);
                     replace(0);
                 }
             }

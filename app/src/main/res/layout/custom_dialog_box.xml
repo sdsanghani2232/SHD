@@ -26,22 +26,19 @@
         android:layout_marginTop="30dp"
         android:layout_marginStart="10dp"
         android:ellipsize="end"
-        android:textColor="@color/dialogBox_text_color"
-        android:fontFamily="@font/poppins_regular"
-        android:textSize="15sp"
+        style="@style/Theme.SHD.Text.small"
+        android:textColor="@color/colorPrimaryButton"
         android:maxLines="2"/>
 
     <Button
         android:id="@+id/cancel_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/Widget.Material3.Button.TextButton"
+        style="@style/Theme.SHD.TextButton"
         android:text="@string/cancel"
-        android:textSize="20sp"
-        android:textColor="@color/dialogBox_button_text_color"
+        android:textColor="@color/colorPrimaryError"
         app:layout_constraintTop_toBottomOf="@id/lottie_animation_view"
         android:layout_margin="5dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

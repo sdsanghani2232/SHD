@@ -6,9 +6,10 @@
     <string name="password">Password</string>
     <string name="log_in">Log In</string>
     <string name="empty_email_error">Enter The email id</string>
-    <string name="invalid_email_error">Enter The valid email id</string>
+    <string name="invalid_email_error">Wrong email id</string>
+    <string name="internet_error">Check Internet Connection.</string>
     <string name="empty_password_error">Enter Password</string>
-    <string name="invalid_password_error">Enter valid Password</string>
+    <string name="invalid_password_error">Wrong Password</string>
     <string name="other_error">Some Thing was Wrong please try again</string>
     <string name="reset_password_email">Reset Password Email Send</string>
     <string name="forgot_password">Forgot Password</string>
@@ -27,19 +28,15 @@
     <string name="work_by">Work By :</string>
     <string name="work_by_text">SHD</string>
     <string name="work_place_text">SHD office</string>
-    <string name="select_date">Select Date</string>
-    <string name="date">Date :</string>
     <string name="slider_error1">Only 0.00 to 100.00 number Allow</string>
     <string name="slider_error2">Only 2 Decimal Allow</string>
     <string name="jewellery_types">Jewellery Types :</string>
     <string name="select_jewellery">Jewellery</string>
     <string name="select_sub_type">Sub type</string>
-    <string name="weight">Weight :</string>
     <string name="gold_gm">Gold (gm) :</string>
     <string name="form_starting_number">0.00</string>
     <string name="slide">slide</string>
     <string name="diamond_text">Diamond (Carat):</string>
-    <string name="size">Size :</string>
     <string name="length">Length (mm) :</string>
     <string name="width">Width (mm) :</string>
     <string name="height">Height (mm) :</string>
@@ -55,7 +52,6 @@
     <string name="required_temp_code">Temp Code Required</string>
     <string name="exits_temp_code">Temp Code already exits</string>
     <string name="exits_design_code">Design Code already exits</string>
-    <string name="check_internet_connectivity">Check Internet Connectivity</string>
     <string name="sub_type">Sub Type</string>
     <string name="processing">Processing</string>
     <string name="warning">Warning</string>
@@ -66,16 +62,12 @@
     <string name="excel_file_read_error">Excel file not read properly Please check  excel file… </string>
     <string name="profile_tab_emp">EMPLOYEES</string>
     <string name="profile_tab_customer">CUSTOMER</string>
-    <string name="excel_img">excel img</string>
-    <string name="file_name">File Name</string>
-    <string name="select_excel">Select Excel</string>
     <string name="design">Design</string>
     <string name="design_img">Design img</string>
     <string name="update">UPDATE</string>
     <string name="do_not_cancel">Do not Cancel the Process..</string>
     <string name="delete">DELETE</string>
-    <string name="search">search</string>
-    <string name="filter">Filter</string>
+    <string name="search">Search</string>
     <string name="more_menu">More menu</string>
     <string name="share">Share</string>
     <string name="download">Download</string>
@@ -84,7 +76,14 @@
     <string name="total_error_count">Total Error Files :</string>
     <string name="one_more_time">one more time if you wont to exit</string>
     <string name="design_have_error">Design Have Errors..</string>
-    <string name="empty_design_set">NO Design To have Store</string>
+    <string name="empty_design_set">NO Design To have StoreM</string>
+    <string name="home">Home</string>
+    <string name="jewellery">Jewellery</string>
+    <string name="users">Users</string>
+    <string name="upload">Upload</string>
+    <string name="select_excel_file">Select Excel File</string>
+    <string name="file">File</string>
+    <string name="shimmer_button">shimmer button</string>
 
 
     <string-array name="jewellery_main_type">
@@ -123,7 +122,7 @@
 
     <string-array name="jewellery_br_sub_type">
         <item>Lose</item>
-        <item>Tenies</item>
+        <item>Tenis</item>
         <item>Kada</item>
     </string-array>
 

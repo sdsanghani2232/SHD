@@ -13,10 +13,9 @@
         android:layout_height="match_parent"
         android:layout_margin="20dp"
         style="?attr/materialCardViewElevatedStyle"
-        app:strokeColor="@color/cv_stroke_color"
+        app:strokeColor="@color/colorPrimaryButton"
         app:strokeWidth="1.5dp"
-        app:cardElevation="7dp"
-        app:cardBackgroundColor="@color/cv_bg_color">
+        app:cardBackgroundColor="@color/colorSecondaryBackground">
 
        <LinearLayout
            android:layout_width="match_parent"
@@ -35,9 +34,9 @@
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintBottom_toTopOf="@id/card_img2"
                    app:layout_constraintEnd_toEndOf="parent"
-                   android:src="@drawable/default_img"
+                   style="@style/Theme.SHD.img_shape"
+                   app:shapeAppearanceOverlay="@style/Theme.SHD.img_shape"
                    android:layout_margin="10dp"
-                   android:scaleType="fitXY"
                    android:contentDescription="@string/design_img"/>
 
                <com.google.android.material.imageview.ShapeableImageView
@@ -49,8 +48,8 @@
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintBottom_toBottomOf="parent"
                    app:layout_constraintEnd_toEndOf="parent"
-                   android:src="@drawable/default_img"
-                   android:scaleType="fitXY"
+                   style="@style/Theme.SHD.img_shape"
+                   app:shapeAppearanceOverlay="@style/Theme.SHD.img_shape"
                    android:contentDescription="@string/design_img"/>
            </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -66,10 +65,7 @@
                    android:layout_height="wrap_content"
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintTop_toTopOf="parent"
-                   style="@style/Theme.SHD.Text"
-                   android:textColor="@color/cv_text_color"
-
-                  />
+                   style="@style/Theme.SHD.Text.small" />
 
                <com.google.android.material.imageview.ShapeableImageView
                    android:id="@+id/card_status_img"
@@ -90,8 +86,7 @@
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintTop_toBottomOf="@id/card_company_name_text"
                    android:layout_marginTop="5dp"
-                   style="@style/Theme.SHD.card.Text"
-                   android:textColor="@color/cv_text_color"
+                   style="@style/Theme.SHD.Text.small"
                    android:background="@drawable/card_view_text_border"
                    android:padding="5dp"
                    android:paddingHorizontal="5dp"
@@ -104,8 +99,7 @@
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintTop_toBottomOf="@id/card_deign_code_text"
                    android:layout_marginTop="5dp"
-                   style="@style/Theme.SHD.card.Text"
-                   android:textColor="@color/cv_text_color"
+                   style="@style/Theme.SHD.Text.small"
                    android:background="@drawable/card_view_text_border"
                    android:padding="5dp"
                    android:paddingHorizontal="5dp"/>
@@ -117,8 +111,7 @@
                    app:layout_constraintStart_toStartOf="parent"
                    app:layout_constraintTop_toBottomOf="@id/card_jw_type"
                    android:layout_marginTop="5dp"
-                   style="@style/Theme.SHD.card.Text"
-                   android:textColor="@color/cv_text_color"
+                   style="@style/Theme.SHD.Text.small"
                    android:background="@drawable/card_view_text_border"
                    android:padding="5dp"
                    android:paddingHorizontal="5dp"/>
@@ -130,11 +123,10 @@
                    app:layout_constraintTop_toBottomOf="@id/card_date"
                    android:layout_marginTop="5dp"
                    app:layout_constraintStart_toStartOf="parent"
-                   style="@style/Widget.Material3.Button.OutlinedButton"
+                   style="@style/Theme.SHD.Button"
                    android:text="@string/delete"
-                   android:textColor="@color/cv_cancel_text_color"
-                   app:layout_constraintEnd_toStartOf="@id/card_update_button"
-                   />
+                   android:textColor="@color/colorPrimaryBackground"
+                   app:layout_constraintEnd_toStartOf="@id/card_update_button" />
 
                <Button
                    android:id="@+id/card_update_button"
@@ -145,10 +137,7 @@
                    app:layout_constraintStart_toEndOf="@id/card_delete_button"
                    app:layout_constraintEnd_toEndOf="parent"
                    android:text="@string/update"
-                   android:textSize="17sp"
-                   android:backgroundTint="@color/cv_update_bg_color"
-                   android:fontFamily="@font/poppins_regular"
-                   android:textColor="@color/cv_text_color" />
+                   style="@style/Theme.SHD.Button" />
 
            </androidx.constraintlayout.widget.ConstraintLayout>
        </LinearLayout>

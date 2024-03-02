@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
+
+import com.shd.ui.fragments.mainFragments.SearchDataFragment;
 import com.shd.ui.fragments.mainFragments.AddJewelleryFragment;
 import com.shd.ui.fragments.mainFragments.HomeFragment;
+import com.shd.ui.fragments.mainFragments.JewelleryFragment;
 import com.shd.ui.fragments.mainFragments.ProfilesDetailFragment;
-import com.shd.ui.fragments.mainFragments.SearchFragment;
-import com.shd.ui.fragments.mainFragments.UserProfileFragment;
+
 public class HomeActivityAdapter extends FragmentStateAdapter {
 
     public HomeActivityAdapter(@NonNull FragmentActivity fragmentActivity) {
@@ -21,16 +23,13 @@ public class HomeActivityAdapter extends FragmentStateAdapter {
         switch (position)
         {
             case 1:
-                return   new AddJewelleryFragment();
+                return new JewelleryFragment();
             case 2:
-                return new SearchFragment();
-
+                return new SearchDataFragment();
             case 3:
+                return new AddJewelleryFragment();
+            case 4:
                 return new ProfilesDetailFragment();
-
-            case 4 :
-                return   new UserProfileFragment();
-
             default:
                 return new HomeFragment();
         }

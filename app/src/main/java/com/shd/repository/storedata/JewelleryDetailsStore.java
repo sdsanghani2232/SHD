@@ -30,8 +30,8 @@ public class JewelleryDetailsStore {
             .setContentType("image/jpg")
             .build();
 
-    DesignCodeList dcList = DesignCodeList.getInstance();
-    TempCodeList tcList = TempCodeList.getInstance();
+    final DesignCodeList dcList = DesignCodeList.getInstance();
+    final TempCodeList tcList = TempCodeList.getInstance();
     public interface Result{
         void onResult(String result);
     }

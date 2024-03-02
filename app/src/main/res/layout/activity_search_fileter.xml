@@ -4,14 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.sub_activity.search.SearchFilterActivity"
-    android:background="@color/app_color">
+    tools:context=".ui.activity.sub_activity.search.SearchFilterActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/filter_appbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/appbar_shape"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 

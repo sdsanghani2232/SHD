@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.app.Activity;
 import android.content.Intent;
@@ -21,10 +22,9 @@ import android.widget.Button;
 import android.widget.HorizontalScrollView;
 import android.widget.ScrollView;
 import android.widget.Toast;
+import com.archit.calendardaterangepicker.customviews.CalendarListener;
+import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
 import com.google.android.material.appbar.MaterialToolbar;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointBackward;
-import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.materialswitch.MaterialSwitch;
@@ -57,7 +57,8 @@ public class UpdateJWDataActivity extends AppCompatActivity {
     private final TempCodeList tempCodeList = TempCodeList.getInstance();
     private final DesignCodeList designCodeList = DesignCodeList.getInstance();
     private final ExcelFileData excelFileData = ExcelFileData.getInstance();
-    List<List<Object>> mainList = excelFileData.getExcelDataList();
+    private final SimpleDateFormat format = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
+    final List<List<Object>> mainList = excelFileData.getExcelDataList();
     List<Object> designList;
     Bitmap img1Bitmap,img2Bitmap;
     MaterialToolbar appbar;
@@ -66,8 +67,9 @@ public class UpdateJWDataActivity extends AppCompatActivity {
     MaterialSwitch designStatus;
     FloatingActionButton jewelleryImg1Button, jewelleryImg2Button;
     HorizontalScrollView imgScrollView;
-    TextInputLayout date_layout, jewelleryMainTypeLayout, jewellerySubTypeLayout, gold_layout, diamond_layout, length_layout, width_layout, height_layout, design_code_layout, customer_code_layout, temp_code_layout, errorLayout;
-    TextInputEditText date_text, gold_text, diamond_text, length_text, width_text, height_text, design_code_text, customer_text, work_by_text, work_place_text, customer_code_text, temp_code_text;
+    DateRangeCalendarView rangeCalendarView;
+    TextInputLayout  jewelleryMainTypeLayout, jewellerySubTypeLayout, gold_layout, diamond_layout, length_layout, width_layout, height_layout, design_code_layout, customer_code_layout, temp_code_layout, errorLayout;
+    TextInputEditText  gold_text, diamond_text, length_text, width_text, height_text, design_code_text, customer_text, work_by_text, work_place_text, customer_code_text, temp_code_text;
     MaterialAutoCompleteTextView jewelleryMainTypeText, jewellerySubTypeText;
     Slider gold_slider, diamond_slider, length_slider, width_slider, height_slider;
     Button save;
@@ -84,10 +86,17 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         setListData();
         setMainDropDownList();
 
+        rangeCalendarView.setCalendarListener(new CalendarListener() {
+            @Override
+            public void onFirstDateSelected(@NonNull Calendar calendar) {}
+
+            @Override
+            public void onDateRangeSelected(@NonNull Calendar calendar, @NonNull Calendar calendar1) {
+                selectedDate = format.format(calendar.getTime());
+            }
+        });
         jewelleryImg1Button.setOnClickListener(v -> img1.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
         jewelleryImg2Button.setOnClickListener(v -> img2.launch(new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)));
-        date_layout.setStartIconOnClickListener(v -> setDate());
-        date_text.setOnClickListener(v -> setDate());
         imgScrollView.setOnScrollChangeListener((v, scrollX, scrollY, oldScrollX, oldScrollY) -> setIndicator(scrollX));
         jewelleryMainTypeText.setOnItemClickListener((parent, view1, position, id) -> {
             jewelleryMainTypeLayout.setFocusable(true);
@@ -202,8 +211,7 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         indicator1 = findViewById(R.id.update_img_indicator_1);
         indicator2 = findViewById(R.id.update_img_indicator_2);
         imgScrollView = findViewById(R.id.update_horizontal_scroll_bar);
-        date_layout = findViewById(R.id.update_date_layout);
-        date_text = findViewById(R.id.update_date_display_text);
+        rangeCalendarView = findViewById(R.id.update_calender);
         jewelleryMainTypeLayout = findViewById(R.id.update_jewellery_main_type_layout);
         jewelleryMainTypeText = findViewById(R.id.update_jewellery_main_type_drop_down);
         jewellerySubTypeLayout = findViewById(R.id.update_jewellery_sub_type_layout);
@@ -226,10 +234,10 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         save = findViewById(R.id.update_save_button);
         design_code_layout = findViewById(R.id.design_code_layout);
         design_code_text = findViewById(R.id.design_code_text);
-        jewelleryImg1Button = findViewById(R.id.update_img_pencil_1);
-        jewelleryImg2Button = findViewById(R.id.update_img_pencil_2);
-        jewelleryImg1 = findViewById(R.id.update_img_1);
-        jewelleryImg2 = findViewById(R.id.update_img_2);
+        jewelleryImg1Button = findViewById(R.id.update_design_img_pencil_1);
+        jewelleryImg2Button = findViewById(R.id.update_design_img_pencil_2);
+        jewelleryImg1 = findViewById(R.id.update_design_img_1);
+        jewelleryImg2 = findViewById(R.id.update_design_img_2);
         customer_text = findViewById(R.id.update_customer_input_text);
         work_by_text = findViewById(R.id.update_work_by_input_text);
         work_place_text = findViewById(R.id.update_work_place_input_text);
@@ -255,7 +263,7 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         temp_code_text.setText(designList.get(5).equals("null") ? "" : (CharSequence) designList.get(5));
         work_by_text.setText((CharSequence) designList.get(6));
         work_place_text.setText((CharSequence) designList.get(7));
-        date_text.setText((CharSequence) designList.get(8));
+        selectedDate = designList.get(8).toString();
         jewelleryMainTypeText.setText(designList.get(9).equals("null") ? "" : (CharSequence) designList.get(9));
         jewellerySubTypeText.setText(designList.get(10).equals("null") ? "" : (CharSequence) designList.get(10));
         designStatus.setChecked(designList.get(11).equals("true"));
@@ -282,7 +290,7 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         diamond_slider.setValue(designList.get(16).equals("null") || Float.parseFloat((String) designList.get(16)) > 100 ? 0.00f : Float.parseFloat((String) designList.get(16)));
     }
 
-    public final ActivityResultLauncher<Intent> img1 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+    public final ActivityResultLauncher<Intent> img1 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<>() {
         @Override
         public void onActivityResult(ActivityResult result) {
             if (result.getResultCode() == Activity.RESULT_OK || result.getData() != null) {
@@ -291,12 +299,12 @@ public class UpdateJWDataActivity extends AppCompatActivity {
                     img1Bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(Objects.requireNonNull(result.getData().getData())));
                     jewelleryImg1.setImageBitmap(img1Bitmap);
                 } catch (FileNotFoundException e) {
-                   e.printStackTrace();
+                    e.printStackTrace();
                 }
             }
         }
     });
-    public final ActivityResultLauncher<Intent> img2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+    public final ActivityResultLauncher<Intent> img2 = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<>() {
         @Override
         public void onActivityResult(ActivityResult result) {
             if (result.getResultCode() == Activity.RESULT_OK || result.getData() != null) {
@@ -323,36 +331,12 @@ public class UpdateJWDataActivity extends AppCompatActivity {
             indicator2.setBackgroundResource(R.drawable.img_scroll_indicator_selected);
         }
     }
-    private void setDate() {
-        CalendarConstraints.Builder builder = new CalendarConstraints.Builder();
-        builder.setValidator(DateValidatorPointBackward.now());
 
-        MaterialDatePicker.Builder<Long> dateBuilder = MaterialDatePicker.Builder.datePicker();
-        dateBuilder.setTheme(R.style.Theme_SHD_form_calender);
-        dateBuilder.setCalendarConstraints(builder.build());
-
-        long today = MaterialDatePicker.todayInUtcMilliseconds();
-        dateBuilder.setSelection(today);
-
-        MaterialDatePicker<Long> datePicker = dateBuilder.build();
-
-        dateBuilder.setTitleText(getResources().getString(R.string.select_date));
-        dateBuilder.setSelection(System.currentTimeMillis());
-
-        datePicker.addOnPositiveButtonClickListener(selection -> {
-            Calendar calendars = Calendar.getInstance();
-            calendars.setTimeInMillis(selection);
-            SimpleDateFormat format = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
-            date_text.setText(format.format(calendars.getTime()));
-        });
-
-        datePicker.show(getSupportFragmentManager(), "Jewellery Date");
-    }
     private void setMainDropDownList() {
         ArrayAdapter<CharSequence> mainList = ArrayAdapter.createFromResource(this, R.array.jewellery_main_type, androidx.constraintlayout.widget.R.layout.support_simple_spinner_dropdown_item);
         jewelleryMainTypeText.setAdapter(mainList);
-        jewellerySubTypeLayout.setEnabled(false);
-        jewellerySubTypeText.setEnabled(false);
+        jewellerySubTypeLayout.setEnabled(true);
+        jewellerySubTypeText.setEnabled(true);
     }
 
     private void setSubDropDown(String subType) {
@@ -469,7 +453,6 @@ public class UpdateJWDataActivity extends AppCompatActivity {
         workBy = Objects.requireNonNull(work_by_text.getText()).toString();
         workPlace = Objects.requireNonNull(work_place_text.getText()).toString();
         customerName = Objects.requireNonNull(customer_text.getText()).toString();
-        selectedDate = Objects.requireNonNull(date_text.getText()).toString();
         status = designStatus.isChecked();
 
         design_code_layout.setErrorEnabled(false);

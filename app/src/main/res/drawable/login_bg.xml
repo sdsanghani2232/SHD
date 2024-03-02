@@ -3,6 +3,7 @@
     android:shape="rectangle">
 
     <corners android:topLeftRadius="20dp" android:topRightRadius="20dp"/>
-    <solid android:color="@color/login_area_background"/>
+    <solid android:color="@color/colorPrimaryBackground"/>
+    <stroke android:color="@color/colorSecondaryBackground" android:width="@dimen/edit_text_box_stroke_width"/>
 
 </shape>

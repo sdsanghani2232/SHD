@@ -9,11 +9,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ExcelDataValidation {
-    Context context;
-    ExcelFileData data = ExcelFileData.getInstance();
+    final Context context;
+    final ExcelFileData data = ExcelFileData.getInstance();
     private final Codes codes = Codes.getInstance();
-    List<List<Object>> sheetData = data.getExcelDataList();
-    List<String> mainJw = new ArrayList<>();
+    final List<List<Object>> sheetData = data.getExcelDataList();
+    final List<String> mainJw = new ArrayList<>();
     private static int errorCount;
 
     public ExcelDataValidation(Context context) {

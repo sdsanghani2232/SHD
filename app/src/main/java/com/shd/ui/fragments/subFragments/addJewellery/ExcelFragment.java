@@ -8,30 +8,28 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
-
 import com.airbnb.lottie.LottieAnimationView;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointBackward;
-import com.google.android.material.datepicker.MaterialDatePicker;
+import com.archit.calendardaterangepicker.customviews.CalendarListener;
+import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.materialswitch.MaterialSwitch;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.shd.R;
@@ -39,7 +37,6 @@ import com.shd.halperclass.otherClass.CheckInternet;
 import com.shd.viewmodes.ExcelFileData;
 import com.shd.viewmodes.ExcelImgData;
 import com.shd.ui.activity.sub_activity.excel_file.ExcelDataListActivity;
-
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.ClientAnchor;
@@ -50,7 +47,6 @@ import org.apache.poi.ss.usermodel.Shape;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -70,12 +66,15 @@ public class ExcelFragment extends Fragment {
 
     private boolean isInternet = true, status;
     private String customerName = "", date = "", workBy = "SHD", workPlace = "SHD Office";
-    TextView errorText, dialogMsg;
+    private final SimpleDateFormat format = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
+    ConstraintLayout mainLayout;
+    TextView dialogMsg;
     ScrollView mainScrollView;
     MaterialSwitch designStatus;
+    DateRangeCalendarView rangeCalendarView;
     Uri excelUri;
-    TextInputLayout date_layout, file_name_layout;
-    TextInputEditText date_text, work_by_text, work_place_text, customer_name_text, file_name_text;
+    TextInputLayout file_name_layout;
+    TextInputEditText work_by_text, work_place_text, customer_name_text, file_name_text;
     Button selectFile, save, dialogCancel;
     View dialogBoxView;
     LottieAnimationView animationView;
@@ -91,7 +90,6 @@ public class ExcelFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -100,8 +98,16 @@ public class ExcelFragment extends Fragment {
         findIds(view);
         checkInternet();
         currentDate();
-        date_layout.setStartIconOnClickListener(v -> setDate());
-        date_text.setOnClickListener(v -> setDate());
+
+        rangeCalendarView.setCalendarListener(new CalendarListener() {
+            @Override
+            public void onFirstDateSelected(@NonNull Calendar calendar) {}
+
+            @Override
+            public void onDateRangeSelected(@NonNull Calendar calendar, @NonNull Calendar calendar1) {
+                date = format.format(calendar.getTime());
+            }
+        });
 
         selectFile.setOnClickListener(v -> {
             file_name_layout.setErrorEnabled(false);
@@ -111,37 +117,27 @@ public class ExcelFragment extends Fragment {
             intent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
             filePickerLauncher.launch(intent);
         });
-        save.setOnTouchListener((v, event) -> {
-            switch (event.getAction()) {
-                case MotionEvent.ACTION_DOWN:
-                    checkInternet();
-                    if (isInternet) {
-                        checkData();
-                        save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_onClick_color));
-                    }
-                    break;
-                case MotionEvent.ACTION_UP:
-                    if (isInternet) {
-                        save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_color));
-                    } else {
-                        save.setBackgroundColor(requireContext().getColor(R.color.form_not_enable_button_color));
-                    }
-                    break;
+
+        save.setOnClickListener(v ->{
+            checkInternet();
+            if(isInternet) checkData();
+            else {
+                Snackbar.make(mainLayout,requireContext().getResources().getString(R.string.slider_error1),Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(requireContext().getColor(R.color.colorSecondaryBackground))
+                        .setTextColor(requireContext().getColor(R.color.colorSecondaryText)).show();
             }
-            return true;
         });
         return view;
     }
 
 
     private void findIds(View view) {
+        mainLayout = view.findViewById(R.id.excel_page);
         customer_name_text = view.findViewById(R.id.excel_customer_input_text);
         designStatus = view.findViewById(R.id.excel_status_switch);
         work_by_text = view.findViewById(R.id.excel_work_by_input_text);
         work_place_text = view.findViewById(R.id.excel_work_place_input_text);
-        date_text = view.findViewById(R.id.excel_date_display_text);
-        date_layout = view.findViewById(R.id.excel_date_layout);
-        errorText = view.findViewById(R.id.excel_error_text);
+        rangeCalendarView = view.findViewById(R.id.excel_calender);
         mainScrollView = view.findViewById(R.id.excel_main_scroll_view);
         file_name_layout = view.findViewById(R.id.excel_file_name_layout);
         file_name_text = view.findViewById(R.id.excel_file_name_text);
@@ -150,52 +146,22 @@ public class ExcelFragment extends Fragment {
     }
 
     private void checkInternet() {
-        if (new CheckInternet(requireContext()).Check()) {
-            isInternet = true;
-            save.setClickable(true);
-            save.setBackgroundColor(requireContext().getColor(R.color.form_button_background_color));
-            errorText.setVisibility(View.GONE);
-        } else {
-            isInternet = false;
-            save.setClickable(false);
-            save.setBackgroundColor(requireContext().getColor(R.color.form_not_enable_button_color));
-            errorText.setText(requireContext().getResources().getString(R.string.check_internet_connectivity));
-            errorText.setVisibility(View.VISIBLE);
-            mainScrollView.scrollTo(0, 0);
-        }
+        isInternet = new CheckInternet(requireContext()).Check();
     }
 
     private void currentDate() {
         Calendar calendars = Calendar.getInstance();
-        SimpleDateFormat format = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
-        date_text.setText(format.format(calendars.getTime()));
+        date = format.format(calendars.getTime());
+
+//        set current date in view
+        Calendar currentMonth = Calendar.getInstance();
+        currentMonth.add(Calendar.MONTH,0);
+        Calendar currentDate = (Calendar) currentMonth.clone();
+        currentDate.add(Calendar.DATE, 0);
+
+        rangeCalendarView.setSelectedDateRange(currentMonth, currentDate);
     }
 
-    private void setDate() {
-        CalendarConstraints.Builder builder = new CalendarConstraints.Builder();
-        builder.setValidator(DateValidatorPointBackward.now());
-
-        MaterialDatePicker.Builder<Long> dateBuilder = MaterialDatePicker.Builder.datePicker();
-        dateBuilder.setTheme(R.style.Theme_SHD_form_calender);
-        dateBuilder.setCalendarConstraints(builder.build());
-
-        long today = MaterialDatePicker.todayInUtcMilliseconds();
-        dateBuilder.setSelection(today);
-
-        MaterialDatePicker<Long> datePicker = dateBuilder.build();
-
-        dateBuilder.setTitleText(requireContext().getResources().getString(R.string.select_date));
-        dateBuilder.setSelection(System.currentTimeMillis());
-
-        datePicker.addOnPositiveButtonClickListener(selection -> {
-            Calendar calendars = Calendar.getInstance();
-            calendars.setTimeInMillis(selection);
-            SimpleDateFormat format = new SimpleDateFormat("EEE, MMM dd yyyy", Locale.getDefault());
-            date_text.setText(format.format(calendars.getTime()));
-        });
-
-        datePicker.show(requireActivity().getSupportFragmentManager(), "Jewellery Date");
-    }
     private final ActivityResultLauncher<Intent> filePickerLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             result -> {
                 if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
@@ -216,7 +182,6 @@ public class ExcelFragment extends Fragment {
         customerName = Objects.requireNonNull(customer_name_text.getText()).toString();
         workBy = Objects.requireNonNull(work_by_text.getText()).toString();
         workPlace = Objects.requireNonNull(work_place_text.getText()).toString();
-        date = Objects.requireNonNull(date_text.getText()).toString();
         status = designStatus.isChecked();
 
         if (workBy.isEmpty())
@@ -229,7 +194,6 @@ public class ExcelFragment extends Fragment {
             file_name_layout.setError("Select File");
         } else {
             save.setClickable(false);
-            resetValue();
             executeTack(excelUri);
         }
     }
@@ -340,7 +304,6 @@ public class ExcelFragment extends Fragment {
 
                     ExcelFileData fileData = ExcelFileData.getInstance();
                     fileData.setExcelDataList(excelData);
-                    excelData.forEach(strings -> strings.forEach(s -> Log.d("data get", s.toString())));
                 }
                 return true;
             } catch (Exception e) {
@@ -356,6 +319,7 @@ public class ExcelFragment extends Fragment {
         Handler handler = new Handler(Looper.getMainLooper()) {
             public void handleMessage(Message message) {
                 boolean result = (boolean) message.obj;
+                resetValue();
                 dismissDialog();
                 if (result) {
                     requireContext().startActivity(intent);

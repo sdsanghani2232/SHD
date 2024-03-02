@@ -37,18 +37,20 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     private static final int VIEW_TYPE_ITEM = 0;
     private static final int VIEW_TYPE_EMPTY = 1;
     private final Codes codes = Codes.getInstance();
-    TextView totalDesign, totalErrorDesign;
-    Context context;
+    final TextView totalDesign;
+    final TextView totalErrorDesign;
+    final Context context;
     private static int errorCount;
     private boolean emptyView = false;
-    List<List<Object>> sheetData;
+    final List<List<Object>> sheetData = new ArrayList<>();
+    final List<List<Object>> mainList = ExcelFileData.getInstance().getExcelDataList();
     int totalDesignCount = ExcelFileData.getInstance().getExcelDataList().size();
-    List<String> mainJw = new ArrayList<>();
+    final List<String> mainJw = new ArrayList<>();
 
     public ExcelDataRvAdapter(Context context, TextView totalDesign, TextView totalErrorDesign,Button save,List<List<Object>> sheetData, int errorCount,DeleteItemListener deleteItemListener) {
         this.context = context;
         this.totalErrorDesign = totalErrorDesign;
-        this.sheetData = sheetData;
+        this.sheetData.addAll(sheetData);
         this.save = save;
         this.totalDesign = totalDesign;
         this.deleteItemListener = deleteItemListener;
@@ -90,6 +92,7 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
 
             ((DataView) holder).delete.setOnClickListener(v -> {
                 sheetData.remove(position);
+                mainList.remove(position);
                 notifyDataSetChanged();
                 if(deleteItemListener != null) deleteItemListener.deleteItem();
                 errorCount -= 1;
@@ -148,10 +151,16 @@ public class ExcelDataRvAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     }
 
     public static class DataView extends RecyclerView.ViewHolder {
-        ShapeableImageView img1, img2, statusImg;
-        MaterialTextView companyName, designCode, type, date;
-        MaterialCardView cardView;
-        Button delete, update;
+        final ShapeableImageView img1;
+        final ShapeableImageView img2;
+        final ShapeableImageView statusImg;
+        final MaterialTextView companyName;
+        final MaterialTextView designCode;
+        final MaterialTextView type;
+        final MaterialTextView date;
+        final MaterialCardView cardView;
+        final Button delete;
+        final Button update;
 
         public DataView(@NonNull View itemView) {
 

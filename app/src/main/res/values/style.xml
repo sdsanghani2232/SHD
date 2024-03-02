@@ -1,51 +1,132 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.SHD.form.calender.header.layout" parent="Widget.MaterialComponents.MaterialCalendar.HeaderLayout">
-        <item name="android:backgroundTint">@color/calender_header_background</item>
-    </style>
-    <style name="Theme.SHD.form.calender.header.title" parent="@style/Widget.MaterialComponents.MaterialCalendar.HeaderTitle">
-        <item name="android:textColor">@color/calender_text_color</item>
-    </style>
-    
-    <style name="Theme.SHD.form.calender.header.selection" parent="@style/Widget.Material3.MaterialCalendar.HeaderSelection">
-        <item name="android:textColor">@color/calender_text_color</item>
-    </style>
-    
-    <style name="Theme.SHD.form.calender.switch.keyboard" parent="@style/Widget.Material3.MaterialCalendar.HeaderToggleButton">
-        <item name="android:backgroundTint">@color/calender_header_background</item>
-        <item name="android:tint">@color/calender_key_bored_change_icon_color</item>
-    </style>
-
-    <style name="Theme.SHD.form.calender.year.selection" parent="@style/Widget.Material3.MaterialCalendar.YearNavigationButton">
-        <item name="android:textColor">@color/calender_text_color</item>
-        <item name="iconTint">@color/calender_text_color</item>
-    </style>
-
-    <style name="Theme.SHD.form.calender.month.selection" parent="@style/Widget.Material3.MaterialCalendar.MonthNavigationButton">
-        <item name="android:textColor">@color/calender_text_color</item>
-        <item name="iconTint">@color/calender_text_color</item>
-    </style>
-    
-    <style name="Theme.SHD.dialogBox" parent="MaterialAlertDialog.Material3">
-        <item name="android:backgroundDimAmount">35.00</item>
+    <style name="Theme.SHD.AppBar" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="titleTextColor">@color/colorPrimaryText</item>
+        <item name="navigationIcon">@drawable/back_arrow</item>
+        <item name="navigationIconTint">@color/colorPrimaryText</item>
+        <item name="android:textSize">@dimen/medium_text</item>
     </style>
 
     <style name="Theme.SHD.inputText" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="android:textColorHint">@color/Edit_Text_hint_text_color</item>
-        <item name="boxStrokeColor">@color/Edit_Text_box_stroke_color</item>
-        <item name="boxStrokeErrorColor">@color/Edit_Text_box_stroke_error_color</item>
-        <item name="errorIconTint">@color/Edit_Text_end_error_icon_color</item>
-        <item name="errorTextColor">@color/Edit_Text_error_text_color</item>
-        <item name="cursorColor">@color/Edit_Text_cursor_color</item>
-        <item name="cursorErrorColor">@color/Edit_Text_cursor_error_color</item>
-        <item name="boxStrokeWidth">3dp</item>
-        <item name="boxCornerRadiusBottomEnd">10dp</item>
-        <item name="boxCornerRadiusBottomStart">10dp</item>
-        <item name="boxCornerRadiusTopEnd">10dp</item>
-        <item name="boxCornerRadiusTopStart">10dp</item>
+        <item name="hintTextColor">@color/colorPrimaryText</item>
+        <item name="startIconTint">@color/colorPrimaryText</item>
+        <item name="android:textColorHint">@color/colorPrimaryText</item>
+        <item name="boxStrokeColor">@color/colorPrimaryStroke</item>
+        <item name="errorIconTint">@color/colorPrimaryError</item>
+        <item name="boxStrokeErrorColor">@color/colorPrimaryError</item>
+        <item name="errorTextColor">@color/colorPrimaryError</item>
+        <item name="cursorColor">@color/colorPrimaryText</item>
+        <item name="cursorErrorColor">@color/colorPrimaryText</item>
+        <item name="boxStrokeWidth">@dimen/edit_text_box_stroke_width</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/edit_text_box_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/edit_text_box_corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/edit_text_box_corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/edit_text_box_corner_radius</item>
         <item name="hintEnabled">false</item>
-
+        <item name="boxBackgroundColor">@color/colorSecondaryBackground</item>
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">@dimen/small_text</item>
     </style>
+
+    <style name="Theme.SHD.dropDownInput" parent="Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <item name="hintTextColor">@color/colorPrimaryText</item>
+        <item name="startIconTint">@color/colorPrimaryText</item>
+        <item name="android:textColorHint">@color/colorPrimaryText</item>
+        <item name="boxStrokeColor">@color/colorPrimaryStroke</item>
+        <item name="errorIconTint">@color/colorPrimaryError</item>
+        <item name="boxStrokeErrorColor">@color/colorPrimaryError</item>
+        <item name="errorTextColor">@color/colorPrimaryError</item>
+        <item name="cursorColor">@color/colorPrimaryText</item>
+        <item name="cursorErrorColor">@color/colorPrimaryText</item>
+        <item name="endIconTint">@color/colorSecondaryText</item>
+        <item name="boxStrokeWidth">@dimen/edit_text_box_stroke_width</item>
+        <item name="boxCornerRadiusBottomEnd">@dimen/edit_text_box_corner_radius</item>
+        <item name="boxCornerRadiusBottomStart">@dimen/edit_text_box_corner_radius</item>
+        <item name="boxCornerRadiusTopEnd">@dimen/edit_text_box_corner_radius</item>
+        <item name="boxCornerRadiusTopStart">@dimen/edit_text_box_corner_radius</item>
+        <item name="hintEnabled">false</item>
+        <item name="boxBackgroundColor">@color/colorSecondaryBackground</item>
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">@dimen/small_text</item>
+    </style>
+
+    <style name="Theme.SHD.TextButton" parent="Widget.Material3.Button.TextButton">
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/small_text</item>
+    </style>
+
+    <style name="Theme.SHD.Button" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/colorPrimaryButton</item>
+        <item name="android:textColor">@color/colorPrimaryBackground</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+        <item name="android:textSize">@dimen/medium_text</item>
+        <item name="cornerRadius">@dimen/button_corner_radius</item>
+        <item name="rippleColor">@color/ButtonRippleColor</item>
+    </style>
+
+    <style name="Theme.SHD.tabBar" parent="Widget.Material3.TabLayout">
+        <item name="android:background">@drawable/tab_background</item>
+        <item name="tabIndicator">@drawable/tab_indicator_shape</item>
+        <item name="tabIndicatorColor">@color/colorPrimaryBackground</item>
+        <item name="tabRippleColor">@color/colorPrimaryStroke</item>
+        <item name="tabIndicatorFullWidth">true</item>
+        <item name="tabIndicatorGravity">stretch</item>
+        <item name="tabTextColor">@color/colorSecondaryText</item>
+        <item name="tabSelectedTextColor">@color/colorPrimaryText</item>
+        <item name="fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="Theme.SHD.img_shape" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">15dp</item>
+        <item name="android:src">@drawable/default_img</item>
+        <item name="android:scaleType">fitXY</item>
+    </style>
+
+    <style name="Theme.SHD.fab_button" parent="Widget.Material3.FloatingActionButton.Small.Primary">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+        <item name="srcCompat">@drawable/pencil</item>
+        <item name="tint">@color/colorPrimaryBackground</item>
+        <item name="android:backgroundTint">@color/colorPrimaryButton</item>
+    </style>
+
+    <style name="Theme.SHD.slider" parent="Widget.Material3.Slider">
+        <item name="android:valueFrom">@dimen/slider_starting_valuer</item>
+        <item name="android:valueTo">@dimen/slider_end_valuer</item>
+        <item name="trackColorActive">@color/colorPrimaryButton</item>
+        <item name="trackColorInactive">@color/colorSecondaryBackground</item>
+        <item name="haloColor">@color/colorPrimaryText</item>
+        <item name="thumbColor">@color/colorPrimaryButton</item>
+        <item name="trackThickness">@dimen/slider_track_thickness</item>
+    </style>
+
+
+    <style name="Theme.SHD.dialogBox" parent="MaterialAlertDialog.Material3">
+        <item name="android:backgroundDimAmount">0.75</item>
+    </style>
+
+    <style name="Theme.SHD.rangeCalender" parent="">
+        <item name="disable_date_color">@color/colorSecondaryText</item>
+        <item name="selected_date_circle_color">@color/colorPrimaryButton</item>
+        <item name="title_color">@color/colorPrimaryText</item>
+        <item name="default_date_color">@color/colorPrimaryText</item>
+        <item name="week_color">@color/colorPrimaryText</item>
+        <item name="range_color">@color/colorSecondaryBackground</item>
+        <item name="selected_date_color">@color/colorPrimaryBackground</item>
+        <item name="date_selection_mode">free_range</item>
+        <item name="range_date_color">@color/colorPrimaryText</item>
+    </style>
+
+    <style name="Theme.SHD.shimmer_img" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+        <item name="strokeColor">@color/colorPrimaryStroke</item>
+        <item name="strokeWidth">5dp</item>
+    </style>
+
 
 </resources>

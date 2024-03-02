@@ -1,130 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="app_color">#CA9F85</color>
 
-    <!--   Log in -->
-    <color name="login_area_background">#CA9F85</color>
-    <color name="login_welcome_text">#B3000000</color>
-    <color name="login_welcome_text2">#A6000000</color>
-    <color name="login_start_icon_color">#FF000000</color>
-    <color name="login_forgot_text_color">#000000</color>
-    <color name="login_button_text_color">#FFFFFF</color>
-    <color name="login_button_background_color">#0048FF</color>
-    <color name="login_button_background_onClick_color">#3363DE</color>
+    <color name="colorPrimaryBackground">#141414</color>
+    <color name="colorSecondaryBackground">#292929</color>
 
-<!--    Reset Password-->
-    <color name="RP_background">#CA9F85</color>
+    <color name="colorPrimaryText">#FFFFFF</color>
+    <color name="colorSecondaryText">#C4C4C4</color>
 
-    <color name="RP_msg_color">#000000</color>
-    <color name="RP_not_enable_button_color">#302C2C</color>
-    <color name="RP_color_primary">#FF000000</color>
+    <color name="colorPrimaryStroke">#383838</color>
 
-<!--    Home Activity-->
-    <color name="home_background">#CA9F85</color>
-    <color name="bottom_navigation_background">#A865C9</color>
-    <color name="bottom_navigation_shadow">#1f212121</color>
-    <color name="bottom_navigation_selected_icon">#ffffff</color>
-    <color name="bottom_navigation_not_selected_icon">#ffffff</color>
+    <color name="colorPrimaryButton">#38E078</color>
+    <color name="ButtonRippleColor">#00FF61</color>
 
-<!--    fragments-->
-<!--    1) Home -->
-<!--    2) Add Jewellery -->
-    <color name="add_jewellery_fragment_background">#CA9F85</color>
-    <color name="add_jewellery_form_text_color">#FF000000</color>
-    <color name="form_button_text_color">#FFFFFF</color>
-    <color name="form_button_background_color">#0048FF</color>
-    <color name="form_button_background_onClick_color">#3363DE</color>
-    <color name="form_not_enable_button_color">#302C2C</color>
-
-    <color name="excel_button_background_color">#31DA0C</color>
-
-<!--    3) Search -->
-    <color name="search_icon_color">#FF000000</color>
-    <color name="search_filter_icon_color">#FF000000</color>
-    <color name="search_bar_bg_color">#9BB2BF</color>
-
-<!--    4) Profiles Detail -->
-    <color name="profiles_details_background">#CA9F85</color>
-
-    <!--    5) Profile -->
-
-<!--    component-->
+    <color name="colorPrimaryError">#FF0E0E</color>
 
 
-<!--    App bar-->
-    <color name="app_bar_title_color">#FF000000</color>
-    <color name="app_bar_navigation_icon_color">#FF000000</color>
-    <color name="app_bar_bg_color">#21CC27</color>
-    <color name="app_bar_button_color">#000DFF</color>
-
-<!--    Edit Text -->
-    <color name="Edit_Text_box_stroke_color">#FF000000</color>
-    <color name="Edit_Text_box_stroke_error_color">#FF0000</color>
-    <color name="Edit_Text_error_text_color">#FF0000</color>
-    <color name="Edit_Text_cursor_color">#000000</color>
-    <color name="Edit_Text_cursor_error_color">#FF0000</color>
-    <color name="Edit_Text_input_text_color">#000000</color>
-    <color name="Edit_Text_hint_text_color">#80000000</color>
-    <color name="Edit_Text_end_icon_color">#FF000000</color>
-    <color name="Edit_Text_end_error_icon_color">#FF0000</color>
-    <color name="Edit_Text_background">#CA9F85</color>
-    <color name="Edit_Text_drop_down_background">#CA9F85</color>
-    <color name="Edit_Text_drop_down_list_style_color">#000000</color>
-
-<!--    Tab Bar -->
-    <color name="tab_indicator_color">#EB7A7A</color>
-    <color name="tab_text_color">#FF000000</color>
-    <color name="tab_selected_text_color">#FFFFFF</color>
-    <color name="tab_background_color">#A865C9</color>
-
-<!--    floating (edit) button-->
-    <color name="floating_button_background">#A865C9</color>
-    <color name="floating_button_icon_color">#FF000000</color>
-
-<!--    scroll bar Indicator-->
-    <color name="img_scroll_bar_indicator">#0048FF</color>
-
-<!--    Switch -->
-    <color name="switch_disable">#FF0E0E</color>
-    <color name="switch_enable">#34C759</color>
-    <color name="switch_thumb_color">#FFFFFF</color>
-
-<!--    Calender -->
-    <color name="calender_icon">#3363DE</color>
-    <color name="calender_selected_date">#FF0000</color>
-    <color name="calender_header_background">#3363DE</color>
-    <color name="calender_text_color">#FFFFFFFF</color>
-    <color name="calender_key_bored_change_icon_color">#FFFFFF</color>
-
-<!--    slider-->
-    <color name="slider_track_active_color">#3363DE</color>
-    <color name="slider_track_inactive_color">#80000000</color>
-    <color name="slider_thumb_color">#FFFFFF</color>
-    <color name="slider_holo_color">#803363DE</color>
-    <color name="slider_label_text_color">#000000</color>
-    <color name="slider_label_background_color">#3363DE</color>
-
-<!--    Dialog Box-->
-    <color name="dialogBox_button_text_color">#3363DE</color>
-    <color name="dialogBox_text_color">#009A19</color>
-    <color name="dialogBox_error_text_color">#EC0505</color>
-
-<!--    Card view-->
+    <!--    Card view-->
     <color name="cv_stroke_color">#00FF29</color>
     <color name="cv_stroke_error_color">#FF0000</color>
-    <color name="cv_bg_color">#B3000000</color>
-    <color name="cv_text_color">#FFFFFF</color>
-    <color name="cv_cancel_text_color">#FF0000</color>
-    <color name="cv_text_view_border_color">#FFFFFF</color>
-    <color name="cv_update_bg_color">#002430</color>
-
-<!--    Card View (Shimmer effect)-->
-    <color name="cv_shimmer_bg">#4DFFFFFF</color>
-
-<!--    Progressbar-->
-    <color name="pb_track_color">#0048FF</color>
-    <color name="pb_indicator_color">#0048FF</color>
 
 </resources>

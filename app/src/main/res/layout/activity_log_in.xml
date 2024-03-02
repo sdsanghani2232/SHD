@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/login_page"
     tools:context=".ui.activity.main_activity.login.LogIn">
 
     <ImageView
@@ -33,11 +34,9 @@
             android:id="@+id/welcome_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:fontFamily="@font/poppins_extra_bold"
+            android:layout_margin="@dimen/top_margin"
+            style="@style/Theme.SHD.Text.Large"
             android:text="@string/welcome_back"
-            android:textColor="@color/login_welcome_text"
-            android:textSize="32sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,10 +45,8 @@
             android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/poppins_bold"
+            style="@style/Theme.SHD.Text.small"
             android:text="@string/see_you_again"
-            android:textColor="@color/login_welcome_text2"
-            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/welcome_text" />
@@ -58,23 +55,19 @@
             android:id="@+id/email_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/all_side_margin"
             android:hint="@string/email"
             style="@style/Theme.SHD.inputText"
             app:layout_constraintTop_toBottomOf="@id/text"
             app:startIconDrawable="@drawable/email"
-            app:hintTextColor="@color/Edit_Text_hint_text_color"
-            app:startIconTint="@color/login_start_icon_color"
             app:hintEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/Edit_Text_input_text_color"
-                android:textSize="16sp"
+                style="@style/Theme.SHD.Text.medium"
                 tools:ignore="VisualLintTextFieldSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,34 +76,43 @@
             android:id="@+id/pass_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp"
+            android:layout_margin="@dimen/all_side_margin"
             android:hint="@string/password"
             style="@style/Theme.SHD.inputText"
             app:hintEnabled="true"
-            app:hintTextColor="@color/Edit_Text_hint_text_color"
-            app:startIconTint="@color/login_start_icon_color"
+            app:endIconMode="password_toggle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/email_layout"
-            app:startIconDrawable="@drawable/login_lock_password">
+            app:startIconDrawable="@drawable/lock">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/pass_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_bold"
+                style="@style/Theme.SHD.Text.medium"
                 android:inputType="textPassword"
-                android:textColor="@color/Edit_Text_input_text_color"
-                android:textSize="16sp"
                 tools:ignore="VisualLintTextFieldSize" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <TextView
+            android:id="@+id/error_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/pass_layout"
+            app:layout_constraintBottom_toTopOf="@id/login_button"
+            style="@style/Theme.SHD.Text.small"
+            android:textColor="@color/colorPrimaryError"
+            android:layout_marginStart="@dimen/staring_margin"
+            />
+        <Button
             android:id="@+id/forgot_pass"
-            style="@style/Theme.SHD.Login.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/Theme.SHD.TextButton"
             android:text="@string/forgot_password"
+            android:layout_marginEnd="@dimen/end_margin"
             app:layout_constraintTop_toBottomOf="@id/pass_layout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@id/login_button"
@@ -118,19 +120,17 @@
 
         <Button
             android:id="@+id/login_button"
-            style="@style/Theme.SHD.Login.Button"
+            style="@style/Theme.SHD.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginHorizontal="15dp"
+            android:layout_marginHorizontal="@dimen/staring_margin"
+            android:layout_marginBottom="@dimen/bottom_margin"
             android:text="@string/log_in"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/forgot_pass"
-            android:elevation="16dp"
-            android:stateListAnimator="@null"
-            tools:ignore="VisualLintButtonSize" />
+            app:layout_constraintTop_toBottomOf="@id/forgot_pass" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
