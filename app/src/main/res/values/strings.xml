@@ -84,6 +84,16 @@
     <string name="select_excel_file">Select Excel File</string>
     <string name="file">File</string>
     <string name="shimmer_button">shimmer button</string>
+    <string name="search_design">Search Design</string>
+    <string name="filter">Filter</string>
+    <string name="start_code">Start Code</string>
+    <string name="end_code">End Code</string>
+    <string name="only_photos">Only Photos</string>
+    <string name="to">TO</string>
+    <string name="gold_range_slider">gold range slider</string>
+    <string name="diamond_range_slider">Diamond range slider</string>
+    <string name="apply_filter">Apply Filter</string>
+    <string name="remove_filter">Remove Filter</string>
 
 
     <string-array name="jewellery_main_type">
@@ -125,5 +135,10 @@
         <item>Tenis</item>
         <item>Kada</item>
     </string-array>
+
+    <array name="range_slider_default_value">
+        <item>0.0</item>
+        <item>0.0</item>
+    </array>
 
 </resources>

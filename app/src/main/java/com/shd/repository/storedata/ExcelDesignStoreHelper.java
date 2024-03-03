@@ -49,7 +49,6 @@ public class ExcelDesignStoreHelper {
     private void processDesign(int position) {
         if (position < mainList.size() && !errorSet.get()) {
             designList = mainList.get(position);
-            Log.d("data upload", "upload");
             Bitmap img1Bitmap = designList.get(0).equals("null") ? null : (Bitmap) designList.get(0);
             Bitmap img2Bitmap = designList.get(1).equals("null") ? null : (Bitmap) designList.get(1);
             String customerName = designList.get(2).equals("null") ? "" : (String) designList.get(2);

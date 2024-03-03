@@ -23,6 +23,8 @@
 
     <dimen name="slider_starting_valuer">0.0</dimen>
     <dimen name="slider_end_valuer">100.0</dimen>
+    <dimen name="range_slider_starting_valuer">10.0</dimen>
+    <dimen name="range_slider_end_valuer">70.0</dimen>
     <dimen name="slider_track_thickness">8dp</dimen>
 
 

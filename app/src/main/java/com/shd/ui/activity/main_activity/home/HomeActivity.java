@@ -42,11 +42,11 @@ public class HomeActivity extends AppCompatActivity {
 //        adminModel = new ViewModelProvider(this).get(AdminModel.class);
 //        adminModel.getAdminMap().observe(this, adminInfo::updateAdminList);
 
-        designCodeModel = new ViewModelProvider(this).get(DesignCodeModel.class);
-        designCodeModel.getDesignCodeList().observe(this, codes::updateDesignCodes);
-
-        tempCodeModel = new ViewModelProvider(this).get(TempCodeModel.class);
-        tempCodeModel.getTempCodeList().observe(this, codes::updateTempCodes);
+//        designCodeModel = new ViewModelProvider(this).get(DesignCodeModel.class);
+//        designCodeModel.getDesignCodeList().observe(this, codes::updateDesignCodes);
+//
+//        tempCodeModel = new ViewModelProvider(this).get(TempCodeModel.class);
+//        tempCodeModel.getTempCodeList().observe(this, codes::updateTempCodes);
 
         navigation = findViewById(R.id.bottom_navigation);
 

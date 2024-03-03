@@ -94,6 +94,14 @@
         <item name="android:backgroundTint">@color/colorPrimaryButton</item>
     </style>
 
+    <style name="Theme.SHD.filter_button" parent="Widget.Material3.FloatingActionButton.Primary">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+        <item name="srcCompat">@drawable/filter</item>
+        <item name="tint">@color/colorPrimaryText</item>
+        <item name="android:backgroundTint">@color/colorSecondaryBackground</item>
+    </style>
+
     <style name="Theme.SHD.slider" parent="Widget.Material3.Slider">
         <item name="android:valueFrom">@dimen/slider_starting_valuer</item>
         <item name="android:valueTo">@dimen/slider_end_valuer</item>
@@ -102,6 +110,7 @@
         <item name="haloColor">@color/colorPrimaryText</item>
         <item name="thumbColor">@color/colorPrimaryButton</item>
         <item name="trackThickness">@dimen/slider_track_thickness</item>
+        <item name="labelStyle">@style/Theme.SHD.tooltip</item>
     </style>
 
 
@@ -126,6 +135,39 @@
         <item name="cornerSize">12dp</item>
         <item name="strokeColor">@color/colorPrimaryStroke</item>
         <item name="strokeWidth">5dp</item>
+    </style>
+
+    <style name="Theme.SHD.chips" parent="Widget.Material3.Chip.Filter">
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipBackgroundColor">@color/chip_back_ground_selector</item>
+        <item name="android:textColor">@color/chip_text_selector</item>
+        <item name="fontFamily">@font/poppins_regular</item>
+        <item name="android:textSize">@dimen/small_text</item>
+    </style>
+
+
+    <style name="Theme.SHD.rangeSlider" parent="Widget.Material3.Slider">
+        <item name="android:valueFrom">@dimen/slider_starting_valuer</item>
+        <item name="android:valueTo">@dimen/slider_end_valuer</item>
+        <item name="trackColorActive">@color/colorPrimaryButton</item>
+        <item name="trackColorInactive">@color/colorSecondaryBackground</item>
+        <item name="haloColor">@color/colorSecondaryBackground</item>
+        <item name="thumbColor">@color/colorPrimaryButton</item>
+        <item name="trackThickness">@dimen/slider_track_thickness</item>
+        <item name="values">@array/range_slider_default_value</item>
+        <item name="labelBehavior">gone</item>
+        <item name="labelStyle">@style/Theme.SHD.tooltip</item>
+    </style>
+
+    <style name="Theme.SHD.tooltip" parent="Widget.Material3.Tooltip">
+        <item name="backgroundTint">#00141414</item>
+        <item name="android:textColor">@color/colorPrimaryText</item>
+        <item name="shapeAppearance">@style/Theme.SHD.tooltip.bg</item>
+    </style>
+    <style name="Theme.SHD.tooltip.bg" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+        <item name="strokeWidth">0dp</item>
     </style>
 
 
